@@ -6,12 +6,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.alexkaz.simplytaskmanager.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#e1e1e1"
+    android:baselineAligned="false">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_gravity="center_horizontal"/>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="7dp"
+        android:layout_marginRight="7dp"
+        card_view:cardCornerRadius="4dp"
+        card_view:cardElevation="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="143px"
+                android:layout_height="143px"
+                android:layout_marginTop="5px"
+                android:layout_marginLeft="5px"
+                android:layout_marginStart="5px"
+                android:background="#cb8a49">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/work_icon"
+                    android:layout_margin="6px"/>
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="431px"
+                android:layout_height="143px"
+                android:orientation="vertical"
+                android:layout_marginTop="5px"
+
+                android:layout_marginLeft="5px"
+                android:layout_marginStart="5px"
+                android:layout_marginRight="5px"
+                android:layout_marginEnd="5px"
+
+                android:background="#42e230">
+
+                <TextView
+                    android:layout_width="419px"
+                    android:layout_height="88px"
+                    android:background="#a7d8f1"
+                    android:layout_margin="6px"/>
+
+                <View
+                    android:layout_width="419px"
+                    android:layout_height="38px"
+                    android:layout_marginLeft="6px"
+                    android:layout_marginRight="6px"
+                    android:layout_marginBottom="6px"
+                    android:background="#a7d8f1"/>
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="143px"
+                android:layout_height="143px"
+                android:layout_marginTop="5px"
+                android:layout_marginRight="5px"
+                android:layout_marginEnd="5px"
+                android:background="#cb8a49">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="#fd1010"
+                    android:layout_margin="6px"/>
+
+            </FrameLayout>
+
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </LinearLayout>
