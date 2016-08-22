@@ -25,8 +25,21 @@ public class TaskIndictor {
     private Paint inProcessBlurPaint;
     private Paint doneBlurPaint;
 
-    public TaskIndictor() {
+    private TaskStatus[] taskStatuses = new TaskStatus[8];
 
+    public TaskIndictor() {
+        initComps();
+    }
+
+    private void initComps() {
+        taskStatuses[0] = TaskStatus.DONE;
+        taskStatuses[1] = TaskStatus.DONE;
+        taskStatuses[2] = TaskStatus.DONE;
+        taskStatuses[3] = TaskStatus.IN_PROCESS;
+        taskStatuses[4] = TaskStatus.IN_PROCESS;
+        taskStatuses[5] = TaskStatus.NOT_COMPLITED;
+        taskStatuses[6] = TaskStatus.NOT_COMPLITED;
+        taskStatuses[7] = TaskStatus.NOT_COMPLITED;
     }
 
 
@@ -38,17 +51,34 @@ public class TaskIndictor {
         }
 
         for (int i = 0; i < 8; i++) {
-            Paint p = new Paint();
-            p.setAntiAlias(true);
-            p.setColor(Color.RED);
-//            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
-            if (i < 7){
-                canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,p);
+//            Paint p = new Paint();
+//            p.setAntiAlias(true);
+//            p.setColor(Color.RED);
+////            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
+            switch (taskStatuses[i]){
+                case DONE:
+                    if (i < 7){
+                        canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,donePaint);
+                    }
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,donePaint);
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,doneBlurPaint);
+                    break;
+                case IN_PROCESS:
+                    if (i < 7){
+                        canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,inProcessPaint);
+                    }
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,inProcessPaint);
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,inProcessBlurPaint);
+                    break;
+                case NOT_COMPLITED:
+                    if (i < 7){
+                        canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,notCompletedPaint);
+                    }
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,notCompletedPaint);
+                    canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,notCompletedBlurPaint);
+                    break;
             }
-            canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,donePaint);
-            canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,doneBlurPaint);
         }
-
     }
 
     private void determineMeasurements(int width, int height){
@@ -101,5 +131,13 @@ public class TaskIndictor {
         doneBlurPaint = new Paint();
         doneBlurPaint.setMaskFilter(blurMaskFilter);
         doneBlurPaint.setColor(Color.parseColor("#d0fdff")); // light blue blur
+    }
+
+    public void setTaskStatus(int position, TaskStatus taskStatus){
+        taskStatuses[position] = taskStatus;
+    }
+
+    public void setTaskStatuses(TaskStatus[] taskStatuses){
+        this.taskStatuses = taskStatuses;
     }
 }
