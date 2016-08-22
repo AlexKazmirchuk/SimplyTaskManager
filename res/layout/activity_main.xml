@@ -90,6 +90,11 @@
                     android:background="@drawable/diagram_temporary_patch"
                     android:layout_margin="2dp"/>
 
+                <com.alexkaz.simplytaskmanager.uicomp.PieChartView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="2dp"/>
+
             </FrameLayout>
 
 
