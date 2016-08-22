@@ -5,9 +5,9 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="6dp"
-    android:paddingLeft="7dp"
-    android:paddingRight="7dp"
+    android:paddingTop="2dp"
+    android:paddingLeft="3dp"
+    android:paddingRight="3dp"
     tools:context="com.alexkaz.simplytaskmanager.MainActivity"
     android:orientation="vertical"
     android:background="#e1e1e1"
@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="6dp"
-        card_view:cardCornerRadius="4dp"
+        card_view:cardCornerRadius="3dp"
         card_view:cardElevation="6dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,71 +26,69 @@
             android:baselineAligned="false"
             android:orientation="horizontal">
             <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_weight="0"
-                android:layout_marginTop="3dp"
-                android:layout_marginLeft="3dp"
-                android:layout_marginStart="3dp"
-                android:layout_marginBottom="3dp"
-                >
-
+                android:layout_marginTop="2dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:layout_marginBottom="2dp">
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/work_icon"
-                    android:layout_margin="3dp"/>
+                    android:layout_margin="2dp"/>
             </FrameLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="72dp"
+                android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical"
-                android:layout_marginTop="3dp"
 
-                android:layout_marginLeft="3dp"
-                android:layout_marginStart="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginEnd="3dp"
-                android:layout_marginBottom="3dp"
 
-                >
+                android:layout_marginBottom="2dp">
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:gravity="center"
-
-                    android:textSize="13sp"
+                    android:layout_height="40dp"
+                    android:gravity="start"
+                    android:textSize="12sp"
+                    android:textAlignment="viewStart"
                     android:text="@string/first_item_text"
-                    android:layout_margin="3dp"/>
+                    android:layout_margin="2dp"/>
 
-                <View
+                <!--<View-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="19dp"-->
+                    <!--android:layout_gravity="center_horizontal"-->
+                    <!--android:layout_marginLeft="3dp"-->
+                    <!--android:layout_marginRight="3dp"-->
+                    <!--android:layout_marginBottom="3dp"-->
+                    <!--android:background="@drawable/indicator_tempory_patch"/>-->
+
+                <com.alexkaz.simplytaskmanager.uicomp.TaskIndicatorView
                     android:layout_width="match_parent"
-                    android:layout_height="19dp"
+                    android:layout_height="18dp"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginLeft="3dp"
-                    android:layout_marginRight="3dp"
-                    android:layout_marginBottom="3dp"
-                    android:background="@drawable/indicator_tempory_patch"/>
-
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginRight="2dp"
+                    android:layout_marginBottom="2dp"/>
             </LinearLayout>
 
             <FrameLayout
-                android:layout_width="72dp"
-                android:layout_height="72dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_weight="0"
-                android:layout_marginTop="3dp"
-                android:layout_marginRight="3dp"
-                android:layout_marginEnd="3dp"
-                >
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="2dp"
+                android:layout_marginEnd="2dp">
 
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/diagram_temporary_patch"
-                    android:layout_margin="3dp"/>
+                    android:layout_margin="2dp"/>
 
             </FrameLayout>
 
@@ -98,6 +96,7 @@
         </LinearLayout>
 
 </android.support.v7.widget.CardView>
+
 
 
 
