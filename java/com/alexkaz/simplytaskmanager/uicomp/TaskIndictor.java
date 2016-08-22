@@ -1,5 +1,6 @@
 package com.alexkaz.simplytaskmanager.uicomp;
 
+import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,13 +15,15 @@ public class TaskIndictor {
     private int linkingRectSizeX;
     private int linkingRectSizeY;
 
+    private float blurRadius;
+
     private Paint notCompletedPaint;
     private Paint inProcessPaint;
     private Paint donePaint;
 
-    private Paint notCompletedRadialGradientPaint;
-    private Paint inProcessRadialGradientPaint;
-    private Paint doneRadialGradientPaint;
+    private Paint notCompletedBlurPaint;
+    private Paint inProcessBlurPaint;
+    private Paint doneBlurPaint;
 
     public TaskIndictor() {
 
@@ -28,18 +31,22 @@ public class TaskIndictor {
 
 
     public void draw(Canvas canvas){
-        canvas.drawColor(Color.GREEN);
-        if (measureFlag){determineMeasurements(canvas.getWidth(),canvas.getHeight());}
+//        canvas.drawColor(Color.GREEN);
+        if (measureFlag){
+            determineMeasurements(canvas.getWidth(),canvas.getHeight());
+            initPaintComp();
+        }
 
         for (int i = 0; i < 8; i++) {
             Paint p = new Paint();
             p.setAntiAlias(true);
             p.setColor(Color.RED);
-            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
+//            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
             if (i < 7){
                 canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,p);
             }
-            canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,p);
+            canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,donePaint);
+            canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,doneBlurPaint);
         }
 
     }
@@ -47,33 +54,52 @@ public class TaskIndictor {
     private void determineMeasurements(int width, int height){
         elemRectSizeX = width/8;
         elemRectSizeY = height;
-
         if (elemRectSizeX >= elemRectSizeY){
-            // визначаємо по висоті
-            // circleRad = elemRectSizeY
-//            float fCircleRadius = (elemRectSizeY/2) * 0.625f;
             float fCircleRadius = (elemRectSizeY/2) * 0.75f;
             circleRadius = (int)fCircleRadius;
         }else {
-            // визначаємо по ширині
-            // circleRad = elemRectSizeX
-//            float fCircleRadius = (elemRectSizeX/2) * 0.625f;
             float fCircleRadius = (elemRectSizeX/2) * 0.75f;
             circleRadius = (int)fCircleRadius;
         }
-
         linkingRectSizeX = elemRectSizeX;
         float fLinkingRectSizeY = circleRadius*0.25f;
         linkingRectSizeY = (int)fLinkingRectSizeY;
-//        linkingRectSizeY = circleRadius/4;
+//        String elemRectSizes ="elemRectSizeX: " + elemRectSizeX + ", elemRectSizeY: " + elemRectSizeY;
+//        String circleRad ="circleRadius: " + circleRadius;
+//        String linkingRectSizes ="linkingRectSizeX: " + linkingRectSizeX + ", linkingRectSizeY: " + linkingRectSizeY;
+//
+//        Log.d("sizesLog",elemRectSizes);
+//        Log.d("sizesLog",circleRad);
+//        Log.d("sizesLog",linkingRectSizes);
+    }
 
-        String elemRectSizes ="elemRectSizeX: " + elemRectSizeX + ", elemRectSizeY: " + elemRectSizeY;
-        String circleRad ="circleRadius: " + circleRadius;
-        String linkingRectSizes ="linkingRectSizeX: " + linkingRectSizeX + ", linkingRectSizeY: " + linkingRectSizeY;
+    private void initPaintComp(){
+        blurRadius = circleRadius*0.7f;
 
-        Log.d("sizesLog",elemRectSizes);
-        Log.d("sizesLog",circleRad);
-        Log.d("sizesLog",linkingRectSizes);
+        notCompletedPaint = new Paint();
+        notCompletedPaint.setColor(Color.parseColor("#ef001c")); //red
+        notCompletedPaint.setAntiAlias(true);
 
+        inProcessPaint = new Paint();
+        inProcessPaint.setColor(Color.parseColor("#c9d41b")); // yellow
+        inProcessPaint.setAntiAlias(true);
+
+        donePaint = new Paint();
+        donePaint.setColor(Color.parseColor("#09c804")); //green
+        donePaint.setAntiAlias(true);
+
+        BlurMaskFilter blurMaskFilter = new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL);
+
+        notCompletedBlurPaint = new Paint();
+        notCompletedBlurPaint.setMaskFilter(blurMaskFilter);
+        notCompletedBlurPaint.setColor(Color.parseColor("#ffb1fc")); //pink blur
+
+        inProcessBlurPaint = new Paint();
+        inProcessBlurPaint.setMaskFilter(blurMaskFilter);
+        inProcessBlurPaint.setColor(Color.parseColor("#c5e0f4")); // light blue blur
+
+        doneBlurPaint = new Paint();
+        doneBlurPaint.setMaskFilter(blurMaskFilter);
+        doneBlurPaint.setColor(Color.parseColor("#d0fdff")); // light blue blur
     }
 }

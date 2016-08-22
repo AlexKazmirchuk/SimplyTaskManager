@@ -14,11 +14,13 @@ public class TaskIndicatorView extends View {
 
     public TaskIndicatorView(Context context) {
         super(context);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         taskIndictor = new TaskIndictor();
     }
 
     public TaskIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         taskIndictor = new TaskIndictor();
     }
 
