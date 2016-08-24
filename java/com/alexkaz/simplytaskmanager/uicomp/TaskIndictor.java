@@ -48,6 +48,7 @@ public class TaskIndictor {
         if (measureFlag){
             determineMeasurements(canvas.getWidth(),canvas.getHeight());
             initPaintComp();
+            measureFlag = false;
         }
 
         for (int i = 0; i < 8; i++) {
