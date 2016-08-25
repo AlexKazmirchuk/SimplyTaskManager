@@ -2,4 +2,5 @@
     <string name="app_name">SimplyTaskManager</string>
     <string name="first_item_text">1.Development of the interface , the initial screen paragraphs...</string>
     <string name="fullTaskActivityLabel">Review</string>
+    <string name="main_activity_label">All Tasks</string>
 </resources>
