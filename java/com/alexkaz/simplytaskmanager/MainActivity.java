@@ -24,4 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,AddNewTaskActivity.class);
         startActivity(intent);
     }
+
+    public void startFourthActivity(View view) {
+        Intent intent = new Intent(this,EditTaskActivity.class);
+        startActivity(intent);
+    }
 }

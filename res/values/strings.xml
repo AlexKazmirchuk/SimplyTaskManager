@@ -4,4 +4,5 @@
     <string name="fullTaskActivityLabel">Review</string>
     <string name="main_activity_label">All Tasks</string>
     <string name="new_task_activity_label">New task</string>
+    <string name="edit_task_activity_label">Edit</string>
 </resources>
