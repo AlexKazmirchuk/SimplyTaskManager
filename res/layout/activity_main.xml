@@ -119,6 +119,12 @@
                     android:layout_height="wrap_content"
                     android:text="Start second activity"
                     android:onClick="startSecondActivity"/>
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Start third activity"
+                    android:onClick="startThirdActivity"/>
             </LinearLayout>
 
         </ScrollView>

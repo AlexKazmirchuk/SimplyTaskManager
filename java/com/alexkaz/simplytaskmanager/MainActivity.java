@@ -19,4 +19,9 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this,FullTaskActivity.class);
         startActivity(intent);
     }
+
+    public void startThirdActivity(View view) {
+        Intent intent = new Intent(this,AddNewTaskActivity.class);
+        startActivity(intent);
+    }
 }

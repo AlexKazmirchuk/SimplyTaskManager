@@ -20,7 +20,8 @@
         <activity
             android:name=".FullTaskActivity"
             android:label="@string/fullTaskActivityLabel" />
-        <activity android:name=".AddNewTaskActivity"></activity>
+        <activity android:name=".AddNewTaskActivity"
+            android:label="@string/new_task_activity_label"></activity>
     </application>
 
 </manifest>
