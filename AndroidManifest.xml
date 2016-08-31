@@ -22,6 +22,7 @@
             android:label="@string/fullTaskActivityLabel" />
         <activity
             android:name=".AddNewTaskActivity"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/new_task_activity_label" />
         <activity android:name=".EditTaskActivity"
             android:label="@string/edit_task_activity_label"></activity>
