@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class ItemTaskAdapter extends BaseAdapter {
 
-    public ArrayList<String> items;
-    public ArrayList<String> texts = new ArrayList<>();
+    private ArrayList<String> items;
+//    public ArrayList<String> texts;
 
     private Context context;
     private LayoutInflater inflater;
@@ -28,10 +28,20 @@ public class ItemTaskAdapter extends BaseAdapter {
         this.items = items;
         this.context = context;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        texts = new ArrayList<>();
+//        for (String item : items) {
+//            texts.add("");
+//        }
+    }
 
-        for (String item : items) {
-            texts.add("");
-        }
+    public ItemTaskAdapter(Context context){
+        this.context = context;
+        items = new ArrayList<>();
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//        texts = new ArrayList<>();
+//        for (String item : items) {
+//            texts.add("");
+//        }
     }
 
     @Override
@@ -70,7 +80,7 @@ public class ItemTaskAdapter extends BaseAdapter {
 
         holder.ref = position;
         holder.textView.setText((position+1) + ".");
-        holder.editText.setText(texts.get(position));
+        holder.editText.setText(items.get(position));
         holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,7 +94,7 @@ public class ItemTaskAdapter extends BaseAdapter {
 
             @Override
             public void afterTextChanged(Editable s) {
-                texts.set(holder.ref,s.toString());
+                items.set(holder.ref,s.toString());
             }
         });
 
@@ -92,7 +102,6 @@ public class ItemTaskAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 items.remove(position);
-                texts.remove(position);
                 Log.d("position", position + "");
                 ItemTaskAdapter.super.notifyDataSetChanged();
             }
@@ -124,7 +133,11 @@ public class ItemTaskAdapter extends BaseAdapter {
         int ref;
     }
 
-    public void addNewItem(String itemName){
-        items.add(itemName);
+    public void addNewItem(){
+        items.add("");
+    }
+
+    public ArrayList<String> getItems() {
+        return items;
     }
 }

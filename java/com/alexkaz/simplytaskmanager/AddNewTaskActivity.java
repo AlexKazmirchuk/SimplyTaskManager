@@ -8,16 +8,20 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.alexkaz.simplytaskmanager.uicomp.ItemTaskAdapter;
+import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
+import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 
@@ -34,6 +38,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
     private LinearLayout addNewTaskButton;
 
     private Button addButton;
+    private EditText editTextTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,11 +48,12 @@ public class AddNewTaskActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
         initSpinner();
+        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
         initListView();
     }
 
     private void initSpinner(){
-        images = new int[] {R.drawable.fun_icon,R.drawable.home_icon,R.drawable.other_icon,R.drawable.work_icon};
+        images = new int[] {R.drawable.work_icon,R.drawable.home_icon,R.drawable.fun_icon,R.drawable.other_icon};
         data = new ArrayList<Map<String, Object>>();
         from = new String[] {"image_bg"};
         to = new int[] {R.id.icon3};
@@ -61,6 +67,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(simpleAdapter);
+        spinner.setSelection(0);
     }
 
     private void initListView() {
@@ -69,9 +76,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
         data.add("");
         data.add("");
         //////////////
-
-
-        itemTaskAdapter = new ItemTaskAdapter(this, data); //  замінити data на об'єкт сформований з бази
+//        itemTaskAdapter = new ItemTaskAdapter(this, data); //  замінити data на об'єкт сформований з бази
+        itemTaskAdapter = new ItemTaskAdapter(this); //  замінити data на об'єкт сформований з бази
 
         itemTaskList = (ListView) findViewById(R.id.itemTaskList);
         itemTaskList.setDivider(null);
@@ -80,8 +86,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
         addNewTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemTaskAdapter.addNewItem(""); // переписати
-                itemTaskAdapter.texts.add("");  // переписати
+                itemTaskAdapter.addNewItem(); // переписати
                 itemTaskAdapter.notifyDataSetChanged();
             }
         });
@@ -94,10 +99,37 @@ public class AddNewTaskActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // в цьому блоці реалізувати занесення даних з текстових полів в базу даних, з спінера, поля заголовку
                 String buf ="";
-                for (String item : itemTaskAdapter.texts) {
+                for (String item : itemTaskAdapter.getItems()) {
                     buf = buf + " " + item;
                 }
                 Log.d("items",buf);
+
+                //////////////////
+                String icon = "";
+                switch (spinner.getSelectedItemPosition()){
+                    case 0:
+                        icon = "work_icon";
+                        break;
+                    case 1:
+                        icon = "home_icon";
+                        break;
+                    case 2:
+                        icon = "fun_icon";
+                        break;
+                    case 3:
+                        icon = "other_icon";
+                        break;
+                }
+                String taskTitle = editTextTitle.getText().toString();
+
+                ArrayList<String> itemTitles = itemTaskAdapter.getItems();
+                ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
+                for (int i = 0; i < itemTitles.size(); i++) {
+                    statuses.add(TaskStatus.NOT_COMPLITED);
+                }
+                TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
+                //тут записуємо в базу ...
+                /////////////////
             }
         });
     }
