@@ -15,14 +15,13 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
-import com.alexkaz.simplytaskmanager.uicomp.ItemTaskAdapter;
+import com.alexkaz.simplytaskmanager.adapters.ItemTaskAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.StringTokenizer;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 

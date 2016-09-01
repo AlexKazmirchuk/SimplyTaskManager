@@ -1,4 +1,4 @@
-package com.alexkaz.simplytaskmanager.uicomp;
+package com.alexkaz.simplytaskmanager.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +10,9 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.R;
+import com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView;
+import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
+import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 import java.util.ArrayList;
 

@@ -6,6 +6,8 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 public class TaskIndictor {
 
     private boolean measureFlag = true;
@@ -26,6 +28,7 @@ public class TaskIndictor {
     private Paint doneBlurPaint;
 
     private TaskStatus[] taskStatuses = new TaskStatus[8];
+    private ArrayList<TaskStatus> statuses;
 
     public TaskIndictor() {
         initComps();
@@ -40,6 +43,12 @@ public class TaskIndictor {
         taskStatuses[5] = TaskStatus.NOT_COMPLITED;
         taskStatuses[6] = TaskStatus.NOT_COMPLITED;
         taskStatuses[7] = TaskStatus.NOT_COMPLITED;
+
+        statuses = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            statuses.add(TaskStatus.NOT_COMPLITED);
+        }
+
     }
 
 
@@ -51,12 +60,12 @@ public class TaskIndictor {
             measureFlag = false;
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < statuses.size(); i++) {
 //            Paint p = new Paint();
 //            p.setAntiAlias(true);
 //            p.setColor(Color.RED);
 ////            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
-            switch (taskStatuses[i]){
+            switch (statuses.get(i)){
                 case DONE:
                     if (i < 7){
                         canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,donePaint);
@@ -135,10 +144,10 @@ public class TaskIndictor {
     }
 
     public void setTaskStatus(int position, TaskStatus taskStatus){
-        taskStatuses[position] = taskStatus;
+        statuses.set(position,taskStatus);
     }
 
-    public void setTaskStatuses(TaskStatus[] taskStatuses){
-        this.taskStatuses = taskStatuses;
+    public void setTaskStatuses(ArrayList<TaskStatus> statuses){
+        this.statuses = statuses;
     }
 }

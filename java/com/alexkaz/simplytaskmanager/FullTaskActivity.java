@@ -1,5 +1,6 @@
 package com.alexkaz.simplytaskmanager;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -9,7 +10,7 @@ import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
-import com.alexkaz.simplytaskmanager.uicomp.TaskViewerAdapter;
+import com.alexkaz.simplytaskmanager.adapters.TaskViewerAdapter;
 
 public class FullTaskActivity extends AppCompatActivity {
 
@@ -30,8 +31,13 @@ public class FullTaskActivity extends AppCompatActivity {
     private void initComp() {
         reviewIcon = (ImageView)findViewById(R.id.reviewIcon);
         txtViewTaskTitle = (TextView)findViewById(R.id.txtViewTaskTitle);
+        Intent intent = getIntent();
+        String taskTitle = "щось там зробити";
+        if (intent != null){
+            taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
+        }
         DBHelper helper = new DBHelper(this);
-        taskObject = helper.getTask("щось там зробити");
+        taskObject = helper.getTask(taskTitle);
 
         switch (taskObject.getIcon()){
             case "work_icon":

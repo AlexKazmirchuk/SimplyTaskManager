@@ -11,6 +11,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class PieChartView extends View {
 
     private boolean measureFlag = true;
@@ -27,6 +29,7 @@ public class PieChartView extends View {
     private int amountOfDone;
 
     private TaskStatus[] taskStatuses = new TaskStatus[8];
+    private ArrayList<TaskStatus> statuses;
 
     public PieChartView(Context context) {
         super(context);
@@ -49,6 +52,11 @@ public class PieChartView extends View {
         taskStatuses[5] = TaskStatus.NOT_COMPLITED;
         taskStatuses[6] = TaskStatus.NOT_COMPLITED;
         taskStatuses[7] = TaskStatus.NOT_COMPLITED;
+
+        statuses = new ArrayList<>();
+        for (int i = 0; i < 8; i++) {
+            statuses.add(TaskStatus.DONE);
+        }
 
         for (TaskStatus taskStatus : taskStatuses) {
             switch (taskStatus) {
@@ -149,5 +157,25 @@ public class PieChartView extends View {
         pieChartDividerPaint.setAntiAlias(true);
         pieChartDividerPaint.setStrokeWidth(pieChartDividerSize);
         pieChartDividerPaint.setColor(Color.BLACK);
+    }
+
+    public void setTaskStatuses(ArrayList<TaskStatus> statuses) {
+        this.statuses = statuses;
+        amountOfNotCompleted = 0;
+        amountOfInProcess = 0;
+        amountOfDone = 0;
+        for (TaskStatus taskStatus : statuses) {
+            switch (taskStatus) {
+                case NOT_COMPLITED:
+                    amountOfNotCompleted++;
+                    break;
+                case IN_PROCESS:
+                    amountOfInProcess++;
+                    break;
+                case DONE:
+                    amountOfDone++;
+                    break;
+            }
+        }
     }
 }

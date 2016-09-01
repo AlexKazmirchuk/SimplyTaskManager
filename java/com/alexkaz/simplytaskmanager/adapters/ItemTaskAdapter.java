@@ -1,4 +1,4 @@
-package com.alexkaz.simplytaskmanager.uicomp;
+package com.alexkaz.simplytaskmanager.adapters;
 
 import android.content.Context;
 import android.text.Editable;

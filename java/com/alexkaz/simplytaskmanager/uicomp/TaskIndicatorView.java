@@ -8,6 +8,8 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
+import java.util.ArrayList;
+
 public class TaskIndicatorView extends View {
 
     private TaskIndictor taskIndictor;
@@ -52,5 +54,9 @@ public class TaskIndicatorView extends View {
 //        p.setColor(Color.GREEN);
 //        canvas.drawRect(border, border, canvas.getWidth() - border, canvas.getHeight() - border, p);
 
+    }
+
+    public void setTaskStatuses(ArrayList<TaskStatus> statuses){
+        taskIndictor.setTaskStatuses(statuses);
     }
 }
