@@ -64,7 +64,7 @@ public class ItemTaskAdapter extends BaseAdapter {
 
         final ViewHolder holder;
 
-        if (itemView ==null){
+        if (itemView == null){
             holder = new ViewHolder();
             itemView = inflater.inflate(R.layout.new_item_task_layout,parent,false);
 

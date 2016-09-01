@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 
+import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.ItemTaskAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
@@ -129,6 +130,9 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 }
                 TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
                 //тут записуємо в базу ...
+                DBHelper helper = new DBHelper(AddNewTaskActivity.this);
+                helper.addTask(taskObject);
+                finish();
                 /////////////////
             }
         });

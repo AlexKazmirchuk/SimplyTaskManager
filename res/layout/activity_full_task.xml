@@ -15,11 +15,13 @@
         android:orientation="horizontal"
         android:background="#dddddd">
         <ImageView
+            android:id="@+id/reviewIcon"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_margin="7dp"
             android:src="@drawable/work_icon"/>
         <TextView
+            android:id="@+id/txtViewTaskTitle"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#c8b7e8"
@@ -35,197 +37,201 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <ScrollView
+        <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:paddingTop="8dp"-->
+                <!--android:paddingLeft="8dp"-->
+                <!--android:paddingRight="8dp"-->
+                <!--android:orientation="vertical">-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="1. Створити статус бар і іконки на ньому"/>-->
+                <!--</LinearLayout>-->
+
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="2. Редагувати екшн бар, замінити іконку меню, додати іконку повернення"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="3. Розприділити місце під кожен блок інфформації, заголовок і контент"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="4. Позначити місце для пунктів"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="5. Намалювати вертикальний індикатор"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="6. Створити зв'язки між пунктами та індикатором виконаних завдань"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="7. Додати відповідну іконку в заголовок"/>-->
+
+                <!--</LinearLayout>-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--<com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView-->
+                        <!--android:layout_width="40dp"-->
+                        <!--android:layout_height="match_parent"/>-->
+
+                    <!--<TextView-->
+                        <!--android:layout_width="match_parent"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginTop="5dp"-->
+                        <!--android:background="#dbdbdb"-->
+                        <!--android:textSize="13sp"-->
+                        <!--android:paddingTop="5dp"-->
+                        <!--android:paddingBottom="5dp"-->
+                        <!--android:paddingLeft="2dp"-->
+                        <!--android:text="8. Переглянути у різних варіантах"/>-->
+
+                <!--</LinearLayout>-->
+
+
+
+
+
+            <!--</LinearLayout>-->
+        <!--</ScrollView>-->
+        <ListView
+            android:id="@+id/reviewTaskListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="8dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="1. Створити статус бар і іконки на ньому"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="2. Редагувати екшн бар, замінити іконку меню, додати іконку повернення"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="3. Розприділити місце під кожен блок інфформації, заголовок і контент"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="4. Позначити місце для пунктів"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="5. Намалювати вертикальний індикатор"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="6. Створити зв'язки між пунктами та індикатором виконаних завдань"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="7. Додати відповідну іконку в заголовок"/>
-
-                </LinearLayout>
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:background="#dbdbdb"
-                        android:textSize="13sp"
-                        android:paddingTop="5dp"
-                        android:paddingBottom="5dp"
-                        android:paddingLeft="2dp"
-                        android:text="8. Переглянути у різних варіантах"/>
-
-                </LinearLayout>
-
-
-
-
-
-            </LinearLayout>
-        </ScrollView>
+        </ListView>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="140dp"
             android:layout_gravity="bottom"
             android:orientation="vertical"
+            android:visibility="invisible"
             android:background="#ffffff">
 
             <TextView

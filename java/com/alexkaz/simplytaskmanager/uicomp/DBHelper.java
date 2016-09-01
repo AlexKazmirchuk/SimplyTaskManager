@@ -12,7 +12,7 @@ import java.util.ArrayList;
 public class DBHelper extends SQLiteOpenHelper {
 
     public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "my_db";
+    public static final String DB_NAME = "task_db";
 
     public static final String TABLE_TASKS = "tasks";
     public static final String TASK_ID = "task_id";
