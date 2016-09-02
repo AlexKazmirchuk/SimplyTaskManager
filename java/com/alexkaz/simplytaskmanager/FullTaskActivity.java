@@ -3,6 +3,7 @@ package com.alexkaz.simplytaskmanager;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -69,6 +70,16 @@ public class FullTaskActivity extends AppCompatActivity {
         if(item.getItemId() == android.R.id.home){
             this.finish();
         }
+        if (item.getItemId() == R.id.editMenuItem){
+            Intent intent = new Intent(this,AddNewTaskActivity.class);
+            startActivity(intent);
+        }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.edit_icon,menu);
+        return true;
     }
 }
