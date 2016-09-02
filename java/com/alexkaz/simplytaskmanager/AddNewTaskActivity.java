@@ -2,6 +2,7 @@ package com.alexkaz.simplytaskmanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -168,8 +169,20 @@ public class AddNewTaskActivity extends AppCompatActivity {
                         break;
                 }
                 String taskTitle = editTextTitle.getText().toString();
-
                 ArrayList<String> itemTitles = itemTaskAdapter.getItems();
+                /////////////
+                if (taskTitle.equals("")){
+                    showAlertMassage("Please set task name");
+                    return;
+                }
+                for (String item : itemTitles) {
+                    if (item.equals("")){
+                        showAlertMassage("Please set or delete all empty fields");
+                        return;
+                    }
+                }
+
+                /////////////
                 ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
                 for (int i = 0; i < itemTitles.size(); i++) {
                     statuses.add(TaskStatus.NOT_COMPLITED);
@@ -201,5 +214,13 @@ public class AddNewTaskActivity extends AppCompatActivity {
             this.finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showAlertMassage(String massage){
+        AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddNewTaskActivity.this);
+        dialogBuilder.setTitle("Warning");
+        dialogBuilder.setMessage(massage);
+        dialogBuilder.setPositiveButton("Ok",null);
+        dialogBuilder.create().show();
     }
 }
