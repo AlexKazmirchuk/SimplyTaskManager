@@ -58,8 +58,9 @@ public class ItemTaskAdapter extends BaseAdapter {
             holder = new ViewHolder();
             itemView = inflater.inflate(R.layout.new_item_task_layout,parent,false);
 
-            holder.editText = (EditText) itemView.findViewById(R.id.editTextTaskItem);
             holder.textView = (TextView)itemView.findViewById(R.id.itemTxt);
+            holder.txtCharCounter = (TextView)itemView.findViewById(R.id.txtCharCounter);
+            holder.editText = (EditText) itemView.findViewById(R.id.editTextTaskItem);
             holder.imageButton = (ImageButton) itemView.findViewById(R.id.deleteBtn);
 
             itemView.setTag(holder);
@@ -71,6 +72,7 @@ public class ItemTaskAdapter extends BaseAdapter {
         holder.ref = position;
         holder.textView.setText((position+1) + ".");
         holder.editText.setText(items.get(position));
+        holder.txtCharCounter.setText(holder.editText.getText().toString().length() + "/50");
         holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -85,6 +87,8 @@ public class ItemTaskAdapter extends BaseAdapter {
             @Override
             public void afterTextChanged(Editable s) {
                 items.set(holder.ref,s.toString());
+                holder.txtCharCounter.setText(s.toString().length() + "/50");
+                Log.d("afterTextChangedLog",s.toString().length()+"");
             }
         });
 
@@ -101,6 +105,7 @@ public class ItemTaskAdapter extends BaseAdapter {
 
     private class ViewHolder {
         TextView textView;
+        TextView txtCharCounter;
         EditText editText;
         ImageButton imageButton;
         int ref;
