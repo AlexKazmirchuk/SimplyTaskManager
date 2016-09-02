@@ -124,16 +124,22 @@ public class PieChartView extends View {
 //        canvas.drawArc(pieChartAvailableSpace,30,-120,true,pieChartDividerPaint);
 
         ////////////////////////////////////////
-        pieChartPaint.setColor(Color.GREEN);
-        canvas.drawArc(pieChartAvailableSpace,270,-(45*amountOfDone),true,pieChartPaint);
-        pieChartPaint.setColor(Color.YELLOW);
-        canvas.drawArc(pieChartAvailableSpace,270 - (45*amountOfDone),-(45*amountOfInProcess),true,pieChartPaint);
-        pieChartPaint.setColor(Color.RED);
-        canvas.drawArc(pieChartAvailableSpace,270 - (45*amountOfDone + 45*amountOfInProcess),-(45*amountOfNotCompleted),true,pieChartPaint);
+        float degreeInterest = 360.0f/(float)(amountOfDone + amountOfInProcess + amountOfNotCompleted);
 
-        canvas.drawArc(pieChartAvailableSpace,270,-(45*amountOfDone),true,pieChartDividerPaint);
-        canvas.drawArc(pieChartAvailableSpace,270 - (45*amountOfDone),-(45*amountOfInProcess),true,pieChartDividerPaint);
-        canvas.drawArc(pieChartAvailableSpace,270 - (45*amountOfDone + 45*amountOfInProcess),-(45*amountOfNotCompleted),true,pieChartDividerPaint);
+        int doneAngle = Math.round(degreeInterest*amountOfDone);
+        int inProcessAngle = Math.round(degreeInterest*amountOfInProcess);
+        int notCompletedAngle = 360 - (doneAngle + inProcessAngle);
+
+        pieChartPaint.setColor(Color.GREEN);
+        canvas.drawArc(pieChartAvailableSpace,270,- (doneAngle),true,pieChartPaint);
+        pieChartPaint.setColor(Color.YELLOW);
+        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle),-(inProcessAngle),true,pieChartPaint);
+        pieChartPaint.setColor(Color.RED);
+        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartPaint);
+
+        canvas.drawArc(pieChartAvailableSpace,270,- (doneAngle),true,pieChartDividerPaint);
+        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle),-(inProcessAngle),true,pieChartDividerPaint);
+        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartDividerPaint);
     }
 
     private void determineMeasurements(int width, int height){
@@ -177,5 +183,11 @@ public class PieChartView extends View {
                     break;
             }
         }
+    }
+
+    public void setValues(int amountOfNotCompleted, int amountOfInProcess, int amountOfDone){
+        this.amountOfNotCompleted = amountOfNotCompleted;
+        this.amountOfInProcess = amountOfInProcess;
+        this.amountOfDone = amountOfDone;
     }
 }

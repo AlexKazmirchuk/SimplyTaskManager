@@ -12,130 +12,9 @@
     android:orientation="vertical"
     android:background="#e1e1e1"
     android:baselineAligned="false">
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--<ScrollView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent">-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="match_parent"-->
-                <!--android:orientation="vertical">-->
-
-                <!--&lt;!&ndash;<android.support.v7.widget.CardView&ndash;&gt;-->
-                    <!--&lt;!&ndash;xmlns:card_view="http://schemas.android.com/apk/res-auto"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
-                    <!--&lt;!&ndash;android:layout_marginBottom="6dp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;card_view:cardCornerRadius="3dp"&ndash;&gt;-->
-                    <!--&lt;!&ndash;card_view:cardElevation="6dp">&ndash;&gt;-->
-                    <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:baselineAligned="false"&ndash;&gt;-->
-                        <!--&lt;!&ndash;android:orientation="horizontal">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<FrameLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="60dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="60dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_weight="0"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginTop="2dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginLeft="2dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginStart="2dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginBottom="2dp">&ndash;&gt;-->
-                            <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:src="@drawable/work_icon"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_margin="2dp"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</FrameLayout>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<LinearLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_weight="1"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:orientation="vertical"&ndash;&gt;-->
-
-
-                            <!--&lt;!&ndash;android:layout_marginBottom="2dp">&ndash;&gt;-->
-
-                            <!--&lt;!&ndash;<TextView&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_height="40dp"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:gravity="start"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:textSize="12sp"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:textAlignment="viewStart"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:text="@string/first_item_text"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_margin="2dp"/>&ndash;&gt;-->
-
-                            <!--&lt;!&ndash;&lt;!&ndash;<View&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_height="19dp"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_marginLeft="3dp"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_marginRight="3dp"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_marginBottom="3dp"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:background="@drawable/indicator_tempory_patch"/>&ndash;&gt;&ndash;&gt;-->
-
-                            <!--&lt;!&ndash;<com.alexkaz.simplytaskmanager.uicomp.TaskIndicatorView&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_height="18dp"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_gravity="center_horizontal"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_marginLeft="2dp"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_marginRight="2dp"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_marginBottom="2dp"/>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;<FrameLayout&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_width="60dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_height="60dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_weight="0"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginTop="2dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginRight="2dp"&ndash;&gt;-->
-                            <!--&lt;!&ndash;android:layout_marginEnd="2dp">&ndash;&gt;-->
-
-                            <!--&lt;!&ndash;&lt;!&ndash;<View&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:background="@drawable/diagram_temporary_patch"&ndash;&gt;&ndash;&gt;-->
-                            <!--&lt;!&ndash;&lt;!&ndash;android:layout_margin="2dp"/>&ndash;&gt;&ndash;&gt;-->
-
-                            <!--&lt;!&ndash;<com.alexkaz.simplytaskmanager.uicomp.PieChartView&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
-                                <!--&lt;!&ndash;android:layout_margin="2dp"/>&ndash;&gt;-->
-
-                        <!--&lt;!&ndash;</FrameLayout>&ndash;&gt;-->
-
-
-                    <!--&lt;!&ndash;</LinearLayout>&ndash;&gt;-->
-
-                <!--&lt;!&ndash;</android.support.v7.widget.CardView>&ndash;&gt;-->
-
-                <!--<Button-->
-                    <!--android:visibility="invisible"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Start second activity"-->
-                    <!--android:onClick="startSecondActivity"/>-->
-
-                <!--<Button-->
-                    <!--android:visibility="invisible"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Start third activity"-->
-                    <!--android:onClick="startThirdActivity"/>-->
-
-                <!--<Button-->
-                    <!--android:visibility="invisible"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="Start fourth activity"-->
-                    <!--android:onClick="startFourthActivity"/>-->
-            <!--</LinearLayout>-->
-
-        <!--</ScrollView>-->
         <ListView
             android:id="@+id/mainListView"
             android:layout_width="match_parent"
@@ -147,7 +26,6 @@
             android:layout_gravity="bottom"
             android:orientation="vertical"
             android:background="#ffffff">
-
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -158,27 +36,23 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
-
                 <com.alexkaz.simplytaskmanager.uicomp.PieChartView
                     android:id="@+id/pieChart"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
-
                     android:layout_alignParentBottom="true"
                     android:layout_alignParentRight="true"/>
-
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-
                     android:layout_toLeftOf="@id/pieChart">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:orientation="vertical">
-
                         <TextView
+                            android:id="@+id/doneTxtView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -187,6 +61,7 @@
                             android:drawablePadding="6dp"
                             android:text="Виконано - 34%(13)"/>
                         <TextView
+                            android:id="@+id/inProcessTxtView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -195,6 +70,7 @@
                             android:drawablePadding="6dp"
                             android:text="В процесі - 14%(5)"/>
                         <TextView
+                            android:id="@+id/notCompletedTxtView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
@@ -202,20 +78,9 @@
                             android:drawableLeft="@drawable/not_completed_status_icon"
                             android:drawablePadding="6dp"
                             android:text="Не виконано - 52%(23)"/>
-
                     </LinearLayout>
                 </FrameLayout>
-
-
-
             </RelativeLayout>
-
         </LinearLayout>
-
     </FrameLayout>
-
-
-
-
-
 </LinearLayout>
