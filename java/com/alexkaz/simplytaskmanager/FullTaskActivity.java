@@ -19,12 +19,24 @@ public class FullTaskActivity extends AppCompatActivity {
     private TextView txtViewTaskTitle;
     private ListView reviewTaskListView;
     private TaskObject taskObject;
+    String taskTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_task);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        Intent intent = getIntent();
+//        taskTitle = "щось там зробити";
+        if (intent != null){
+            taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
+        }
+        if (savedInstanceState!=null){
+            taskTitle = savedInstanceState.getString("savedTaskTitle");
+        }
+        DBHelper helper = new DBHelper(this);
+        taskObject = helper.getTask(taskTitle);
+
         initComp();
         initListView();
     }
@@ -32,13 +44,9 @@ public class FullTaskActivity extends AppCompatActivity {
     private void initComp() {
         reviewIcon = (ImageView)findViewById(R.id.reviewIcon);
         txtViewTaskTitle = (TextView)findViewById(R.id.txtViewTaskTitle);
-        Intent intent = getIntent();
-        String taskTitle = "щось там зробити";
-        if (intent != null){
-            taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
-        }
-        DBHelper helper = new DBHelper(this);
-        taskObject = helper.getTask(taskTitle);
+
+
+
 
         switch (taskObject.getIcon()){
             case "work_icon":
@@ -72,7 +80,9 @@ public class FullTaskActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.editMenuItem){
             Intent intent = new Intent(this,AddNewTaskActivity.class);
-            startActivity(intent);
+            intent.putExtra(DBHelper.TASK_TITLE,taskObject.getTaskTitle());
+//            startActivity(intent);
+            startActivityForResult(intent,1);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -81,5 +91,23 @@ public class FullTaskActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit_icon,menu);
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null){
+            return;
+        }
+        String newTaskTitle = data.getStringExtra(DBHelper.TASK_TITLE);
+        DBHelper helper = new DBHelper(this);
+        taskObject = helper.getTask(newTaskTitle);
+        initComp();
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("savedTaskTitle",taskObject.getTaskTitle());
     }
 }

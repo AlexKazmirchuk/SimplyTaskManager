@@ -40,13 +40,19 @@ public class MainActivity extends AppCompatActivity {
                 String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
                 Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
                 intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
-                startActivity(intent);
+//                startActivity(intent);
+                startActivityForResult(intent,1);
                 Log.d("titleLog",taskTitle);
             }
         });
     }
 
-//    public void startSecondActivity(View view) {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        initList();
+    }
+
+    //    public void startSecondActivity(View view) {
 //        Intent intent = new Intent(this,FullTaskActivity.class);
 //        startActivity(intent);
 //    }

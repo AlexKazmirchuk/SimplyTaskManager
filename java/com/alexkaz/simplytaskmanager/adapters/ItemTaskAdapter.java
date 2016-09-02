@@ -19,8 +19,6 @@ import java.util.ArrayList;
 public class ItemTaskAdapter extends BaseAdapter {
 
     private ArrayList<String> items;
-//    public ArrayList<String> texts;
-
     private Context context;
     private LayoutInflater inflater;
 
@@ -28,20 +26,12 @@ public class ItemTaskAdapter extends BaseAdapter {
         this.items = items;
         this.context = context;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        texts = new ArrayList<>();
-//        for (String item : items) {
-//            texts.add("");
-//        }
     }
 
     public ItemTaskAdapter(Context context){
         this.context = context;
         items = new ArrayList<>();
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//        texts = new ArrayList<>();
-//        for (String item : items) {
-//            texts.add("");
-//        }
     }
 
     @Override
@@ -106,23 +96,6 @@ public class ItemTaskAdapter extends BaseAdapter {
                 ItemTaskAdapter.super.notifyDataSetChanged();
             }
         });
-
-//        View view = itemView;
-//        view = inflater.inflate(R.layout.new_item_task_layout,parent,false);
-//
-//        EditText editText = (EditText) view.findViewById(R.id.editTextTaskItem);
-//        editText.setText(items.get(position));
-//        ((TextView)view.findViewById(R.id.itemTxt)).setText((position+1) + ".");
-//        ImageButton button = (ImageButton) view.findViewById(R.id.deleteBtn);
-//
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                items.remove(position);
-//                Log.d("position", position + "");
-//                ItemTaskAdapter.super.notifyDataSetChanged();
-//            }
-//        });
         return itemView;
     }
 

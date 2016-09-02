@@ -1,6 +1,7 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -39,7 +40,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     private Button addButton;
     private EditText editTextTitle;
-
+    private TaskObject intentTaskObject;
+    private String intentTaskTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,9 +49,45 @@ public class AddNewTaskActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        Intent intent = getIntent();
+        intentTaskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
+
         initSpinner();
+        ////////////////////
         editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+        addButton = (Button) findViewById(R.id.addButton);
+        ////////////////////
         initListView();
+
+
+        ///////////////////////////
+        ///////////////////////////
+        if(intentTaskTitle != null){
+            intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
+            switch (intentTaskObject.getIcon()){
+                case "work_icon":
+                    spinner.setSelection(0);
+                    break;
+                case "home_icon":
+                    spinner.setSelection(1);
+                    break;
+                case "fun_icon":
+                    spinner.setSelection(2);
+                    break;
+                case "other_icon":
+                    spinner.setSelection(3);
+                    break;
+            }
+            editTextTitle.setText(intentTaskObject.getTaskTitle());
+            itemTaskAdapter = new ItemTaskAdapter(this,intentTaskObject.getItemTitles());
+            addButton.setText("SAVE");
+        } else {
+            spinner.setSelection(0);
+            itemTaskAdapter = new ItemTaskAdapter(this);
+        }
+        itemTaskList.setAdapter(itemTaskAdapter);
+        initAddButton();
     }
 
     private void initSpinner(){
@@ -67,17 +105,23 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(simpleAdapter);
-        spinner.setSelection(0);
+
+        //////////////////
+
+
+
+
+        //////////////////
     }
 
     private void initListView() {
         /////////////// пізніше замінити на дані з бази
         ArrayList<String> data = new ArrayList<>();
-        data.add("");
-        data.add("");
+
+
         //////////////
 //        itemTaskAdapter = new ItemTaskAdapter(this, data); //  замінити data на об'єкт сформований з бази
-        itemTaskAdapter = new ItemTaskAdapter(this); //  замінити data на об'єкт сформований з бази
+         //  замінити data на об'єкт сформований з бази
 
         itemTaskList = (ListView) findViewById(R.id.itemTaskList);
         itemTaskList.setDivider(null);
@@ -91,9 +135,12 @@ public class AddNewTaskActivity extends AppCompatActivity {
             }
         });
         itemTaskList.addFooterView(view);
-        itemTaskList.setAdapter(itemTaskAdapter);
 
-        addButton = (Button) findViewById(R.id.addButton);
+
+
+    }
+
+    private void initAddButton() {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,8 +176,19 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 }
                 TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
                 //тут записуємо в базу ...
+
                 DBHelper helper = new DBHelper(AddNewTaskActivity.this);
-                helper.addTask(taskObject);
+                /////////////////////////////
+                if (intentTaskTitle != null){
+                    helper.setTask(intentTaskObject.getTaskTitle(),taskObject);
+                    Intent callbackIntent = new Intent();
+                    callbackIntent.putExtra(DBHelper.TASK_TITLE, taskTitle);
+                    setResult(1,callbackIntent);
+                } else {
+                    helper.addTask(taskObject);
+                }
+
+                /////////////////////////////
                 finish();
                 /////////////////
             }
