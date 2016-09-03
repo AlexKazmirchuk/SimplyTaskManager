@@ -154,4 +154,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return taskObjects;
     }
 
+    public void setStatus(String taskItem, int newStatus){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATUS,newStatus);
+        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
+
+    }
 }
