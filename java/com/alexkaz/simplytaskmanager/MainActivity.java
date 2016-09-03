@@ -55,7 +55,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        listOftasks = new DBHelper(this).getListOfTasks();
         initList();
+        initStatisticPanel();
     }
 
     //    public void startSecondActivity(View view) {
