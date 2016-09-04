@@ -60,28 +60,30 @@ public class TaskIndictor {
             measureFlag = false;
         }
 
-        for (int i = 0; i < statuses.size(); i++) {
-//            Paint p = new Paint();
-//            p.setAntiAlias(true);
-//            p.setColor(Color.RED);
-////            canvas.drawLine(i*elemRectSizeX,0,i*elemRectSizeX,elemRectSizeY,p);
+        int countOfTaskItems;
+        if (statuses.size() > 8 ){
+            countOfTaskItems = 8;
+        } else {
+            countOfTaskItems = statuses.size();
+        }
+        for (int i = 0; i < countOfTaskItems; i++) {
             switch (statuses.get(i)){
                 case DONE:
-                    if (i < 7){
+                    if (i < countOfTaskItems-1){
                         canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,donePaint);
                     }
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,donePaint);
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,doneBlurPaint);
                     break;
                 case IN_PROCESS:
-                    if (i < 7){
+                    if (i < countOfTaskItems-1){
                         canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,inProcessPaint);
                     }
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,inProcessPaint);
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,inProcessBlurPaint);
                     break;
                 case NOT_COMPLITED:
-                    if (i < 7){
+                    if (i < countOfTaskItems-1){
                         canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,notCompletedPaint);
                     }
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,notCompletedPaint);
