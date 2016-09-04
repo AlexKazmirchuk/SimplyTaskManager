@@ -91,4 +91,9 @@ public class MainTaskAdapter extends BaseAdapter {
         PieChartView mainItemPieChart;
         int ref;
     }
+
+    public void removeItem(int position){
+        taskObjects.remove(position);
+        notifyDataSetChanged();
+    }
 }

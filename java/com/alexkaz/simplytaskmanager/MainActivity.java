@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("titleLog",taskTitle);
             }
         });
+        registerForContextMenu(mainListView);
     }
 
     @Override
@@ -110,5 +113,39 @@ public class MainActivity extends AppCompatActivity {
         ((PieChartView)findViewById(R.id.pieChart)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
         ((PieChartView)findViewById(R.id.pieChart)).invalidate();
 
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        getMenuInflater().inflate(R.menu.main_item_context_menu,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        switch (item.getItemId()) {
+            case R.id.editItem:
+                Log.d("listPositionItem",info.position + " edited");
+                ////////////////
+                //TODO реалізувати виклик актівіті редагування
+                Intent intent = new Intent(this,AddNewTaskActivity.class);
+                intent.putExtra(DBHelper.TASK_TITLE,((TaskObject) adapter.getItem(info.position)).getTaskTitle());
+                startActivityForResult(intent,2);
+                ////////////////
+                return true;
+            case R.id.deleteItem:
+                Log.d("listPositionItem",info.position + " deleted");
+                ////////////////
+                //TODO реалізувати видалення елемента з бази і з списку
+                String taskTitle = ((TaskObject) adapter.getItem(info.position)).getTaskTitle();
+                new DBHelper(this).removeTask(taskTitle);
+                adapter.removeItem(info.position);
+                adapter.notifyDataSetChanged();
+                ////////////////
+                return true;
+            default:
+                return super.onContextItemSelected(item);
+        }
     }
 }
