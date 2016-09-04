@@ -10,8 +10,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
+import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.adapters.TaskViewerAdapter;
+import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 public class FullTaskActivity extends AppCompatActivity {
 
@@ -39,15 +41,12 @@ public class FullTaskActivity extends AppCompatActivity {
 
         initComp();
         initListView();
+        initStatisticPanel();
     }
 
     private void initComp() {
         reviewIcon = (ImageView)findViewById(R.id.reviewIcon);
         txtViewTaskTitle = (TextView)findViewById(R.id.txtViewTaskTitle);
-
-
-
-
         switch (taskObject.getIcon()){
             case "work_icon":
                 reviewIcon.setImageResource(R.drawable.work_icon);
@@ -109,5 +108,38 @@ public class FullTaskActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("savedTaskTitle",taskObject.getTaskTitle());
+    }
+
+    public void initStatisticPanel() {
+        int notCompletedTaskItemCount = 0, inProcessTaskItemCount = 0, doneTaskItemCount = 0;
+        int notCompletedTaskItemInterest = 0,  inProcessTaskItemInterest = 0, doneTaskItemInterest = 0;
+        int amountOfTaskItems = 0;
+        for (TaskStatus taskStatus : taskObject.getStatuses()) {
+            switch (taskStatus){
+                case NOT_COMPLITED:
+                    notCompletedTaskItemCount++;
+                    break;
+                case IN_PROCESS:
+                    inProcessTaskItemCount++;
+                    break;
+                case DONE:
+                    doneTaskItemCount++;
+                    break;
+            }
+        }
+//        notCompletedTaskItemCount = 300;
+//        inProcessTaskItemCount = 23;
+//        doneTaskItemCount = 150;
+
+        amountOfTaskItems = notCompletedTaskItemCount + inProcessTaskItemCount + doneTaskItemCount;
+        notCompletedTaskItemInterest =  Math.round((((float) notCompletedTaskItemCount)/((float) amountOfTaskItems))*100);
+        inProcessTaskItemInterest = Math.round(((float)inProcessTaskItemCount/(float)amountOfTaskItems)*100);
+        doneTaskItemInterest = Math.round(((float)doneTaskItemCount/(float)amountOfTaskItems)*100);
+
+        ((TextView)findViewById(R.id.doneTxtViewFullTask)).setText("Виконано - " + doneTaskItemInterest + "%(" + doneTaskItemCount + ")");
+        ((TextView)findViewById(R.id.inProcessTxtViewFullTask)).setText("В процесі - " + inProcessTaskItemInterest + "%(" + inProcessTaskItemCount + ")");
+        ((TextView)findViewById(R.id.notCompletedTxtViewFullTask)).setText("Не виконано - " + notCompletedTaskItemInterest + "%(" + notCompletedTaskItemCount + ")");
+        ((PieChartView)findViewById(R.id.pieChartViewFullTask)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
+        ((PieChartView)findViewById(R.id.pieChartViewFullTask)).invalidate();
     }
 }

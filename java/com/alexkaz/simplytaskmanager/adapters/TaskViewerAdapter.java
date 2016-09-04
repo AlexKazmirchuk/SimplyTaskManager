@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alexkaz.simplytaskmanager.FullTaskActivity;
 import com.alexkaz.simplytaskmanager.R;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView;
@@ -118,6 +119,7 @@ public class TaskViewerAdapter extends BaseAdapter {
                             }
                         }
                         choosedStatus = null;
+                        ((FullTaskActivity)context).initStatisticPanel();
                         notifyDataSetChanged();
                     }
                 });
