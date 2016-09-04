@@ -23,8 +23,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
             </ListView>
-
-
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/actionBtn"
+                android:src="@drawable/ic_add_white_24dp"
+                sothree:fabSize="normal"
+                android:layout_gravity="bottom|end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginEnd="10dp"/>
         </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"

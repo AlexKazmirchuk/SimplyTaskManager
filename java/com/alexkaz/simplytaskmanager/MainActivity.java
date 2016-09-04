@@ -1,6 +1,7 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private ListView mainListView;
     private MainTaskAdapter adapter;
     private ArrayList<TaskObject> listOftasks;
+    private FloatingActionButton actionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +38,18 @@ public class MainActivity extends AppCompatActivity {
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
         initStatisticPanel();
+        initActionButton();
+    }
+
+    private void initActionButton() {
+        actionButton = (FloatingActionButton) findViewById(R.id.actionBtn);
+        actionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,AddNewTaskActivity.class);
+                startActivityForResult(intent,3);
+            }
+        });
     }
 
     private void initList() {
