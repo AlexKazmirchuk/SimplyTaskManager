@@ -1,108 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<com.sothree.slidinguppanel.SlidingUpPanelLayout
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_full_task"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="30dp"
+    sothree:umanoShadowHeight="4dp"
     tools:context="com.alexkaz.simplytaskmanager.FullTaskActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:background="#dddddd">
-        <ImageView
-            android:id="@+id/reviewIcon"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="7dp"
-            android:src="@drawable/work_icon"/>
-        <TextView
-            android:id="@+id/txtViewTaskTitle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#c8b7e8"
-            android:layout_marginTop="7dp"
-            android:layout_marginBottom="7dp"
-            android:layout_marginRight="7dp"
-            android:layout_marginEnd="7dp"
-            android:textSize="16sp"
-            android:gravity="center"
-            android:text="Створення інтерфейсу екрану для повного перегляду"/>
-    </LinearLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <ListView
-            android:id="@+id/reviewTaskListView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </ListView>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="140dp"
-            android:layout_gravity="bottom"
-            android:orientation="vertical"
-            android:background="#ffffff">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:background="#dddddd">
+            <ImageView
+                android:id="@+id/reviewIcon"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="7dp"
+                android:src="@drawable/work_icon"/>
             <TextView
+                android:id="@+id/txtViewTaskTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="4dp"
+                android:layout_height="match_parent"
+                android:background="#c8b7e8"
+                android:layout_marginTop="7dp"
+                android:layout_marginBottom="7dp"
+                android:layout_marginRight="7dp"
+                android:layout_marginEnd="7dp"
+                android:textSize="16sp"
                 android:gravity="center"
-                android:text="Статистика"/>
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-                <com.alexkaz.simplytaskmanager.uicomp.PieChartView
-                    android:id="@+id/pieChartViewFullTask"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"/>
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_toLeftOf="@id/pieChartViewFullTask">
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="vertical">
-                        <TextView
-                            android:id="@+id/doneTxtViewFullTask"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/done_status_icon"
-                            android:drawablePadding="6dp"
-                            android:text="Виконано - 34%(13)"/>
-                        <TextView
-                            android:id="@+id/inProcessTxtViewFullTask"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/in_process_status_icon"
-                            android:drawablePadding="6dp"
-                            android:text="В процесі - 14%(5)"/>
-                        <TextView
-                            android:id="@+id/notCompletedTxtViewFullTask"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/not_completed_status_icon"
-                            android:drawablePadding="6dp"
-                            android:text="Не виконано - 52%(23)"/>
-                    </LinearLayout>
-                </FrameLayout>
-            </RelativeLayout>
+                android:text="Створення інтерфейсу екрану для повного перегляду"/>
         </LinearLayout>
-    </FrameLayout>
-</LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ListView
+                android:id="@+id/reviewTaskListView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+            </ListView>
+        </FrameLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        android:background="#ffffff">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:gravity="center"
+            android:text="Статистика"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.alexkaz.simplytaskmanager.uicomp.PieChartView
+                android:id="@+id/pieChartViewFullTask"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/pieChartViewFullTask">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/doneTxtViewFullTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:drawableLeft="@drawable/done_status_icon"
+                        android:drawablePadding="6dp"
+                        android:text="Виконано - 34%(13)"/>
+                    <TextView
+                        android:id="@+id/inProcessTxtViewFullTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:drawableLeft="@drawable/in_process_status_icon"
+                        android:drawablePadding="6dp"
+                        android:text="В процесі - 14%(5)"/>
+                    <TextView
+                        android:id="@+id/notCompletedTxtViewFullTask"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:layout_marginBottom="4dp"
+                        android:drawableLeft="@drawable/not_completed_status_icon"
+                        android:drawablePadding="6dp"
+                        android:text="Не виконано - 52%(23)"/>
+                </LinearLayout>
+            </FrameLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
