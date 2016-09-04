@@ -91,6 +91,7 @@ public class DBHelper extends SQLiteOpenHelper {
                     break;
             }
         }
+        taskTitleCursor.close();
         return new TaskObject(icon,taskTitle,itemTitles,statuses);
     }
 
@@ -132,7 +133,7 @@ public class DBHelper extends SQLiteOpenHelper {
             this.getWritableDatabase().execSQL("DELETE FROM " + TABLE_TASK_ITEMS + " WHERE " + TASK_ID + "=" + taskID);
             this.getWritableDatabase().execSQL("DELETE FROM " + TABLE_TASKS + " WHERE " + TASK_ID + "=" + taskID);
         }
-
+        cursor.close();
     }
 
     public void setTask(String oldTaskTitle, TaskObject taskObject){
@@ -150,7 +151,7 @@ public class DBHelper extends SQLiteOpenHelper {
             String taskTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TASK_TITLE));
             taskObjects.add(getTask(taskTitle));
         }
-
+        cursor.close();
         return taskObjects;
     }
 
@@ -158,6 +159,5 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(STATUS,newStatus);
         getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
-
     }
 }

@@ -74,13 +74,12 @@ public class TaskViewerAdapter extends BaseAdapter {
         }
         holder.horizontalTaskIndicatorView.invalidate();
         holder.textView.setText((position+1) + ". " + itemTitles.get(position));
-        ////////////////////
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String[] statusItems = new String[]{"Done","In process","Not completed"};
+                String[] statusItems = context.getResources().getStringArray(R.array.status_dialog_choosing_titles);
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                alertBuilder.setTitle("Please choose task status!");
+                alertBuilder.setTitle(context.getResources().getString(R.string.status_dialog_title));
                 alertBuilder.setSingleChoiceItems(statusItems, 0, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -97,8 +96,8 @@ public class TaskViewerAdapter extends BaseAdapter {
                         }
                     }
                 });
-                alertBuilder.setNegativeButton("Cancel",null);
-                alertBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                alertBuilder.setNegativeButton(context.getResources().getString(R.string.status_dialog_negative_button_text),null);
+                alertBuilder.setPositiveButton(context.getResources().getString(R.string.status_dialog_positive_button_text), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         if(choosedStatus == null){
@@ -126,9 +125,6 @@ public class TaskViewerAdapter extends BaseAdapter {
                 alertBuilder.create().show();
             }
         });
-
-
-        ////////////////////
         return itemView;
     }
 

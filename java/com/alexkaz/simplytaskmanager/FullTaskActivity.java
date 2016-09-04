@@ -136,9 +136,13 @@ public class FullTaskActivity extends AppCompatActivity {
         inProcessTaskItemInterest = Math.round(((float)inProcessTaskItemCount/(float)amountOfTaskItems)*100);
         doneTaskItemInterest = Math.round(((float)doneTaskItemCount/(float)amountOfTaskItems)*100);
 
-        ((TextView)findViewById(R.id.doneTxtViewFullTask)).setText("Виконано - " + doneTaskItemInterest + "%(" + doneTaskItemCount + ")");
-        ((TextView)findViewById(R.id.inProcessTxtViewFullTask)).setText("В процесі - " + inProcessTaskItemInterest + "%(" + inProcessTaskItemCount + ")");
-        ((TextView)findViewById(R.id.notCompletedTxtViewFullTask)).setText("Не виконано - " + notCompletedTaskItemInterest + "%(" + notCompletedTaskItemCount + ")");
+        String done = String.format(getString(R.string.done_count),doneTaskItemInterest,doneTaskItemCount);
+        String inProcess = String.format(getString(R.string.in_process_count),inProcessTaskItemInterest,inProcessTaskItemCount);
+        String notCompleted = String.format(getString(R.string.not_completed_count),notCompletedTaskItemInterest,notCompletedTaskItemCount);
+
+        ((TextView)findViewById(R.id.doneTxtViewFullTask)).setText(done);
+        ((TextView)findViewById(R.id.inProcessTxtViewFullTask)).setText(inProcess);
+        ((TextView)findViewById(R.id.notCompletedTxtViewFullTask)).setText(notCompleted);
         ((PieChartView)findViewById(R.id.pieChartViewFullTask)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
         ((PieChartView)findViewById(R.id.pieChartViewFullTask)).invalidate();
     }

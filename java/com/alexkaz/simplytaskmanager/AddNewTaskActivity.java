@@ -82,7 +82,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
             }
             editTextTitle.setText(intentTaskObject.getTaskTitle());
             itemTaskAdapter = new ItemTaskAdapter(this,intentTaskObject.getItemTitles());
-            addButton.setText("SAVE");
+            addButton.setText(getString(R.string.edit_button_title));
         } else {
             spinner.setSelection(0);
             itemTaskAdapter = new ItemTaskAdapter(this);
@@ -116,14 +116,6 @@ public class AddNewTaskActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        /////////////// пізніше замінити на дані з бази
-        ArrayList<String> data = new ArrayList<>();
-
-
-        //////////////
-//        itemTaskAdapter = new ItemTaskAdapter(this, data); //  замінити data на об'єкт сформований з бази
-         //  замінити data на об'єкт сформований з бази
-
         itemTaskList = (ListView) findViewById(R.id.itemTaskList);
         itemTaskList.setDivider(null);
         View view = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_task_handler_layout, null, false);
@@ -136,9 +128,6 @@ public class AddNewTaskActivity extends AppCompatActivity {
             }
         });
         itemTaskList.addFooterView(view);
-
-
-
     }
 
     private void initAddButton() {
@@ -172,17 +161,15 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 ArrayList<String> itemTitles = itemTaskAdapter.getItems();
                 /////////////
                 if (taskTitle.equals("")){
-                    showAlertMassage("Please set task name");
+                    showAlertMassage(getString(R.string.alert_massage_when_task_title_empty));
                     return;
                 }
                 for (String item : itemTitles) {
                     if (item.equals("")){
-                        showAlertMassage("Please set or delete all empty fields");
+                        showAlertMassage(getString(R.string.alert_massage_when_task_title_item_empty));
                         return;
                     }
                 }
-
-                /////////////
                 ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
                 for (int i = 0; i < itemTitles.size(); i++) {
                     statuses.add(TaskStatus.NOT_COMPLITED);
@@ -218,9 +205,9 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     private void showAlertMassage(String massage){
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddNewTaskActivity.this);
-        dialogBuilder.setTitle("Warning");
+        dialogBuilder.setTitle(R.string.alert_massage_warning);
         dialogBuilder.setMessage(massage);
-        dialogBuilder.setPositiveButton("Ok",null);
+        dialogBuilder.setPositiveButton(getResources().getString(R.string.status_dialog_positive_button_text),null);
         dialogBuilder.create().show();
     }
 }

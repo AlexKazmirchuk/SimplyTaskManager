@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_24dp);
-        getSupportActionBar().setTitle("  All tasks");
+        getSupportActionBar().setTitle(R.string.main_activity_label);
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
         initStatisticPanel();
@@ -107,9 +107,14 @@ public class MainActivity extends AppCompatActivity {
         inProcessTaskItemInterest = Math.round(((float)inProcessTaskItemCount/(float)amountOfTaskItems)*100);
         doneTaskItemInterest = Math.round(((float)doneTaskItemCount/(float)amountOfTaskItems)*100);
 
-        ((TextView)findViewById(R.id.doneTxtView)).setText("Виконано - " + doneTaskItemInterest + "%(" + doneTaskItemCount + ")");
-        ((TextView)findViewById(R.id.inProcessTxtView)).setText("В процесі - " + inProcessTaskItemInterest + "%(" + inProcessTaskItemCount + ")");
-        ((TextView)findViewById(R.id.notCompletedTxtView)).setText("Не виконано - " + notCompletedTaskItemInterest + "%(" + notCompletedTaskItemCount + ")");
+        String done = String.format(getString(R.string.done_count),doneTaskItemInterest,doneTaskItemCount);
+        String inProcess = String.format(getString(R.string.in_process_count),inProcessTaskItemInterest,inProcessTaskItemCount);
+        String notCompleted = String.format(getString(R.string.not_completed_count),notCompletedTaskItemInterest,notCompletedTaskItemCount);
+
+        ((TextView)findViewById(R.id.doneTxtView)).setText(done);
+        ((TextView)findViewById(R.id.inProcessTxtView)).setText(inProcess);
+        ((TextView)findViewById(R.id.notCompletedTxtView)).setText(notCompleted);
+
         ((PieChartView)findViewById(R.id.pieChart)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
         ((PieChartView)findViewById(R.id.pieChart)).invalidate();
 

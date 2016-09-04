@@ -2,7 +2,6 @@
 <com.sothree.slidinguppanel.SlidingUpPanelLayout
     xmlns:sothree="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -46,7 +45,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="4dp"
                 android:gravity="center"
-                android:text="Статистика"/>
+                android:text="@string/bottom_panel_title"/>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -55,11 +54,13 @@
                     android:layout_width="120dp"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"/>
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_toLeftOf="@id/pieChart">
+                    android:layout_toLeftOf="@id/pieChart"
+                    android:layout_toStartOf="@id/pieChart">
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -72,8 +73,9 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:drawableLeft="@drawable/done_status_icon"
+                            android:drawableStart="@drawable/done_status_icon"
                             android:drawablePadding="6dp"
-                            android:text="Виконано - 34%(13)"/>
+                            android:text="@string/done_txt_view_text"/>
                         <TextView
                             android:id="@+id/inProcessTxtView"
                             android:layout_width="match_parent"
@@ -81,8 +83,9 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:drawableLeft="@drawable/in_process_status_icon"
+                            android:drawableStart="@drawable/in_process_status_icon"
                             android:drawablePadding="6dp"
-                            android:text="В процесі - 14%(5)"/>
+                            android:text="@string/in_process_txt_view_text"/>
                         <TextView
                             android:id="@+id/notCompletedTxtView"
                             android:layout_width="match_parent"
@@ -90,8 +93,9 @@
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
                             android:drawableLeft="@drawable/not_completed_status_icon"
+                            android:drawableStart="@drawable/not_completed_status_icon"
                             android:drawablePadding="6dp"
-                            android:text="Не виконано - 52%(23)"/>
+                            android:text="@string/not_completed_txt_view_text"/>
                     </LinearLayout>
                 </FrameLayout>
             </RelativeLayout>

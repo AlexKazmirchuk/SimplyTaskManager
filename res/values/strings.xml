@@ -1,8 +1,50 @@
 <resources>
-    <string name="app_name">SimplyTaskManager</string>
+    <string name="app_name">Simple Task Manager</string>
     <string name="first_item_text">1.Development of the interface , the initial screen paragraphs...</string>
     <string name="fullTaskActivityLabel">Review</string>
-    <string name="main_activity_label">SimpleTaskManager</string>
+    <string name="main_activity_label">&#160;&#160;All tasks</string>
     <string name="new_task_activity_label">New task</string>
     <string name="edit_task_activity_label">Edit</string>
+    <string name="bottom_panel_title">Статистика</string>
+    <string name="done_txt_view_text">Виконано - 34%(13)</string>
+    <string name="in_process_txt_view_text">В процесі - 14%(5)</string>
+    <string name="not_completed_txt_view_text">Не виконано - 52%(23)</string>
+    <string name="main_item_icon_content_description">icon description</string>
+    <string name="spinner_arrow_description">spinner bottom right arrow</string>
+    <string name="edit_text_title_hint">Title</string>
+    <string name="character_counter_text">33/50</string>
+    <string name="add_button_text">ADD</string>
+    <string name="review_icon_description">review icon</string>
+    <string name="txt_view_task_title_text">Створення інтерфейсу екрану для повного перегляду</string>
+    <string name="add_new_task_icon_content_description">add new task icon</string>
+    <string name="add_new_task_item_text">add new task</string>
+    <string name="item_txt_view_text">1. Створити статус бар і іконки на ньому</string>
+    <string name="temp_value_of_list_add_item">1.</string>
+    <string name="delete_button_icon_content_description">delete button icon</string>
+    <string name="txt_char_counter_temp_value">33/50</string>
+    <string name="edit_text_task_item_hint">Please input your task</string>
+    <string name="spinner_item_content_description">spinner item</string>
+    <string name="edit_menu_item_title">Edit</string>
+    <string name="edit_item_title_for_context_menu">Edit</string>
+    <string name="delete_item_title_for_context_menu">Delete</string>
+    <string name="options_menu_item_title">Options</string>
+    <string name="status_dialog_title">Please choose task status!</string>
+    <string name="status_dialog_positive_button_text">OK</string>
+    <string name="status_dialog_negative_button_text">Cancel</string>
+    <string name="edit_button_title">SAVE</string>
+    <string name="alert_massage_when_task_title_empty">Please set task name</string>
+    <string name="alert_massage_when_task_title_item_empty">Please set or delete all empty fields</string>
+    <string name="alert_massage_warning">Warning</string>
+    <string name="done_count">Виконано - %1$d%%(%2$d)</string>
+    <string name="in_process_count">В процесі - %1$d%%(%2$d)</string>
+    <string name="not_completed_count">Не виконано - %1$d%%(%2$d)</string>
+
+
+
+    <string-array name="status_dialog_choosing_titles">
+        <item>Done</item>
+        <item>In process</item>
+        <item>Not completed</item>
+    </string-array>
+
 </resources>

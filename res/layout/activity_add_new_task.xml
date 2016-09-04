@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_add_new_task"
     android:layout_width="match_parent"
@@ -11,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="90dp"
         android:orientation="horizontal">
-
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,11 +24,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/spinner_arrow"
-                android:layout_gravity="bottom|end"
-                />
+                android:contentDescription="@string/spinner_arrow_description"
+                android:layout_gravity="bottom|end"/>
         </FrameLayout>
-
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -48,7 +44,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lines="1"
-                    android:hint="Title"/>
+                    android:hint="@string/edit_text_title_hint"/>
 
             </android.support.design.widget.TextInputLayout>
             <TextView
@@ -58,131 +54,38 @@
                 android:layout_marginEnd="15dp"
                 android:gravity="end"
                 android:textSize="12sp"
-                android:text="33/50"/>
+                android:text="@string/character_counter_text"/>
         </LinearLayout>
-
-
     </LinearLayout>
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#c1c1c1"/>
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
-
-                <ListView
-                    android:id="@+id/itemTaskList"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1">
-                </ListView>
-                <!--<RelativeLayout-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="70dp"-->
-                    <!--android:layout_marginTop="3dp">-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/itemTxt"-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_alignParentLeft="true"-->
-                        <!--android:layout_alignParentStart="true"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:gravity="center"-->
-                        <!--android:text="1."/>-->
-
-                    <!--<ImageButton-->
-                        <!--android:id="@+id/deleteBtn"-->
-                        <!--android:layout_width="50dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:background="#00ffffff"-->
-                        <!--android:src="@drawable/ic_clear_white_24dp"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:layout_alignParentTop="true"-->
-                        <!--android:layout_alignParentEnd="true"-->
-                        <!--android:layout_alignParentRight="true"/>-->
-
-                    <!--<TextView-->
-                        <!--android:id="@+id/txtCharCounter"-->
-                        <!--android:layout_width="wrap_content"-->
-                        <!--android:layout_height="wrap_content"-->
-                        <!--android:layout_alignParentBottom="true"-->
-                        <!--android:layout_toLeftOf="@id/deleteBtn"-->
-                        <!--android:layout_toStartOf="@id/deleteBtn"-->
-                        <!--android:textSize="10sp"-->
-                        <!--android:gravity="end"-->
-                        <!--android:text="33/50"/>-->
-
-                    <!--<android.support.design.widget.TextInputLayout-->
-                        <!--android:id="@+id/editTextContainer"-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_toRightOf="@id/itemTxt"-->
-                        <!--android:layout_toEndOf="@id/itemTxt"-->
-                        <!--android:layout_toLeftOf="@id/deleteBtn"-->
-                        <!--android:layout_toStartOf="@id/deleteBtn"-->
-                        <!--android:layout_above="@id/txtCharCounter">-->
-                        <!--<EditText-->
-                            <!--android:layout_width="match_parent"-->
-                            <!--android:layout_height="match_parent"-->
-                            <!--android:lines="1"-->
-                            <!--android:hint="Please input your task"/>-->
-
-                    <!--</android.support.design.widget.TextInputLayout>-->
-
-                <!--</RelativeLayout>-->
-                <!--<LinearLayout-->
-                    <!--android:id="@+id/addNewTask"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="40dp"-->
-                    <!--android:orientation="horizontal">-->
-                    <!--<ImageView-->
-                        <!--android:layout_width="40dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginStart="10dp"-->
-                        <!--android:src="@drawable/ic_add_white_24dp"/>-->
-                    <!--<TextView-->
-                        <!--android:layout_width="match_parent"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginLeft="10dp"-->
-                        <!--android:layout_marginStart="10dp"-->
-                        <!--android:gravity="center_vertical"-->
-                        <!--android:textSize="18sp"-->
-                        <!--android:text="add new task"/>-->
-
-                <!--</LinearLayout>-->
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="#d8d8d8">
-                    <Button
-                        android:id="@+id/addButton"
-                        android:layout_width="wrap_content"
-                        android:layout_height="35dp"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="7dp"
-                        android:background="#2bbbd8"
-                        android:textColor="#ffffff"
-                        android:textSize="20sp"
-                        android:text="ADD"/>
-                </FrameLayout>
-            </LinearLayout>
-
-    </FrameLayout>
-
-
-
-
-
-
-    <!--</LinearLayout>-->
-
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ListView
+            android:id="@+id/itemTaskList"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        </ListView>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:background="#d8d8d8">
+            <Button
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="7dp"
+                android:background="#2bbbd8"
+                android:textColor="#ffffff"
+                android:textSize="20sp"
+                android:text="@string/add_button_text"/>
+        </FrameLayout>
+    </LinearLayout>
 </LinearLayout>
