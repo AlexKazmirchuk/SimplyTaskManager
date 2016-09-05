@@ -24,7 +24,7 @@
             </ListView>
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/actionBtn"
-                android:src="@drawable/ic_add_white_24dp"
+                android:src="@drawable/ic_add_white_36dp"
                 sothree:fabSize="normal"
                 android:layout_gravity="bottom|end"
                 android:layout_width="wrap_content"

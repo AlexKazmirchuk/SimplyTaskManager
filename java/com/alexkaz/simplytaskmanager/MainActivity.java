@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_24dp);
+        getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_36dp);
         getSupportActionBar().setTitle(R.string.main_activity_label);
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
