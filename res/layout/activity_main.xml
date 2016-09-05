@@ -72,8 +72,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/done_status_icon"
-                            android:drawableStart="@drawable/done_status_icon"
+                            android:drawableLeft="@drawable/done_status"
+                            android:drawableStart="@drawable/done_status"
                             android:drawablePadding="6dp"
                             android:text="@string/done_txt_view_text"/>
                         <TextView
@@ -82,8 +82,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/in_process_status_icon"
-                            android:drawableStart="@drawable/in_process_status_icon"
+                            android:drawableLeft="@drawable/in_process_status"
+                            android:drawableStart="@drawable/in_process_status"
                             android:drawablePadding="6dp"
                             android:text="@string/in_process_txt_view_text"/>
                         <TextView
@@ -92,8 +92,8 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:layout_marginBottom="4dp"
-                            android:drawableLeft="@drawable/not_completed_status_icon"
-                            android:drawableStart="@drawable/not_completed_status_icon"
+                            android:drawableLeft="@drawable/not_completed_status"
+                            android:drawableStart="@drawable/not_completed_status"
                             android:drawablePadding="6dp"
                             android:text="@string/not_completed_txt_view_text"/>
                     </LinearLayout>
