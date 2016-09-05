@@ -1,0 +1,40 @@
+<resources>
+    <!--for locale-->
+    <string name="app_name">Simple Task Manager</string>
+    <string name="main_activity_label">&#160;&#160;Всі завдання</string>
+    <string name="fullTaskActivityLabel">Перегляд</string>
+    <string name="new_task_activity_label">Нове завдання</string>
+    <string name="edit_task_activity_label">Редагувати</string>
+
+    <string name="add_button_text">ДОДАТИ</string>
+    <string name="edit_button_title">ЗБЕРЕГТИ</string>
+
+    <string name="edit_text_title_hint">Назва</string>
+    <string name="edit_text_task_item_hint">Введіть крок виконання</string>
+    <string name="add_new_task_item_text">Додати крок виконання</string>
+
+    <string name="edit_menu_item_title">Редагувати</string>
+    <string name="edit_item_title_for_context_menu">Редагувати</string>
+    <string name="delete_item_title_for_context_menu">Видалити</string>
+    <string name="options_menu_item_title">Налаштування</string>
+
+
+    <string name="bottom_panel_title">Статистика</string>
+    <string name="done_count">Виконано - %1$d%%(%2$d)</string>
+    <string name="in_process_count">В процесі - %1$d%%(%2$d)</string>
+    <string name="not_completed_count">Не виконано - %1$d%%(%2$d)</string>
+
+    <string name="status_dialog_title">Будь ласка оберіть статус кроку завдання</string>
+    <string name="status_dialog_positive_button_text">OK</string>
+    <string name="status_dialog_negative_button_text">Відміна</string>
+    <string name="alert_massage_warning">Попередження</string>
+    <string name="alert_massage_when_task_title_empty">Будь ласка введіть назву завдання</string>
+    <string name="alert_massage_when_task_title_item_empty">Будь ласка заповніть або видаліть порожні поля</string>
+
+    <string-array name="status_dialog_choosing_titles">
+        <item>Виконано</item>
+        <item>В процесі</item>
+        <item>Не виконано</item>
+    </string-array>
+    <!--end-->
+</resources>

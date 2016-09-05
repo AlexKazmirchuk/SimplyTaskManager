@@ -1,0 +1,40 @@
+<resources>
+    <!--for locale-->
+    <string name="app_name">Simple Task Manager</string>
+    <string name="main_activity_label">&#160;&#160;Все задачи</string>
+    <string name="fullTaskActivityLabel">Просмотр</string>
+    <string name="new_task_activity_label">Новая задача</string>
+    <string name="edit_task_activity_label">Изменить</string>
+
+    <string name="add_button_text">ДОБАВИТЬ</string>
+    <string name="edit_button_title">СОХРАНИТЬ</string>
+
+    <string name="edit_text_title_hint">Название</string>
+    <string name="edit_text_task_item_hint">Введите шаги исполнения</string>
+    <string name="add_new_task_item_text">Добавить шаг исполнения</string>
+
+    <string name="edit_menu_item_title">Редактировать</string>
+    <string name="edit_item_title_for_context_menu">Редактировать</string>
+    <string name="delete_item_title_for_context_menu">Удалить</string>
+    <string name="options_menu_item_title">Настройки</string>
+
+
+    <string name="bottom_panel_title">Статистика</string>
+    <string name="done_count">Выполнено - %1$d%%(%2$d)</string>
+    <string name="in_process_count">В процессе - %1$d%%(%2$d)</string>
+    <string name="not_completed_count">Не выполнено - %1$d%%(%2$d)</string>
+
+    <string name="status_dialog_title">Пожалуйста, выберите статус задачи!</string>
+    <string name="status_dialog_positive_button_text">OK</string>
+    <string name="status_dialog_negative_button_text">Отмена</string>
+    <string name="alert_massage_warning">Предупреждение</string>
+    <string name="alert_massage_when_task_title_empty">Пожалуйста, введите имя задачи</string>
+    <string name="alert_massage_when_task_title_item_empty">Пожалуйста, заполните или удалите пустые поля</string>
+
+    <string-array name="status_dialog_choosing_titles">
+        <item>Выполнено</item>
+        <item>В процессе</item>
+        <item>Не выполнено</item>
+    </string-array>
+    <!--end-->
+</resources>
