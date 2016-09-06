@@ -15,6 +15,11 @@ import java.util.ArrayList;
 
 public class PieChartView extends View {
 
+    public static final int MAX_DISPLAY_COUNT = 8;
+    public static final int START_ANGLE = 270;
+    public static final float RADIUS_HEIGHT_DIVIDER = 0.9524f;
+    public static final float RADIUS_WIDTH_DIVIDER = 0.9524f;
+    public static final float PIE_CHART_DIVIDER = 0.1f;
     private boolean measureFlag = true;
 
     private int pieChartRadius;
@@ -28,7 +33,7 @@ public class PieChartView extends View {
     private int amountOfInProcess;
     private int amountOfDone;
 
-    private TaskStatus[] taskStatuses = new TaskStatus[8];
+    private TaskStatus[] taskStatuses = new TaskStatus[MAX_DISPLAY_COUNT];
     private ArrayList<TaskStatus> statuses;
 
     public PieChartView(Context context) {
@@ -54,7 +59,7 @@ public class PieChartView extends View {
         taskStatuses[7] = TaskStatus.NOT_COMPLITED;
 
         statuses = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
             statuses.add(TaskStatus.DONE);
         }
 
@@ -81,49 +86,7 @@ public class PieChartView extends View {
             initGraphicComp();
             measureFlag = false;
         }
-//        Paint p = new Paint();
-//        p.setColor(Color.RED);
-//        p.setAntiAlias(true);
-//        p.setColor(Color.GREEN);
-////        RectF rectF = new RectF(canvas.getWidth()/2-40,canvas.getHeight()/2-40,canvas.getWidth()/2+40,canvas.getHeight()/2+40);
-//        RectF rectF = new RectF(canvas.getWidth()/2-pieChartRadius,canvas.getHeight()/2-pieChartRadius,canvas.getWidth()/2+pieChartRadius,canvas.getHeight()/2+pieChartRadius);
-//
-//        p.setColor(Color.GREEN);
-//        canvas.drawArc(rectF,270,-120,true,p);
-//
-//        p.setColor(Color.YELLOW);
-//        canvas.drawArc(rectF,150,-120,true,p);
-//
-//        p.setColor(Color.RED);
-//        canvas.drawArc(rectF,30,-120,true,p);
-//
-//
-//        Paint p1 = new Paint();
-//        p1.setStyle(Paint.Style.STROKE);
-//        p1.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
-//        p1.setAntiAlias(true);
-////        p1.setStrokeWidth(4);
-//        p1.setStrokeWidth(pieChartDividerSize);
-//        p1.setColor(Color.BLACK);
-//
-//        canvas.drawArc(rectF,270,-120,true,p1);
-//        canvas.drawArc(rectF,150,-120,true,p1);
-//        canvas.drawArc(rectF,30,-120,true,p1);
 
-        //////////////////////////////
-        ////////////////////////////////////////////
-//        pieChartPaint.setColor(Color.GREEN);
-//        canvas.drawArc(pieChartAvailableSpace,270,-120,true,pieChartPaint);
-//        pieChartPaint.setColor(Color.YELLOW);
-//        canvas.drawArc(pieChartAvailableSpace,150,-120,true,pieChartPaint);
-//        pieChartPaint.setColor(Color.RED);
-//        canvas.drawArc(pieChartAvailableSpace,30,-120,true,pieChartPaint);
-//
-//        canvas.drawArc(pieChartAvailableSpace,270,-120,true,pieChartDividerPaint);
-//        canvas.drawArc(pieChartAvailableSpace,150,-120,true,pieChartDividerPaint);
-//        canvas.drawArc(pieChartAvailableSpace,30,-120,true,pieChartDividerPaint);
-
-        ////////////////////////////////////////
         float degreeInterest = 360.0f/(float)(amountOfDone + amountOfInProcess + amountOfNotCompleted);
 
         int doneAngle = Math.round(degreeInterest*amountOfDone);
@@ -131,24 +94,24 @@ public class PieChartView extends View {
         int notCompletedAngle = 360 - (doneAngle + inProcessAngle);
 
         pieChartPaint.setColor(Color.GREEN);
-        canvas.drawArc(pieChartAvailableSpace,270,- (doneAngle),true,pieChartPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE,- (doneAngle),true,pieChartPaint);
         pieChartPaint.setColor(Color.YELLOW);
-        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle),-(inProcessAngle),true,pieChartPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE - (doneAngle),-(inProcessAngle),true,pieChartPaint);
         pieChartPaint.setColor(Color.RED);
-        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartPaint);
 
-        canvas.drawArc(pieChartAvailableSpace,270,- (doneAngle),true,pieChartDividerPaint);
-        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle),-(inProcessAngle),true,pieChartDividerPaint);
-        canvas.drawArc(pieChartAvailableSpace,270 - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartDividerPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE,- (doneAngle),true,pieChartDividerPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE - (doneAngle),-(inProcessAngle),true,pieChartDividerPaint);
+        canvas.drawArc(pieChartAvailableSpace,START_ANGLE - (doneAngle +  inProcessAngle),-(notCompletedAngle),true,pieChartDividerPaint);
     }
 
     private void determineMeasurements(int width, int height){
         if (width >= height){
-            pieChartRadius =(int)((height*0.9524f)/2);  //84 * 84;
+            pieChartRadius =(int)((height* RADIUS_HEIGHT_DIVIDER)/2);  //84 * 84;
         } else {
-            pieChartRadius = (int)((width*0.9524f)/2);  //84 * 84;
+            pieChartRadius = (int)((width* RADIUS_WIDTH_DIVIDER)/2);  //84 * 84;
         }
-        pieChartDividerSize = (int)(pieChartRadius*0.1f);
+        pieChartDividerSize = (int)(pieChartRadius* PIE_CHART_DIVIDER);
         pieChartAvailableSpace = new RectF(width/2-pieChartRadius,height/2-pieChartRadius,width/2+pieChartRadius,height/2+pieChartRadius);
     }
 

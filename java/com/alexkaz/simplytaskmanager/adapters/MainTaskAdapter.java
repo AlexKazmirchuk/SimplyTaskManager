@@ -15,6 +15,11 @@ import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 
 import java.util.ArrayList;
 
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.FUN_ICON;
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.HOME_ICON;
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.OTHER_ICON;
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.WORK_ICON;
+
 public class MainTaskAdapter extends BaseAdapter {
 
     private Context context;
@@ -62,16 +67,16 @@ public class MainTaskAdapter extends BaseAdapter {
 
         ///////
         switch (taskObjects.get(position).getIcon()){
-            case "work_icon":
+            case WORK_ICON:
                 holder.mainItemIcon.setImageResource(R.drawable.work_icon);
                 break;
-            case "home_icon":
+            case HOME_ICON:
                 holder.mainItemIcon.setImageResource(R.drawable.home_icon);
                 break;
-            case "fun_icon":
+            case FUN_ICON:
                 holder.mainItemIcon.setImageResource(R.drawable.fun_icon);
                 break;
-            case "other_icon":
+            case OTHER_ICON:
                 holder.mainItemIcon.setImageResource(R.drawable.other_icon);
                 break;
         }

@@ -3,6 +3,16 @@ package com.alexkaz.simplytaskmanager.uicomp;
 import java.util.ArrayList;
 
 public class TaskObject {
+
+    public static final String WORK_ICON = "work_icon";
+    public static final String HOME_ICON = "home_icon";
+    public static final String FUN_ICON = "fun_icon";
+    public static final String OTHER_ICON = "other_icon";
+
+    public static final int STATUS_DONE = 2;
+    public static final int STATUS_IN_PROCESS = 1;
+    public static final int STATUS_NOT_COMPLETED = 0;
+
     private String icon;
     private String taskTitle;
     private ArrayList<String> itemTitles;

@@ -67,16 +67,16 @@ public class AddNewTaskActivity extends AppCompatActivity {
         if(intentTaskTitle != null){
             intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
             switch (intentTaskObject.getIcon()){
-                case "work_icon":
+                case TaskObject.WORK_ICON:
                     spinner.setSelection(0);
                     break;
-                case "home_icon":
+                case TaskObject.HOME_ICON:
                     spinner.setSelection(1);
                     break;
-                case "fun_icon":
+                case TaskObject.FUN_ICON:
                     spinner.setSelection(2);
                     break;
-                case "other_icon":
+                case TaskObject.OTHER_ICON:
                     spinner.setSelection(3);
                     break;
             }
@@ -95,7 +95,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
         images = new int[] {R.drawable.work_icon,R.drawable.home_icon,R.drawable.fun_icon,R.drawable.other_icon};
         data = new ArrayList<Map<String, Object>>();
         from = new String[] {"image_bg"};
-        to = new int[] {R.id.icon3};
+        to = new int[] {R.id.spinnerIcon};
         Map<String, Object> m;
         for (int i = 0; i < 4; i++) {
             m = new HashMap<String, Object>();
@@ -145,16 +145,16 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 String icon = "";
                 switch (spinner.getSelectedItemPosition()){
                     case 0:
-                        icon = "work_icon";
+                        icon = TaskObject.WORK_ICON;
                         break;
                     case 1:
-                        icon = "home_icon";
+                        icon = TaskObject.HOME_ICON;
                         break;
                     case 2:
-                        icon = "fun_icon";
+                        icon = TaskObject.FUN_ICON;
                         break;
                     case 3:
-                        icon = "other_icon";
+                        icon = TaskObject.OTHER_ICON;
                         break;
                 }
                 String taskTitle = editTextTitle.getText().toString();

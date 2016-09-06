@@ -1,15 +1,22 @@
 package com.alexkaz.simplytaskmanager.uicomp;
 
+import android.content.ContentValues;
+import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.Log;
 
+import com.alexkaz.simplytaskmanager.R;
+
 import java.util.ArrayList;
 
-public class TaskIndictor {
+public class TaskIndicator {
 
+    public static final int MAX_DISPLAY_COUNT = 8;
+    public static final float CIRCLE_RADIUS_DIVIDER = 0.75f;
+    public static final float LINKING_RECT_SIZE_DIVIDER = 0.25f;
     private boolean measureFlag = true;
     private int circleRadius;
     private int elemRectSizeX;
@@ -18,6 +25,8 @@ public class TaskIndictor {
     private int linkingRectSizeY;
 
     private float blurRadius;
+
+    private Context context;
 
     private Paint notCompletedPaint;
     private Paint inProcessPaint;
@@ -30,7 +39,8 @@ public class TaskIndictor {
     private TaskStatus[] taskStatuses = new TaskStatus[8];
     private ArrayList<TaskStatus> statuses;
 
-    public TaskIndictor() {
+    public TaskIndicator(Context context) {
+        this.context = context;
         initComps();
     }
 
@@ -45,7 +55,7 @@ public class TaskIndictor {
         taskStatuses[7] = TaskStatus.NOT_COMPLITED;
 
         statuses = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
             statuses.add(TaskStatus.NOT_COMPLITED);
         }
 
@@ -61,8 +71,8 @@ public class TaskIndictor {
         }
 
         int countOfTaskItems;
-        if (statuses.size() > 8 ){
-            countOfTaskItems = 8;
+        if (statuses.size() > MAX_DISPLAY_COUNT ){
+            countOfTaskItems = MAX_DISPLAY_COUNT;
         } else {
             countOfTaskItems = statuses.size();
         }
@@ -94,55 +104,48 @@ public class TaskIndictor {
     }
 
     private void determineMeasurements(int width, int height){
-        elemRectSizeX = width/8;
+        elemRectSizeX = width/MAX_DISPLAY_COUNT;
         elemRectSizeY = height;
         if (elemRectSizeX >= elemRectSizeY){
-            float fCircleRadius = (elemRectSizeY/2) * 0.75f;
+            float fCircleRadius = (elemRectSizeY/2) * CIRCLE_RADIUS_DIVIDER;
             circleRadius = (int)fCircleRadius;
         }else {
-            float fCircleRadius = (elemRectSizeX/2) * 0.75f;
+            float fCircleRadius = (elemRectSizeX/2) * CIRCLE_RADIUS_DIVIDER;
             circleRadius = (int)fCircleRadius;
         }
         linkingRectSizeX = elemRectSizeX;
-        float fLinkingRectSizeY = circleRadius*0.25f;
+        float fLinkingRectSizeY = circleRadius* LINKING_RECT_SIZE_DIVIDER;
         linkingRectSizeY = (int)fLinkingRectSizeY;
-//        String elemRectSizes ="elemRectSizeX: " + elemRectSizeX + ", elemRectSizeY: " + elemRectSizeY;
-//        String circleRad ="circleRadius: " + circleRadius;
-//        String linkingRectSizes ="linkingRectSizeX: " + linkingRectSizeX + ", linkingRectSizeY: " + linkingRectSizeY;
-//
-//        Log.d("sizesLog",elemRectSizes);
-//        Log.d("sizesLog",circleRad);
-//        Log.d("sizesLog",linkingRectSizes);
     }
 
     private void initPaintComp(){
         blurRadius = circleRadius*0.7f;
 
         notCompletedPaint = new Paint();
-        notCompletedPaint.setColor(Color.parseColor("#ef001c")); //red
+        notCompletedPaint.setColor(context.getResources().getColor(R.color.VI_NotCompletedColor));
         notCompletedPaint.setAntiAlias(true);
 
         inProcessPaint = new Paint();
-        inProcessPaint.setColor(Color.parseColor("#c9d41b")); // yellow
+        inProcessPaint.setColor(context.getResources().getColor(R.color.VI_InProcessColor));
         inProcessPaint.setAntiAlias(true);
 
         donePaint = new Paint();
-        donePaint.setColor(Color.parseColor("#09c804")); //green
+        donePaint.setColor(context.getResources().getColor(R.color.VI_DoneColor));
         donePaint.setAntiAlias(true);
 
         BlurMaskFilter blurMaskFilter = new BlurMaskFilter(blurRadius, BlurMaskFilter.Blur.NORMAL);
 
         notCompletedBlurPaint = new Paint();
         notCompletedBlurPaint.setMaskFilter(blurMaskFilter);
-        notCompletedBlurPaint.setColor(Color.parseColor("#ffb1fc")); //pink blur
+        notCompletedBlurPaint.setColor(context.getResources().getColor(R.color.VI_NotCompletedBlurColor));
 
         inProcessBlurPaint = new Paint();
         inProcessBlurPaint.setMaskFilter(blurMaskFilter);
-        inProcessBlurPaint.setColor(Color.parseColor("#c5e0f4")); // light blue blur
+        inProcessBlurPaint.setColor(context.getResources().getColor(R.color.VI_InProcessBlurColor));
 
         doneBlurPaint = new Paint();
         doneBlurPaint.setMaskFilter(blurMaskFilter);
-        doneBlurPaint.setColor(Color.parseColor("#d0fdff")); // light blue blur
+        doneBlurPaint.setColor(context.getResources().getColor(R.color.VI_DoneBlurColor));
     }
 
     public void setTaskStatus(int position, TaskStatus taskStatus){

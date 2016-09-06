@@ -17,6 +17,8 @@ import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 public class FullTaskActivity extends AppCompatActivity {
 
+    public static final String SAVED_TASK_TITLE = "savedTaskTitle";
+    public static final int ADD_NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     private ImageView reviewIcon;
     private TextView txtViewTaskTitle;
     private ListView reviewTaskListView;
@@ -29,12 +31,11 @@ public class FullTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_full_task);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         Intent intent = getIntent();
-//        taskTitle = "щось там зробити";
         if (intent != null){
             taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
         }
         if (savedInstanceState!=null){
-            taskTitle = savedInstanceState.getString("savedTaskTitle");
+            taskTitle = savedInstanceState.getString(SAVED_TASK_TITLE);
         }
         DBHelper helper = new DBHelper(this);
         taskObject = helper.getTask(taskTitle);
@@ -48,16 +49,16 @@ public class FullTaskActivity extends AppCompatActivity {
         reviewIcon = (ImageView)findViewById(R.id.reviewIcon);
         txtViewTaskTitle = (TextView)findViewById(R.id.txtViewTaskTitle);
         switch (taskObject.getIcon()){
-            case "work_icon":
+            case TaskObject.WORK_ICON:
                 reviewIcon.setImageResource(R.drawable.work_icon);
                 break;
-            case "home_icon":
+            case TaskObject.HOME_ICON:
                 reviewIcon.setImageResource(R.drawable.home_icon);
                 break;
-            case "fun_icon":
+            case TaskObject.FUN_ICON:
                 reviewIcon.setImageResource(R.drawable.fun_icon);
                 break;
-            case "other_icon":
+            case TaskObject.OTHER_ICON:
                 reviewIcon.setImageResource(R.drawable.other_icon);
                 break;
         }
@@ -80,8 +81,7 @@ public class FullTaskActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.editMenuItem){
             Intent intent = new Intent(this,AddNewTaskActivity.class);
             intent.putExtra(DBHelper.TASK_TITLE,taskObject.getTaskTitle());
-//            startActivity(intent);
-            startActivityForResult(intent,1);
+            startActivityForResult(intent, ADD_NEW_TASK_ACTIVITY_REQUEST_CODE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -107,7 +107,7 @@ public class FullTaskActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString("savedTaskTitle",taskObject.getTaskTitle());
+        outState.putString(SAVED_TASK_TITLE,taskObject.getTaskTitle());
     }
 
     public void initStatisticPanel() {

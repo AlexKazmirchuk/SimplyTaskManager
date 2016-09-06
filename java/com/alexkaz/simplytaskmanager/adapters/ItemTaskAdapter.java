@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class ItemTaskAdapter extends BaseAdapter {
 
+    public static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/50";
     private ArrayList<String> items;
     private Context context;
     private LayoutInflater inflater;
@@ -72,7 +73,7 @@ public class ItemTaskAdapter extends BaseAdapter {
         holder.ref = position;
         holder.textView.setText((position+1) + ".");
         holder.editText.setText(items.get(position));
-        holder.txtCharCounter.setText(holder.editText.getText().toString().length() + "/50");
+        holder.txtCharCounter.setText(holder.editText.getText().toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS);
         holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -87,7 +88,7 @@ public class ItemTaskAdapter extends BaseAdapter {
             @Override
             public void afterTextChanged(Editable s) {
                 items.set(holder.ref,s.toString());
-                holder.txtCharCounter.setText(s.toString().length() + "/50");
+                holder.txtCharCounter.setText(s.toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS);
                 Log.d("afterTextChangedLog",s.toString().length()+"");
             }
         });

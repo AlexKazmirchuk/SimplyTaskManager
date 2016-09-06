@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#008675</color>
+
+    <color name="VI_BgColor">#d6d7d6</color>
+    <color name="VI_LinkingRectColor">#4b288c</color>
+    <color name="VI_TopRectColor">#09c804</color>
+    <color name="VI_NotCompletedColor">#ef001c</color>
+    <color name="VI_NotCompletedBlurColor">#ffa3d5</color>
+    <color name="VI_InProcessColor">#c9d41b</color>
+    <color name="VI_InProcessBlurColor">#ffe1b7</color>
+    <color name="VI_DoneColor">#09c804</color>
+    <color name="VI_DoneBlurColor">#c4e5fd</color>
+
 </resources>

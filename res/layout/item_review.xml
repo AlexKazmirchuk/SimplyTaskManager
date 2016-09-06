@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-        <com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView
+        <com.alexkaz.simplytaskmanager.uicomp.VerticalTaskIndicatorView
             android:id="@+id/horTaskIndicator"
             android:layout_width="40dp"
             android:layout_height="match_parent"/>

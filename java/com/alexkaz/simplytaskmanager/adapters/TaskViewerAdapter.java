@@ -7,19 +7,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.FullTaskActivity;
 import com.alexkaz.simplytaskmanager.R;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
-import com.alexkaz.simplytaskmanager.uicomp.HorizontalTaskIndicatorView;
+import com.alexkaz.simplytaskmanager.uicomp.VerticalTaskIndicatorView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 import java.util.ArrayList;
+
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.STATUS_DONE;
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.STATUS_IN_PROCESS;
+import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.STATUS_NOT_COMPLETED;
 
 public class TaskViewerAdapter extends BaseAdapter {
 
@@ -58,7 +60,7 @@ public class TaskViewerAdapter extends BaseAdapter {
             holder = new ViewHolder();
             itemView = inflater.inflate(R.layout.item_review,parent,false);
             holder.linearLayout = (LinearLayout)itemView.findViewById(R.id.reviewTaskItemLayout);
-            holder.horizontalTaskIndicatorView = (HorizontalTaskIndicatorView)itemView.findViewById(R.id.horTaskIndicator);
+            holder.verticalTaskIndicatorView = (VerticalTaskIndicatorView)itemView.findViewById(R.id.horTaskIndicator);
             holder.textView = (TextView)itemView.findViewById(R.id.itemTextView);
             itemView.setTag(holder);
         } else {
@@ -66,13 +68,13 @@ public class TaskViewerAdapter extends BaseAdapter {
         }
         holder.ref = position;
         if (position == 0){
-            holder.horizontalTaskIndicatorView.setStatus(statuses.get(position),null,false);
+            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),null,false);
         } else if (position == (statuses.size()-1)){
-            holder.horizontalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),true);
+            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),true);
         } else {
-            holder.horizontalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),false);
+            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),false);
         }
-        holder.horizontalTaskIndicatorView.invalidate();
+        holder.verticalTaskIndicatorView.invalidate();
         holder.textView.setText((position+1) + ". " + itemTitles.get(position));
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,18 +104,18 @@ public class TaskViewerAdapter extends BaseAdapter {
                     public void onClick(DialogInterface dialog, int which) {
                         if(choosedStatus == null){
                             statuses.set(position,TaskStatus.DONE);
-                            new DBHelper(context).setStatus(itemTitles.get(position),2);
+                            new DBHelper(context).setStatus(itemTitles.get(position), STATUS_DONE);
                         } else{
                             statuses.set(position,choosedStatus);
                             switch (choosedStatus){
                                 case DONE:
-                                    new DBHelper(context).setStatus(itemTitles.get(position),2);
+                                    new DBHelper(context).setStatus(itemTitles.get(position),STATUS_DONE);
                                     break;
                                 case IN_PROCESS:
-                                    new DBHelper(context).setStatus(itemTitles.get(position),1);
+                                    new DBHelper(context).setStatus(itemTitles.get(position), STATUS_IN_PROCESS);
                                     break;
                                 case NOT_COMPLITED:
-                                    new DBHelper(context).setStatus(itemTitles.get(position),0);
+                                    new DBHelper(context).setStatus(itemTitles.get(position), STATUS_NOT_COMPLETED);
                                     break;
                             }
                         }
@@ -130,7 +132,7 @@ public class TaskViewerAdapter extends BaseAdapter {
 
     private class ViewHolder {
         LinearLayout linearLayout;
-        HorizontalTaskIndicatorView horizontalTaskIndicatorView;
+        VerticalTaskIndicatorView verticalTaskIndicatorView;
         TextView textView;
         int ref;
     }
