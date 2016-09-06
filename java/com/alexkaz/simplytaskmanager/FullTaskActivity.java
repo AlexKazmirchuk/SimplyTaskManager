@@ -101,7 +101,8 @@ public class FullTaskActivity extends AppCompatActivity {
         DBHelper helper = new DBHelper(this);
         taskObject = helper.getTask(newTaskTitle);
         initComp();
-
+        initListView();
+        initStatisticPanel();
     }
 
     @Override
