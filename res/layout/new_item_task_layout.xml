@@ -49,6 +49,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:lines="1"
+                android:maxLength="250"
                 android:hint="@string/edit_text_task_item_hint"/>
         </android.support.design.widget.TextInputLayout>
 </RelativeLayout>

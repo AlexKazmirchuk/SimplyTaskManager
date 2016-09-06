@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,6 +17,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.adapters.ItemTaskAdapter;
@@ -27,6 +30,7 @@ import java.util.Map;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 
+    public static final String TITLE_TEXT_CHAR_LIMIT = "/150";
     private int[] images;
     private ArrayList<Map<String, Object>> data;
     private String[] from;
@@ -41,6 +45,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     private Button addButton;
     private EditText editTextTitle;
+    private TextView titleCharCounter;
     private TaskObject intentTaskObject;
     private String intentTaskTitle;
     @Override
@@ -56,8 +61,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
         initSpinner();
         ////////////////////
-        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
-        addButton = (Button) findViewById(R.id.addButton);
+        initComp();
+
         ////////////////////
         initListView();
 
@@ -81,6 +86,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     break;
             }
             editTextTitle.setText(intentTaskObject.getTaskTitle());
+            titleCharCounter.setText(intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT);
             itemTaskAdapter = new ItemTaskAdapter(this,intentTaskObject.getItemTitles());
             addButton.setText(getString(R.string.edit_button_title));
         } else {
@@ -113,6 +119,29 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
 
         //////////////////
+    }
+
+    private void initComp(){
+        addButton = (Button) findViewById(R.id.addButton);
+        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+        titleCharCounter = (TextView) findViewById(R.id.titleCharCounter);
+
+        editTextTitle.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                titleCharCounter.setText(s.length() + TITLE_TEXT_CHAR_LIMIT);
+            }
+        });
     }
 
     private void initListView() {

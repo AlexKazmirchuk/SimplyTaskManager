@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class ItemTaskAdapter extends BaseAdapter {
 
-    public static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/50";
+    public static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/250";
     private ArrayList<String> items;
     private Context context;
     private LayoutInflater inflater;

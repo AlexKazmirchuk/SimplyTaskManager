@@ -44,10 +44,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:lines="1"
+                    android:maxLength="150"
                     android:hint="@string/edit_text_title_hint"/>
 
             </android.support.design.widget.TextInputLayout>
             <TextView
+                android:id="@+id/titleCharCounter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
