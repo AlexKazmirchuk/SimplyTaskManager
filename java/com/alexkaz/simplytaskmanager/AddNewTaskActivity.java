@@ -153,6 +153,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemTaskAdapter.addNewItem(); // переписати
+                itemTaskAdapter.setItemCountChanged(true);
                 itemTaskAdapter.notifyDataSetChanged();
             }
         });
@@ -199,10 +200,18 @@ public class AddNewTaskActivity extends AppCompatActivity {
                         return;
                     }
                 }
+
+
+
                 ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
-                for (int i = 0; i < itemTitles.size(); i++) {
-                    statuses.add(TaskStatus.NOT_COMPLITED);
+                if (itemTaskAdapter.isItemCountChanged()){
+                    for (int i = 0; i < itemTitles.size(); i++) {
+                        statuses.add(TaskStatus.NOT_COMPLITED);
+                    }
+                } else{
+                    statuses = intentTaskObject.getStatuses();
                 }
+
                 TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
                 //тут записуємо в базу ...
 

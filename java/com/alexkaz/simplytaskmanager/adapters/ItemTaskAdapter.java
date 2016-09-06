@@ -22,6 +22,7 @@ public class ItemTaskAdapter extends BaseAdapter {
     private ArrayList<String> items;
     private Context context;
     private LayoutInflater inflater;
+    private boolean itemCountChanged = false;
 
     public ItemTaskAdapter(Context context, ArrayList<String> items) {
         this.items = items;
@@ -97,6 +98,7 @@ public class ItemTaskAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 items.remove(position);
+                itemCountChanged = true;
                 Log.d("position", position + "");
                 ItemTaskAdapter.super.notifyDataSetChanged();
             }
@@ -119,4 +121,14 @@ public class ItemTaskAdapter extends BaseAdapter {
     public ArrayList<String> getItems() {
         return items;
     }
+
+
+    public boolean isItemCountChanged() {
+        return itemCountChanged;
+    }
+
+    public void setItemCountChanged(boolean itemCountChanged) {
+        this.itemCountChanged = itemCountChanged;
+    }
+
 }
