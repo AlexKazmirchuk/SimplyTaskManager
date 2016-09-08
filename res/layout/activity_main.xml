@@ -23,7 +23,7 @@
                 android:id="@+id/hintTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Create new task"
+                android:text="@string/empty_list_hint_text"
                 android:textSize="20sp"
                 android:textColor="#afafaf"
                 android:visibility="invisible"

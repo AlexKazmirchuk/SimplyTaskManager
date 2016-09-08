@@ -30,6 +30,7 @@
     <string name="alert_massage_warning">Попередження</string>
     <string name="alert_massage_when_task_title_empty">Будь ласка введіть назву завдання</string>
     <string name="alert_massage_when_task_title_item_empty">Будь ласка заповніть або видаліть порожні поля</string>
+    <string name="empty_list_hint_text">Створіть нове завдання</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Виконано</item>
