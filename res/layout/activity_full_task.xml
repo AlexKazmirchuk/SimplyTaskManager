@@ -67,59 +67,65 @@
             android:layout_marginBottom="4dp"
             android:gravity="center"
             android:text="@string/bottom_panel_title"/>
-        <RelativeLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.alexkaz.simplytaskmanager.uicomp.PieChartView
-                android:id="@+id/pieChartViewFullTask"
-                android:layout_width="120dp"
+            <RelativeLayout
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"/>
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/pieChartViewFullTask"
-                android:layout_toStartOf="@id/pieChartViewFullTask">
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal">
+                <com.alexkaz.simplytaskmanager.uicomp.PieChartView
+                    android:id="@+id/pieChartViewFullTask"
+                    android:layout_width="120dp"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/doneTxtViewFullTask"
-                        android:layout_width="match_parent"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"/>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@id/pieChartViewFullTask"
+                    android:layout_toStartOf="@id/pieChartViewFullTask">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="4dp"
-                        android:drawableLeft="@drawable/done_status"
-                        android:drawableStart="@drawable/done_status"
-                        android:drawablePadding="6dp"
-                        android:text="@string/done_txt_view_text"/>
-                    <TextView
-                        android:id="@+id/inProcessTxtViewFullTask"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="4dp"
-                        android:drawableLeft="@drawable/in_process_status"
-                        android:drawableStart="@drawable/in_process_status"
-                        android:drawablePadding="6dp"
-                        android:text="@string/in_process_txt_view_text"/>
-                    <TextView
-                        android:id="@+id/notCompletedTxtViewFullTask"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
-                        android:layout_marginBottom="4dp"
-                        android:drawableLeft="@drawable/not_completed_status"
-                        android:drawableStart="@drawable/not_completed_status"
-                        android:drawablePadding="6dp"
-                        android:text="@string/not_completed_txt_view_text"/>
-                </LinearLayout>
-            </FrameLayout>
-        </RelativeLayout>
+                        android:layout_gravity="center"
+                        android:orientation="vertical">
+                        <TextView
+                            android:id="@+id/doneTxtViewFullTask"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:drawableLeft="@drawable/done_status"
+                            android:drawableStart="@drawable/done_status"
+                            android:drawablePadding="6dp"
+                            android:text="@string/done_txt_view_text"/>
+                        <TextView
+                            android:id="@+id/inProcessTxtViewFullTask"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:drawableLeft="@drawable/in_process_status"
+                            android:drawableStart="@drawable/in_process_status"
+                            android:drawablePadding="6dp"
+                            android:text="@string/in_process_txt_view_text"/>
+                        <TextView
+                            android:id="@+id/notCompletedTxtViewFullTask"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:layout_marginBottom="4dp"
+                            android:drawableLeft="@drawable/not_completed_status"
+                            android:drawableStart="@drawable/not_completed_status"
+                            android:drawablePadding="6dp"
+                            android:text="@string/not_completed_txt_view_text"/>
+                    </LinearLayout>
+                </FrameLayout>
+            </RelativeLayout>
+        </FrameLayout>
+
     </LinearLayout>
 
 </com.sothree.slidinguppanel.SlidingUpPanelLayout>
