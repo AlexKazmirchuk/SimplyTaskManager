@@ -70,6 +70,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
         ///////////////////////////
         ///////////////////////////
         if(intentTaskTitle != null){
+            getSupportActionBar().setTitle(R.string.edit_task_activity_label);
             intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
             switch (intentTaskObject.getIcon()){
                 case TaskObject.WORK_ICON:

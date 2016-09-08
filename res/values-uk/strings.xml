@@ -4,7 +4,7 @@
     <string name="main_activity_label">&#160;&#160;Всі завдання</string>
     <string name="fullTaskActivityLabel">Перегляд</string>
     <string name="new_task_activity_label">Нове завдання</string>
-    <string name="edit_task_activity_label">Редагувати</string>
+    <string name="edit_task_activity_label">Редагування</string>
 
     <string name="add_button_text">ДОДАТИ</string>
     <string name="edit_button_title">ЗБЕРЕГТИ</string>
