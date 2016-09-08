@@ -51,7 +51,7 @@
 
     <!--content description values-->
     <string name="spinner_arrow_description">spinner bottom right arrow</string>
-    <string name="character_counter_text">0/150</string>
+    <string name="character_counter_text">0/100</string>
     <string name="main_item_icon_content_description">icon description</string>
     <string name="add_new_task_icon_content_description">add new task icon</string>
     <string name="delete_button_icon_content_description">delete button icon</string>

@@ -30,7 +30,7 @@ import java.util.Map;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 
-    public static final String TITLE_TEXT_CHAR_LIMIT = "/150";
+    public static final String TITLE_TEXT_CHAR_LIMIT = "/100";
     private int[] images;
     private ArrayList<Map<String, Object>> data;
     private String[] from;
