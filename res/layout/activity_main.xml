@@ -19,6 +19,15 @@
             android:paddingStart="@dimen/main_list_view_padding_left"
             android:paddingRight="@dimen/main_list_view_padding_right"
             android:paddingEnd="@dimen/main_list_view_padding_right">
+            <TextView
+                android:id="@+id/hintTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create new task"
+                android:textSize="20sp"
+                android:textColor="#afafaf"
+                android:visibility="invisible"
+                android:layout_gravity="center"/>
             <ListView
                 android:id="@+id/mainListView"
                 android:layout_width="match_parent"

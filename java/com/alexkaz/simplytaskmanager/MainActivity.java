@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private MainTaskAdapter adapter;
     private ArrayList<TaskObject> listOftasks;
     private FloatingActionButton actionButton;
+    private TextView hintTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +41,18 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_36dp);
         getSupportActionBar().setTitle(R.string.main_activity_label);
+        hintTextView = (TextView) findViewById(R.id.hintTextView);
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
+        showHint();
         initStatisticPanel();
         initActionButton();
+    }
+
+    private void showHint() {
+        if (adapter.getCount() == 0){
+            hintTextView.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initActionButton() {
@@ -78,8 +87,10 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        hintTextView.setVisibility(View.INVISIBLE);
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
+        showHint();
         initStatisticPanel();
     }
 
@@ -151,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
                 new DBHelper(this).removeTask(taskTitle);
                 adapter.removeItem(info.position);
                 adapter.notifyDataSetChanged();
+                hintTextView.setVisibility(View.INVISIBLE);
+                showHint();
                 ////////////////
                 return true;
             default:
