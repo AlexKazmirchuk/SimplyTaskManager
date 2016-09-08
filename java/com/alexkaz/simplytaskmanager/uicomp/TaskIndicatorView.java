@@ -30,10 +30,17 @@ public class TaskIndicatorView extends View {
 
         String result = "width - " + canvas.getWidth() + ", " + "height - " + canvas.getHeight(); // 258 27
         Log.d("myLog", result);
+        taskIndicator.determineMeasurements(this.getWidth(),this.getHeight());
         taskIndicator.draw(canvas);
     }
 
     public void setTaskStatuses(ArrayList<TaskStatus> statuses){
         taskIndicator.setTaskStatuses(statuses);
+    }
+
+    @Override
+    public void invalidate() {
+        taskIndicator.determineMeasurements(this.getWidth(),this.getHeight());
+        super.invalidate();
     }
 }

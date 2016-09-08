@@ -1,6 +1,8 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.graphics.Color;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -16,6 +18,8 @@ import android.widget.TextView;
 import com.alexkaz.simplytaskmanager.adapters.MainTaskAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
+import com.alexkaz.simplytaskmanager.uicomp.TaskIndicator;
+import com.alexkaz.simplytaskmanager.uicomp.TaskIndicatorView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
@@ -164,5 +168,11 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         //
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mainListView.invalidate();
     }
 }

@@ -103,7 +103,7 @@ public class TaskIndicator {
         }
     }
 
-    private void determineMeasurements(int width, int height){
+    public void determineMeasurements(int width, int height){
         elemRectSizeX = width/MAX_DISPLAY_COUNT;
         elemRectSizeY = height;
         if (elemRectSizeX >= elemRectSizeY){
