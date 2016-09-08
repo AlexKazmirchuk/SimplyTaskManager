@@ -48,6 +48,7 @@
                 android:id="@+id/editTextTaskItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:textSize="14sp"
                 android:lines="1"
                 android:maxLength="250"
                 android:hint="@string/edit_text_task_item_hint"/>
