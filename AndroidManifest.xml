@@ -27,8 +27,5 @@
             android:windowSoftInputMode="adjustPan"
             android:label="@string/new_task_activity_label"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
-        <activity android:name=".EditTaskActivity"
-            android:label="@string/edit_task_activity_label"></activity>
     </application>
-
 </manifest>
