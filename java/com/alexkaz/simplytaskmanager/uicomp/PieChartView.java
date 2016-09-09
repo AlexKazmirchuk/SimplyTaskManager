@@ -1,6 +1,8 @@
 package com.alexkaz.simplytaskmanager.uicomp;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +12,8 @@ import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+
+import com.alexkaz.simplytaskmanager.R;
 
 import java.util.ArrayList;
 
@@ -33,22 +37,30 @@ public class PieChartView extends View {
     private int amountOfInProcess;
     private int amountOfDone;
 
+    private Context context;
+    private Bitmap doneBitmap;
+    private RectF doneRectF;
+
     private TaskStatus[] taskStatuses = new TaskStatus[MAX_DISPLAY_COUNT];
     private ArrayList<TaskStatus> statuses;
 
     public PieChartView(Context context) {
         super(context);
+        this.context = context;
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         initComps();
     }
 
     public PieChartView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         initComps();
     }
 
     private void initComps() {
+        doneBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.done);
+        doneRectF = new RectF();
         taskStatuses[0] = TaskStatus.DONE;
         taskStatuses[1] = TaskStatus.DONE;
         taskStatuses[2] = TaskStatus.DONE;
@@ -123,6 +135,10 @@ public class PieChartView extends View {
             canvas.drawArc(pieChartAvailableSpace,START_ANGLE,- (doneAngle),true,pieChartPaint);
             canvas.drawArc(pieChartAvailableSpace,START_ANGLE,- (doneAngle),true,pieChartDividerPaint);
         }
+
+        if((amountOfDone + amountOfInProcess + amountOfNotCompleted) == amountOfDone && amountOfDone != 0){
+            canvas.drawBitmap(doneBitmap,null,doneRectF, null);
+        }
     }
 
     private void determineMeasurements(int width, int height){
@@ -133,6 +149,16 @@ public class PieChartView extends View {
         }
         pieChartDividerSize = (int)(pieChartRadius* PIE_CHART_DIVIDER);
         pieChartAvailableSpace = new RectF(width/2-pieChartRadius,height/2-pieChartRadius,width/2+pieChartRadius,height/2+pieChartRadius);
+
+        int bmpWidth = (int)(width*0.6f);
+        int bmpHeight = (int)(height*0.6f);
+        int bmpPosX = (width - bmpWidth)/2;
+        int bmpPosY = (height - bmpHeight)/2;
+
+        doneRectF.left = bmpPosX;
+        doneRectF.top = bmpPosY;
+        doneRectF.right = bmpPosX + bmpWidth;
+        doneRectF.bottom = bmpPosY + bmpHeight;
     }
 
     private void initGraphicComp(){
