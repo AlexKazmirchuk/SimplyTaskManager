@@ -93,6 +93,10 @@ public class PieChartView extends View {
         int inProcessAngle = Math.round(degreeInterest*amountOfInProcess);
         int notCompletedAngle = 360 - (doneAngle + inProcessAngle);
 
+        if((amountOfDone + amountOfInProcess + amountOfNotCompleted) == 0){
+            notCompletedAngle = 0;
+        }
+
         pieChartPaint.setColor(Color.GREEN);
         canvas.drawArc(pieChartAvailableSpace,START_ANGLE,- (doneAngle),true,pieChartPaint);
         pieChartPaint.setColor(Color.YELLOW);

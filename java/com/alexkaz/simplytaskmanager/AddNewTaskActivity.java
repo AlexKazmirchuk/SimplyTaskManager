@@ -210,7 +210,11 @@ public class AddNewTaskActivity extends AppCompatActivity {
                         statuses.add(TaskStatus.NOT_COMPLITED);
                     }
                 } else{
-                    statuses = intentTaskObject.getStatuses();
+                    if (intentTaskTitle != null){
+                        statuses = intentTaskObject.getStatuses();
+                    } else {
+                        statuses = new ArrayList<TaskStatus>();
+                    }
                 }
 
                 TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
