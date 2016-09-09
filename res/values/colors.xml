@@ -5,7 +5,8 @@
     <color name="colorAccent">#008675</color>
 
     <color name="VI_BgColor">#d6d7d6</color>
-    <color name="VI_LinkingRectColor">#4b288c</color>
+    <!--<color name="VI_LinkingRectColor">#4b288c</color>-->
+    <color name="VI_LinkingRectColor">#cab9e9</color>
     <color name="VI_TopRectColor">#09c804</color>
     <color name="VI_NotCompletedColor">#ef001c</color>
     <color name="VI_NotCompletedBlurColor">#ffa3d5</color>
