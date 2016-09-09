@@ -23,6 +23,7 @@ public class ItemTaskAdapter extends BaseAdapter {
     private Context context;
     private LayoutInflater inflater;
     private boolean itemCountChanged = false;
+    private int itemAddedCount = 0;
 
     public ItemTaskAdapter(Context context, ArrayList<String> items) {
         this.items = items;
@@ -97,8 +98,10 @@ public class ItemTaskAdapter extends BaseAdapter {
         holder.imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if ((items.size()-1) != position){
+                    itemCountChanged = true;
+                }
                 items.remove(position);
-                itemCountChanged = true;
                 Log.d("position", position + "");
                 ItemTaskAdapter.super.notifyDataSetChanged();
             }
@@ -116,6 +119,7 @@ public class ItemTaskAdapter extends BaseAdapter {
 
     public void addNewItem(){
         items.add("");
+        itemAddedCount++;
     }
 
     public ArrayList<String> getItems() {
@@ -129,6 +133,10 @@ public class ItemTaskAdapter extends BaseAdapter {
 
     public void setItemCountChanged(boolean itemCountChanged) {
         this.itemCountChanged = itemCountChanged;
+    }
+
+    public int getItemAddedCount(){
+        return itemAddedCount;
     }
 
 }

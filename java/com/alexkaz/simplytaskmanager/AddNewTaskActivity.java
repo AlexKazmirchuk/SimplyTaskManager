@@ -154,7 +154,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 itemTaskAdapter.addNewItem(); // переписати
-                itemTaskAdapter.setItemCountChanged(true);
+//                itemTaskAdapter.setItemCountChanged(true);
                 itemTaskAdapter.notifyDataSetChanged();
             }
         });
@@ -211,7 +211,19 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     }
                 } else{
                     if (intentTaskTitle != null){
-                        statuses = intentTaskObject.getStatuses();
+//                        statuses = intentTaskObject.getStatuses();
+
+                        ///////////////////////////////////
+                        if (itemTaskAdapter.getItemAddedCount() == 0){
+                            statuses = intentTaskObject.getStatuses();
+                        } else {
+                            statuses = intentTaskObject.getStatuses();
+                            for (int i = 0; i < itemTaskAdapter.getItemAddedCount(); i++) {
+                                statuses.add(TaskStatus.NOT_COMPLITED);
+                            }
+                        }
+                        ///////////////////////////////
+
                     } else {
                         statuses = new ArrayList<TaskStatus>();
                     }
