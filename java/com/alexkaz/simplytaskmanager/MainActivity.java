@@ -16,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexkaz.simplytaskmanager.adapters.MainTaskAdapter;
+import com.alexkaz.simplytaskmanager.adapters.RotateAnimAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskIndicator;
@@ -70,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
         mainListView = (ListView) findViewById(R.id.mainListView);
         mainListView.setDivider(null);
         adapter = new MainTaskAdapter(this,listOftasks);
-        mainListView.setAdapter(adapter);
+        RotateAnimAdapter rotateAnimAdapter = new RotateAnimAdapter(adapter);
+        rotateAnimAdapter.setAbsListView(mainListView);
+        mainListView.setAdapter(rotateAnimAdapter);
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
