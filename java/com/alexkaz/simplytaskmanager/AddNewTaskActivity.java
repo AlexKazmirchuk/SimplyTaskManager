@@ -226,6 +226,9 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
                     } else {
                         statuses = new ArrayList<TaskStatus>();
+                        for (int i = 0; i < itemTitles.size(); i++) {
+                            statuses.add(TaskStatus.NOT_COMPLITED);
+                        }
                     }
                 }
 
