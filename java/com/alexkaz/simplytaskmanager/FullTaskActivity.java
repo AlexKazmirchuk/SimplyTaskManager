@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alexkaz.simplytaskmanager.adapters.RotateAnimAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
@@ -70,7 +71,9 @@ public class FullTaskActivity extends AppCompatActivity {
         reviewTaskListView.setDivider(null);
 
         TaskViewerAdapter adapter = new TaskViewerAdapter(this,taskObject);
-        reviewTaskListView.setAdapter(adapter);
+        RotateAnimAdapter rotateAnimAdapter = new RotateAnimAdapter(adapter);
+        rotateAnimAdapter.setAbsListView(reviewTaskListView);
+        reviewTaskListView.setAdapter(rotateAnimAdapter);
     }
 
     @Override
