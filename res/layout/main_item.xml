@@ -27,6 +27,7 @@
                 android:layout_marginBottom="2dp">
                 <ImageView
                     android:id="@+id/mainItemIcon"
+                    android:transitionName="@string/transition_icon_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/work_icon"
@@ -41,6 +42,7 @@
                 android:layout_marginBottom="2dp">
                 <TextView
                     android:id="@+id/mainItemTitle"
+                    android:transitionName="@string/transition_title_name"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:paddingTop="3dp"
@@ -51,6 +53,7 @@
                     android:gravity="start"
                     android:textSize="14sp"
                     android:textAlignment="viewStart"
+                    android:background="#ffffff"
                     android:text="@string/first_item_text"
                     android:layout_margin="2dp"/>
                 <com.alexkaz.simplytaskmanager.uicomp.TaskIndicatorView

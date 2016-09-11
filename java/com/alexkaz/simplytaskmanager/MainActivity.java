@@ -3,7 +3,11 @@ package com.alexkaz.simplytaskmanager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,12 +81,27 @@ public class MainActivity extends AppCompatActivity {
         mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
-                Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
-                intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
+                if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+                    String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
+                    Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
+                    intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
+
+                    ActivityOptionsCompat options = ActivityOptionsCompat
+                            .makeSceneTransitionAnimation(MainActivity.this,
+                                    new Pair<View, String>(view.findViewById(R.id.mainItemIcon),
+                                            getString(R.string.transition_icon_image)),
+                                    new Pair<View, String>(view.findViewById(R.id.mainItemTitle),
+                                            getString(R.string.transition_title_name)));
+                    ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
+
+                } else {
+                    String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
+                    Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
+                    intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
 //                startActivity(intent);
-                startActivityForResult(intent,1);
-                Log.d("titleLog",taskTitle);
+                    startActivityForResult(intent,1);
+                    Log.d("titleLog",taskTitle);
+                }
             }
         });
         registerForContextMenu(mainListView);

@@ -62,6 +62,8 @@
     <string name="empty_list_hint_text">Create new task</string>
     <!--end-->
 
+    <string name="transition_icon_image">transition:ICON</string>
+    <string name="transition_title_name">transition:TITLE</string>
 
 
 </resources>
