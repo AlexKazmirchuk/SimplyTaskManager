@@ -16,6 +16,10 @@
         <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
     </style>
 
+    <style name="FullTaskTheme" parent="AppTheme">
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
     <style name="spinner_style">
         <item name="android:background">@drawable/gradient_spinner</item>
         <!--<item name="android:layout_marginLeft">5dp</item>-->

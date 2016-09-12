@@ -21,6 +21,7 @@
         <activity
             android:name=".FullTaskActivity"
             android:label="@string/fullTaskActivityLabel"
+            android:theme="@style/FullTaskTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"/>
         <activity
             android:name=".AddNewTaskActivity"

@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:background="#dddddd">
+            android:background="#3F51B5">
             <ImageView
                 android:id="@+id/reviewIcon"
                 android:transitionName="@string/transition_icon_image"
@@ -45,6 +45,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:textColor="#ffffff"
+                    android:layout_gravity="center"
                     android:gravity="center"
                     android:text="@string/txt_view_task_title_text"/>
             </FrameLayout>
