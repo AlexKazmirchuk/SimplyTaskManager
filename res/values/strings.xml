@@ -64,6 +64,9 @@
 
     <string name="transition_icon_image">transition:ICON</string>
     <string name="transition_title_name">transition:TITLE</string>
+    <string name="positive_answer">Yes</string>
+    <string name="negative_answer">No</string>
+    <string name="modified_data_alarm_massage">Do you really want to leave the editing task? All modified data will be lost !</string>
 
 
 </resources>

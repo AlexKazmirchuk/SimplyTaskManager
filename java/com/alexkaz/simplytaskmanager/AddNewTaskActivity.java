@@ -1,6 +1,7 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -48,6 +49,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
     private TextView titleCharCounter;
     private TaskObject intentTaskObject;
     private String intentTaskTitle;
+    private boolean taskChanged = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +91,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
             }
             editTextTitle.setText(intentTaskObject.getTaskTitle());
             titleCharCounter.setText(intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT);
-            itemTaskAdapter = new ItemTaskAdapter(this,intentTaskObject.getItemTitles());
+            itemTaskAdapter = new ItemTaskAdapter(this, (ArrayList<String>) intentTaskObject.getItemTitles().clone());
             addButton.setText(getString(R.string.edit_button_title));
         } else {
             spinner.setSelection(0);
@@ -267,5 +270,44 @@ public class AddNewTaskActivity extends AppCompatActivity {
         dialogBuilder.setMessage(massage);
         dialogBuilder.setPositiveButton(getResources().getString(R.string.status_dialog_positive_button_text),null);
         dialogBuilder.create().show();
+    }
+
+    @Override
+    public void onBackPressed() {
+//        super.onBackPressed();
+
+        if(intentTaskObject != null){
+            if(!(editTextTitle.getText().toString().equals(intentTaskObject.getTaskTitle()))){
+                taskChanged = true;
+            }
+            if (!(itemTaskAdapter.getItems().equals(intentTaskObject.getItemTitles()))){
+                taskChanged = true;
+            }
+        } else {
+            if(!(editTextTitle.getText().toString().equals(""))){
+                taskChanged = true;
+            }
+            if (itemTaskAdapter.getItems().size() != 0){
+                taskChanged = true;
+            }
+        }
+
+        if (taskChanged){
+            AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddNewTaskActivity.this);
+            dialogBuilder.setTitle(R.string.alert_massage_warning);
+            dialogBuilder.setMessage(getString(R.string.modified_data_alarm_massage));
+            dialogBuilder.setPositiveButton(getString(R.string.positive_answer), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    AddNewTaskActivity.this.finish();
+                }
+            });
+            dialogBuilder.setNegativeButton(getString(R.string.negative_answer),null);
+            dialogBuilder.create().show();
+        } else {
+            this.finish();
+        }
+
+        Log.d("textChanged",taskChanged + "");
     }
 }
