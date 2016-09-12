@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this,AddNewTaskActivity.class);
-                startActivityForResult(intent,3);
+                startActivityForResult(intent,AddNewTaskActivity.REQUEST_CODE);
             }
         });
     }
@@ -92,14 +92,14 @@ public class MainActivity extends AppCompatActivity {
                                             getString(R.string.transition_icon_image)),
                                     new Pair<View, String>(view.findViewById(R.id.mainItemTitle),
                                             getString(R.string.transition_title_name)));
-                    ActivityCompat.startActivity(MainActivity.this, intent, options.toBundle());
+                    ActivityCompat.startActivityForResult(MainActivity.this, intent, FullTaskActivity.REQUEST_CODE, options.toBundle());
 
                 } else {
                     String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
                     Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
                     intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
 //                startActivity(intent);
-                    startActivityForResult(intent,1);
+                    startActivityForResult(intent,FullTaskActivity.REQUEST_CODE);
                     Log.d("titleLog",taskTitle);
                 }
             }
@@ -109,11 +109,36 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        hintTextView.setVisibility(View.INVISIBLE);
-        listOftasks = new DBHelper(this).getListOfTasks();
-        initList();
-        showHint();
-        initStatisticPanel();
+        switch (requestCode){
+            case AddNewTaskActivity.REQUEST_CODE:
+                Log.d("requestLog","returned from add new task");
+                if (resultCode == RESULT_OK){
+                    Log.d("requestLog","data changed in add new task");
+                    hintTextView.setVisibility(View.INVISIBLE);
+                    listOftasks = new DBHelper(this).getListOfTasks();
+                    initList();
+                    showHint();
+                    initStatisticPanel();
+                }
+                break;
+            case FullTaskActivity.REQUEST_CODE:
+                Log.d("requestLog","returned from full task");
+                if (resultCode == RESULT_OK){
+                    Log.d("requestLog","data changed in full task");
+                    hintTextView.setVisibility(View.INVISIBLE);
+                    listOftasks = new DBHelper(this).getListOfTasks();
+                    initList();
+                    showHint();
+                    initStatisticPanel();
+                }
+                break;
+        }
+
+//        hintTextView.setVisibility(View.INVISIBLE);
+//        listOftasks = new DBHelper(this).getListOfTasks();
+//        initList();
+//        showHint();
+//        initStatisticPanel();
     }
 
     private void initStatisticPanel() {
@@ -173,7 +198,7 @@ public class MainActivity extends AppCompatActivity {
                 //TODO реалізувати виклик актівіті редагування
                 Intent intent = new Intent(this,AddNewTaskActivity.class);
                 intent.putExtra(DBHelper.TASK_TITLE,((TaskObject) adapter.getItem(info.position)).getTaskTitle());
-                startActivityForResult(intent,2);
+                startActivityForResult(intent,AddNewTaskActivity.REQUEST_CODE);
                 ////////////////
                 return true;
             case R.id.deleteItem:
@@ -186,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
                 hintTextView.setVisibility(View.INVISIBLE);
                 showHint();
+                initStatisticPanel();
                 ////////////////
                 return true;
             default:

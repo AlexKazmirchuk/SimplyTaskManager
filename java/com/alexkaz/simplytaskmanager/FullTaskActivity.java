@@ -18,11 +18,13 @@ import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 public class FullTaskActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 4361;
     public static final String SAVED_TASK_TITLE = "savedTaskTitle";
     public static final int ADD_NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
     private ImageView reviewIcon;
     private TextView txtViewTaskTitle;
     private ListView reviewTaskListView;
+    TaskViewerAdapter adapter;
     private TaskObject taskObject;
     String taskTitle;
 
@@ -69,8 +71,7 @@ public class FullTaskActivity extends AppCompatActivity {
     private void initListView() {
         reviewTaskListView = (ListView) findViewById(R.id.reviewTaskListView);
         reviewTaskListView.setDivider(null);
-
-        TaskViewerAdapter adapter = new TaskViewerAdapter(this,taskObject);
+        adapter = new TaskViewerAdapter(this,taskObject);
         RotateAnimAdapter rotateAnimAdapter = new RotateAnimAdapter(adapter);
         rotateAnimAdapter.setAbsListView(reviewTaskListView);
         reviewTaskListView.setAdapter(rotateAnimAdapter);
@@ -84,7 +85,7 @@ public class FullTaskActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.editMenuItem){
             Intent intent = new Intent(this,AddNewTaskActivity.class);
             intent.putExtra(DBHelper.TASK_TITLE,taskObject.getTaskTitle());
-            startActivityForResult(intent, ADD_NEW_TASK_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(intent, AddNewTaskActivity.REQUEST_CODE);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -100,12 +101,14 @@ public class FullTaskActivity extends AppCompatActivity {
         if (data == null){
             return;
         }
+
         String newTaskTitle = data.getStringExtra(DBHelper.TASK_TITLE);
         DBHelper helper = new DBHelper(this);
         taskObject = helper.getTask(newTaskTitle);
         initComp();
         initListView();
         initStatisticPanel();
+        setResult(RESULT_OK);
     }
 
     @Override
@@ -149,5 +152,13 @@ public class FullTaskActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.notCompletedTxtViewFullTask)).setText(notCompleted);
         ((PieChartView)findViewById(R.id.pieChartViewFullTask)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
         ((PieChartView)findViewById(R.id.pieChartViewFullTask)).invalidate();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (adapter.isSomeStatusChanged()){
+            setResult(RESULT_OK);
+        }
+        super.onBackPressed();
     }
 }

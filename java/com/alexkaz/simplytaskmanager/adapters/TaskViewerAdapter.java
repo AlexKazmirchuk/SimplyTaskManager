@@ -30,6 +30,7 @@ public class TaskViewerAdapter extends BaseAdapter {
     private ArrayList<TaskStatus> statuses;
     private LayoutInflater inflater;
     private TaskStatus choosedStatus;
+    private boolean someStatusChanged = false;
 
     public TaskViewerAdapter(Context context, TaskObject taskObject){
         this.context = context;
@@ -109,12 +110,15 @@ public class TaskViewerAdapter extends BaseAdapter {
                             statuses.set(position,choosedStatus);
                             switch (choosedStatus){
                                 case DONE:
+                                    someStatusChanged = true;
                                     new DBHelper(context).setStatus(itemTitles.get(position),STATUS_DONE);
                                     break;
                                 case IN_PROCESS:
+                                    someStatusChanged = true;
                                     new DBHelper(context).setStatus(itemTitles.get(position), STATUS_IN_PROCESS);
                                     break;
                                 case NOT_COMPLITED:
+                                    someStatusChanged = true;
                                     new DBHelper(context).setStatus(itemTitles.get(position), STATUS_NOT_COMPLETED);
                                     break;
                             }
@@ -135,5 +139,9 @@ public class TaskViewerAdapter extends BaseAdapter {
         VerticalTaskIndicatorView verticalTaskIndicatorView;
         TextView textView;
         int ref;
+    }
+
+    public boolean isSomeStatusChanged() {
+        return someStatusChanged;
     }
 }

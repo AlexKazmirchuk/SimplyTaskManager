@@ -31,6 +31,7 @@ import java.util.Map;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 
+    public static final int REQUEST_CODE = 1324;
     public static final String TITLE_TEXT_CHAR_LIMIT = "/100";
     private int[] images;
     private ArrayList<Map<String, Object>> data;
@@ -244,8 +245,9 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     helper.setTask(intentTaskObject.getTaskTitle(),taskObject);
                     Intent callbackIntent = new Intent();
                     callbackIntent.putExtra(DBHelper.TASK_TITLE, taskTitle);
-                    setResult(1,callbackIntent);
+                    setResult(RESULT_OK,callbackIntent);
                 } else {
+                    setResult(RESULT_OK);
                     helper.addTask(taskObject);
                 }
 
