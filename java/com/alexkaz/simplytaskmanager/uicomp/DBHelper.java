@@ -11,18 +11,18 @@ import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
-    public static final int DB_VERSION = 1;
-    public static final String DB_NAME = "task_db";
+    private static final int DB_VERSION = 1;
+    private static final String DB_NAME = "task_db";
 
-    public static final String TABLE_TASKS = "tasks";
-    public static final String TASK_ID = "task_id";
+    private static final String TABLE_TASKS = "tasks";
+    private static final String TASK_ID = "task_id";
     public static final String TASK_TITLE = "task_title";
-    public static final String ICON = "icon";
+    private static final String ICON = "icon";
 
-    public static final String TABLE_TASK_ITEMS = "task_items";
-    public static final String ITEM_ID = "item_id";
-    public static final String ITEM_TITLE = "item_title";
-    public static final String STATUS = "status";
+    private static final String TABLE_TASK_ITEMS = "task_items";
+    private static final String ITEM_ID = "item_id";
+    private static final String ITEM_TITLE = "item_title";
+    private static final String STATUS = "status";
 
     private static final String CREATE_TABLE_TASKS = "CREATE TABLE " +  TABLE_TASKS + "(" +
             TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -37,24 +37,20 @@ public class DBHelper extends SQLiteOpenHelper {
             "FOREIGN KEY (" + TASK_ID + ") " +
             "REFERENCES " + TABLE_TASKS + "(" + TASK_ID + "));";
 
-    public static final String DELETE_TASK_TITLE_FROM_TASK_ID = "DELETE FROM " + TABLE_TASKS + " WHERE " + TASK_ID + "=";
-    public static final String QUERY_ALL_TASK_TITLES = "SELECT " + TASK_TITLE + " FROM " + TABLE_TASKS + ";";
-    public static final String QUERY_TASK_ID_FROM_TITLE = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + " WHERE " + TASK_TITLE + "=?;";
-    public static final String QUERY_TASK_ID_AND_ICON_FROM_TITLE = "SELECT " + TASK_ID + ", " + ICON
+    private static final String DELETE_TASK_TITLE_FROM_TASK_ID = "DELETE FROM " + TABLE_TASKS + " WHERE " + TASK_ID + "=";
+    private static final String QUERY_ALL_TASK_TITLES = "SELECT " + TASK_TITLE + " FROM " + TABLE_TASKS + ";";
+    private static final String QUERY_TASK_ID_FROM_TITLE = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + " WHERE " + TASK_TITLE + "=?;";
+    private static final String QUERY_TASK_ID_AND_ICON_FROM_TITLE = "SELECT " + TASK_ID + ", " + ICON
             + " FROM " + TABLE_TASKS
             + " WHERE " + TASK_TITLE + "=?;";
 
-    public static final String DELETE_TASK_ITEMS_FROM_TASK_ID = "DELETE FROM " + TABLE_TASK_ITEMS + " WHERE " + TASK_ID + "=";
-    public static final String QUERY_ITEM_TITLE_AND_STATUS_FROM_ID = "SELECT " + ITEM_TITLE + ", " + STATUS
+    private static final String DELETE_TASK_ITEMS_FROM_TASK_ID = "DELETE FROM " + TABLE_TASK_ITEMS + " WHERE " + TASK_ID + "=";
+    private static final String QUERY_ITEM_TITLE_AND_STATUS_FROM_ID = "SELECT " + ITEM_TITLE + ", " + STATUS
             + " FROM " + TABLE_TASK_ITEMS
             + " WHERE " + TASK_ID + "=?;";
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, DB_VERSION);
-    }
-
-    public DBHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
     }
 
     @Override
@@ -70,7 +66,6 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public TaskObject getTask(String taskTitle){
-        String selectSQL = QUERY_TASK_ID_AND_ICON_FROM_TITLE;
         Cursor taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_TASK_ID_AND_ICON_FROM_TITLE,new String[]{taskTitle});
         taskTitleCursor.moveToNext();
         int taskID = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.TASK_ID));
@@ -79,7 +74,7 @@ public class DBHelper extends SQLiteOpenHelper {
         taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_ITEM_TITLE_AND_STATUS_FROM_ID,new String[]{taskID + ""});
         ArrayList<String> itemTitles = new ArrayList<>();
         ArrayList<TaskStatus> statuses = new ArrayList<>();
-        int statusBuff = 0;
+        int statusBuff;
         while(taskTitleCursor.moveToNext()){
             itemTitles.add(taskTitleCursor.getString(taskTitleCursor.getColumnIndex(DBHelper.ITEM_TITLE)));
             statusBuff = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.STATUS));
@@ -148,7 +143,6 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<TaskObject> getListOfTasks(){
 
         ArrayList<TaskObject> taskObjects = new ArrayList<>();
-        ArrayList<String> taskTitles = new ArrayList<>();
         String selectSQL = QUERY_ALL_TASK_TITLES;
         Cursor cursor = this.getReadableDatabase().rawQuery(selectSQL,null);
         while(cursor.moveToNext()){

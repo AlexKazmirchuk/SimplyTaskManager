@@ -22,12 +22,10 @@ import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.WORK_ICON;
 
 public class MainTaskAdapter extends BaseAdapter {
 
-    private Context context;
     private ArrayList<TaskObject> taskObjects;
     private LayoutInflater inflater;
 
     public MainTaskAdapter(Context context, ArrayList<TaskObject> taskObjects) {
-        this.context = context;
         this.taskObjects = taskObjects;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

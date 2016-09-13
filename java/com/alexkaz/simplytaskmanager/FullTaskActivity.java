@@ -6,10 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -24,21 +22,19 @@ import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 
 public class FullTaskActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE = 4361;
-    public static final String SAVED_TASK_TITLE = "savedTaskTitle";
-    public static final int ADD_NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
-    private ImageView reviewIcon;
-    private TextView txtViewTaskTitle;
-    private ListView reviewTaskListView;
-    TaskViewerAdapter adapter;
+    static final int REQUEST_CODE = 4361;
+    private static final String SAVED_TASK_TITLE = "savedTaskTitle";
+    private TaskViewerAdapter adapter;
     private TaskObject taskObject;
-    String taskTitle;
+    private String taskTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_full_task);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
         Intent intent = getIntent();
         if (intent != null){
             taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
@@ -55,8 +51,8 @@ public class FullTaskActivity extends AppCompatActivity {
     }
 
     private void initComp() {
-        reviewIcon = (ImageView)findViewById(R.id.reviewIcon);
-        txtViewTaskTitle = (TextView)findViewById(R.id.txtViewTaskTitle);
+        ImageView reviewIcon = (ImageView) findViewById(R.id.reviewIcon);
+        TextView txtViewTaskTitle = (TextView) findViewById(R.id.txtViewTaskTitle);
         switch (taskObject.getIcon()){
             case TaskObject.WORK_ICON:
                 reviewIcon.setImageResource(R.drawable.work_icon);
@@ -85,7 +81,7 @@ public class FullTaskActivity extends AppCompatActivity {
     }
 
     private void initListView() {
-        reviewTaskListView = (ListView) findViewById(R.id.reviewTaskListView);
+        ListView reviewTaskListView = (ListView) findViewById(R.id.reviewTaskListView);
         reviewTaskListView.setDivider(null);
         adapter = new TaskViewerAdapter(this,taskObject);
         RotateAnimAdapter rotateAnimAdapter = new RotateAnimAdapter(adapter);
@@ -135,8 +131,8 @@ public class FullTaskActivity extends AppCompatActivity {
 
     public void initStatisticPanel() {
         int notCompletedTaskItemCount = 0, inProcessTaskItemCount = 0, doneTaskItemCount = 0;
-        int notCompletedTaskItemInterest = 0,  inProcessTaskItemInterest = 0, doneTaskItemInterest = 0;
-        int amountOfTaskItems = 0;
+        int notCompletedTaskItemInterest,  inProcessTaskItemInterest, doneTaskItemInterest;
+        int amountOfTaskItems;
         for (TaskStatus taskStatus : taskObject.getStatuses()) {
             switch (taskStatus){
                 case NOT_COMPLITED:
@@ -150,9 +146,6 @@ public class FullTaskActivity extends AppCompatActivity {
                     break;
             }
         }
-//        notCompletedTaskItemCount = 300;
-//        inProcessTaskItemCount = 23;
-//        doneTaskItemCount = 150;
 
         amountOfTaskItems = notCompletedTaskItemCount + inProcessTaskItemCount + doneTaskItemCount;
         notCompletedTaskItemInterest =  Math.round((((float) notCompletedTaskItemCount)/((float) amountOfTaskItems))*100);
@@ -167,7 +160,7 @@ public class FullTaskActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.inProcessTxtViewFullTask)).setText(inProcess);
         ((TextView)findViewById(R.id.notCompletedTxtViewFullTask)).setText(notCompleted);
         ((PieChartView)findViewById(R.id.pieChartViewFullTask)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
-        ((PieChartView)findViewById(R.id.pieChartViewFullTask)).invalidate();
+        findViewById(R.id.pieChartViewFullTask).invalidate();
     }
 
     @Override

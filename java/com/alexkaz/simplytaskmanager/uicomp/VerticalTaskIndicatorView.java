@@ -14,12 +14,12 @@ import com.alexkaz.simplytaskmanager.R;
 
 public class VerticalTaskIndicatorView extends View {
 
-    public static final float CIRCLE_RADIUS_HEIGHT_DIVIDER = 0.5385f;
-    public static final float CIRCLE_RADIUS_WIDTH_DIVIDER = 0.4667f;
-    public static final float BLUR_RADIUS_DIVIDER = 0.7f;
-    public static final float BG_RECT_SIZE_DIVIDER = 0.9f;
-    public static final float CIRCLE_POS_X_DIVIDER = 0.9f;
-    public static final float LINKING_RECT_SIZE_DIVIDER = 0.2143f;
+    private static final float CIRCLE_RADIUS_HEIGHT_DIVIDER = 0.5385f;
+    private static final float CIRCLE_RADIUS_WIDTH_DIVIDER = 0.4667f;
+    private static final float BLUR_RADIUS_DIVIDER = 0.7f;
+    private static final float BG_RECT_SIZE_DIVIDER = 0.9f;
+    private static final float CIRCLE_POS_X_DIVIDER = 0.9f;
+    private static final float LINKING_RECT_SIZE_DIVIDER = 0.2143f;
     private boolean measureFlag = true;
     private TaskStatus currentStatus = TaskStatus.NOT_COMPLITED;
     private TaskStatus previousStatus;
@@ -29,18 +29,13 @@ public class VerticalTaskIndicatorView extends View {
     private int circlePosX;
     private int circlePosY;
 
-    private int paddingTop = 16;
-    private int bgRectSizeX;
-
     private int linkingRectSize;
 
-    private Paint topRectPaint;
     private Paint linkingPaint;
     private Paint notCompletedPaint;
     private Paint inProcessPaint;
     private Paint donePaint;
 
-    private Paint bgPaint;
     private Paint notCompletedBlurPaint;
     private Paint inProcessBlurPaint;
     private Paint doneBlurPaint;
@@ -125,24 +120,25 @@ public class VerticalTaskIndicatorView extends View {
         }
 
         blurRadius = circleRadius* BLUR_RADIUS_DIVIDER;
-        bgRectSizeX = (int)(width* BG_RECT_SIZE_DIVIDER);
+        int bgRectSizeX = (int) (width * BG_RECT_SIZE_DIVIDER);
 
         circlePosX = (int) (width* CIRCLE_POS_X_DIVIDER)/2;
+        int paddingTop = 16;
         circlePosY = paddingTop + circleRadius;
 
         linkingRectSize = (int) (circleRadius* LINKING_RECT_SIZE_DIVIDER); // 3
 
-        bgRect = new Rect(0,0,bgRectSizeX,height);
+        bgRect = new Rect(0,0, bgRectSizeX,height);
     }
 
     private void initPaintComp(){
-        bgPaint = new Paint();
+        Paint bgPaint = new Paint();
         bgPaint.setColor(getContext().getResources().getColor(R.color.VI_BgColor));
 
         linkingPaint = new Paint();
         linkingPaint.setColor(getContext().getResources().getColor(R.color.VI_LinkingRectColor));
 
-        topRectPaint = new Paint();
+        Paint topRectPaint = new Paint();
         topRectPaint.setColor(getContext().getResources().getColor(R.color.VI_TopRectColor));
 
         notCompletedPaint = new Paint();

@@ -1,22 +1,18 @@
 package com.alexkaz.simplytaskmanager.uicomp;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.BlurMaskFilter;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.Log;
-
 import com.alexkaz.simplytaskmanager.R;
 
 import java.util.ArrayList;
 
 public class TaskIndicator {
 
-    public static final int MAX_DISPLAY_COUNT = 8;
-    public static final float CIRCLE_RADIUS_DIVIDER = 0.75f;
-    public static final float LINKING_RECT_SIZE_DIVIDER = 0.25f;
+    private static final int MAX_DISPLAY_COUNT = 8;
+    private static final float CIRCLE_RADIUS_DIVIDER = 0.75f;
+    private static final float LINKING_RECT_SIZE_DIVIDER = 0.25f;
     private boolean measureFlag = true;
     private int circleRadius;
     private int elemRectSizeX;
@@ -35,25 +31,14 @@ public class TaskIndicator {
     private Paint notCompletedBlurPaint;
     private Paint inProcessBlurPaint;
     private Paint doneBlurPaint;
-
-    private TaskStatus[] taskStatuses = new TaskStatus[8];
     private ArrayList<TaskStatus> statuses;
 
-    public TaskIndicator(Context context) {
+    TaskIndicator(Context context) {
         this.context = context;
         initComps();
     }
 
     private void initComps() {
-        taskStatuses[0] = TaskStatus.DONE;
-        taskStatuses[1] = TaskStatus.DONE;
-        taskStatuses[2] = TaskStatus.DONE;
-        taskStatuses[3] = TaskStatus.IN_PROCESS;
-        taskStatuses[4] = TaskStatus.IN_PROCESS;
-        taskStatuses[5] = TaskStatus.NOT_COMPLITED;
-        taskStatuses[6] = TaskStatus.NOT_COMPLITED;
-        taskStatuses[7] = TaskStatus.NOT_COMPLITED;
-
         statuses = new ArrayList<>();
         for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
             statuses.add(TaskStatus.NOT_COMPLITED);
@@ -62,8 +47,7 @@ public class TaskIndicator {
     }
 
 
-    public void draw(Canvas canvas){
-//        canvas.drawColor(Color.GREEN);
+    void draw(Canvas canvas){
         if (measureFlag){
             determineMeasurements(canvas.getWidth(),canvas.getHeight());
             initPaintComp();
@@ -103,7 +87,7 @@ public class TaskIndicator {
         }
     }
 
-    public void determineMeasurements(int width, int height){
+    void determineMeasurements(int width, int height){
         elemRectSizeX = width/MAX_DISPLAY_COUNT;
         elemRectSizeY = height;
         if (elemRectSizeX >= elemRectSizeY){
@@ -152,7 +136,7 @@ public class TaskIndicator {
         statuses.set(position,taskStatus);
     }
 
-    public void setTaskStatuses(ArrayList<TaskStatus> statuses){
+    void setTaskStatuses(ArrayList<TaskStatus> statuses){
         this.statuses = statuses;
     }
 }

@@ -31,19 +31,12 @@ import java.util.Map;
 
 public class AddNewTaskActivity extends AppCompatActivity {
 
-    public static final int REQUEST_CODE = 1324;
-    public static final String TITLE_TEXT_CHAR_LIMIT = "/100";
-    private int[] images;
-    private ArrayList<Map<String, Object>> data;
-    private String[] from;
-    private int[] to;
+    static final int REQUEST_CODE = 1324;
+    private static final String TITLE_TEXT_CHAR_LIMIT = "/100";
     private Spinner spinner;
-    private SimpleAdapter simpleAdapter;
 
     private ItemTaskAdapter itemTaskAdapter;
     private ListView itemTaskList;
-
-    private LinearLayout addNewTaskButton;
 
     private Button addButton;
     private EditText editTextTitle;
@@ -91,7 +84,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     break;
             }
             editTextTitle.setText(intentTaskObject.getTaskTitle());
-            titleCharCounter.setText(intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT);
+            String charCounterValue = intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT;
+            titleCharCounter.setText(charCounterValue);
             itemTaskAdapter = new ItemTaskAdapter(this, (ArrayList<String>) intentTaskObject.getItemTitles().clone());
             addButton.setText(getString(R.string.edit_button_title));
         } else {
@@ -103,27 +97,19 @@ public class AddNewTaskActivity extends AppCompatActivity {
     }
 
     private void initSpinner(){
-        images = new int[] {R.drawable.work_icon,R.drawable.home_icon,R.drawable.fun_icon,R.drawable.other_icon};
-        data = new ArrayList<Map<String, Object>>();
-        from = new String[] {"image_bg"};
-        to = new int[] {R.id.spinnerIcon};
+        int[] images = new int[]{R.drawable.work_icon, R.drawable.home_icon, R.drawable.fun_icon, R.drawable.other_icon};
+        ArrayList<Map<String, Object>> data = new ArrayList<>();
+        String[] from = new String[]{"image_bg"};
+        int[] to = new int[]{R.id.spinnerIcon};
         Map<String, Object> m;
         for (int i = 0; i < 4; i++) {
-            m = new HashMap<String, Object>();
+            m = new HashMap<>();
             m.put("image_bg", images[i]);
             data.add(m);
         }
-        simpleAdapter =  new SimpleAdapter(this,data,R.layout.spinner_row,from,to);
-
+        SimpleAdapter simpleAdapter = new SimpleAdapter(this, data, R.layout.spinner_row, from, to);
         spinner = (Spinner) findViewById(R.id.spinner);
         spinner.setAdapter(simpleAdapter);
-
-        //////////////////
-
-
-
-
-        //////////////////
     }
 
     private void initComp(){
@@ -144,7 +130,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                titleCharCounter.setText(s.length() + TITLE_TEXT_CHAR_LIMIT);
+                String charCounterValue = s.length() + TITLE_TEXT_CHAR_LIMIT;
+                titleCharCounter.setText(charCounterValue);
             }
         });
     }
@@ -153,12 +140,11 @@ public class AddNewTaskActivity extends AppCompatActivity {
         itemTaskList = (ListView) findViewById(R.id.itemTaskList);
         itemTaskList.setDivider(null);
         View view = ((LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.add_new_task_handler_layout, null, false);
-        addNewTaskButton = (LinearLayout) view.findViewById(R.id.addNewTask);
+        LinearLayout addNewTaskButton = (LinearLayout) view.findViewById(R.id.addNewTask);
         addNewTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 itemTaskAdapter.addNewItem(); // переписати
-//                itemTaskAdapter.setItemCountChanged(true);
                 itemTaskAdapter.notifyDataSetChanged();
             }
         });
@@ -169,14 +155,6 @@ public class AddNewTaskActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // в цьому блоці реалізувати занесення даних з текстових полів в базу даних, з спінера, поля заголовку
-                String buf ="";
-                for (String item : itemTaskAdapter.getItems()) {
-                    buf = buf + " " + item;
-                }
-                Log.d("items",buf);
-
-                //////////////////
                 String icon = "";
                 switch (spinner.getSelectedItemPosition()){
                     case 0:
@@ -206,9 +184,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     }
                 }
 
-
-
-                ArrayList<TaskStatus> statuses = new ArrayList<TaskStatus>();
+                ArrayList<TaskStatus> statuses = new ArrayList<>();
                 if (itemTaskAdapter.isItemCountChanged()){
                     for (int i = 0; i < itemTitles.size(); i++) {
                         statuses.add(TaskStatus.NOT_COMPLITED);
@@ -229,7 +205,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                         ///////////////////////////////
 
                     } else {
-                        statuses = new ArrayList<TaskStatus>();
+                        statuses = new ArrayList<>();
                         for (int i = 0; i < itemTitles.size(); i++) {
                             statuses.add(TaskStatus.NOT_COMPLITED);
                         }

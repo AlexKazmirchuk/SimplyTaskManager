@@ -10,7 +10,6 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.alexkaz.simplytaskmanager.R;
@@ -19,14 +18,13 @@ import java.util.ArrayList;
 
 public class PieChartView extends View {
 
-    public static final int MAX_DISPLAY_COUNT = 8;
-    public static final int START_ANGLE = 270;
-    public static final float RADIUS_HEIGHT_DIVIDER = 0.9524f;
-    public static final float RADIUS_WIDTH_DIVIDER = 0.9524f;
-    public static final float PIE_CHART_DIVIDER = 0.1f;
+    private static final int MAX_DISPLAY_COUNT = 8;
+    private static final int START_ANGLE = 270;
+    private static final float RADIUS_HEIGHT_DIVIDER = 0.9524f;
+    private static final float RADIUS_WIDTH_DIVIDER = 0.9524f;
+    private static final float PIE_CHART_DIVIDER = 0.1f;
     private boolean measureFlag = true;
 
-    private int pieChartRadius;
     private int pieChartDividerSize;
 
     private Paint pieChartPaint;
@@ -142,13 +140,14 @@ public class PieChartView extends View {
     }
 
     private void determineMeasurements(int width, int height){
+        int pieChartRadius;
         if (width >= height){
             pieChartRadius =(int)((height* RADIUS_HEIGHT_DIVIDER)/2);  //84 * 84;
         } else {
             pieChartRadius = (int)((width* RADIUS_WIDTH_DIVIDER)/2);  //84 * 84;
         }
-        pieChartDividerSize = (int)(pieChartRadius* PIE_CHART_DIVIDER);
-        pieChartAvailableSpace = new RectF(width/2-pieChartRadius,height/2-pieChartRadius,width/2+pieChartRadius,height/2+pieChartRadius);
+        pieChartDividerSize = (int)(pieChartRadius * PIE_CHART_DIVIDER);
+        pieChartAvailableSpace = new RectF(width/2- pieChartRadius,height/2- pieChartRadius,width/2+ pieChartRadius,height/2+ pieChartRadius);
 
         int bmpWidth = (int)(width*0.6f);
         int bmpHeight = (int)(height*0.6f);

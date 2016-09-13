@@ -2,7 +2,6 @@ package com.alexkaz.simplytaskmanager;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
@@ -18,34 +17,32 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.alexkaz.simplytaskmanager.adapters.MainTaskAdapter;
 import com.alexkaz.simplytaskmanager.adapters.RotateAnimAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
-import com.alexkaz.simplytaskmanager.uicomp.TaskIndicator;
-import com.alexkaz.simplytaskmanager.uicomp.TaskIndicatorView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
 import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
-
 import java.util.ArrayList;
-import java.util.List;
+
+import static android.support.v4.app.ActivityOptionsCompat.*;
 
 public class MainActivity extends AppCompatActivity {
 
     private ListView mainListView;
     private MainTaskAdapter adapter;
     private ArrayList<TaskObject> listOftasks;
-    private FloatingActionButton actionButton;
     private TextView hintTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_36dp);
-        getSupportActionBar().setTitle(R.string.main_activity_label);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_36dp);
+            getSupportActionBar().setTitle(R.string.main_activity_label);
+        }
         hintTextView = (TextView) findViewById(R.id.hintTextView);
         listOftasks = new DBHelper(this).getListOfTasks();
         initList();
@@ -61,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void initActionButton() {
-        actionButton = (FloatingActionButton) findViewById(R.id.actionBtn);
+        FloatingActionButton actionButton = (FloatingActionButton) findViewById(R.id.actionBtn);
         actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,12 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
                     intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
 
-                    ActivityOptionsCompat options = ActivityOptionsCompat
-                            .makeSceneTransitionAnimation(MainActivity.this,
-                                    new Pair<View, String>(view.findViewById(R.id.mainItemIcon),
-                                            getString(R.string.transition_icon_image)),
-                                    new Pair<View, String>(view.findViewById(R.id.mainItemTitle),
-                                            getString(R.string.transition_title_name)));
+                    ActivityOptionsCompat options = makeSceneTransitionAnimation(MainActivity.this,
+                            new Pair<>(view.findViewById(R.id.mainItemIcon),
+                                    getString(R.string.transition_icon_image)),
+                            new Pair<>(view.findViewById(R.id.mainItemTitle),
+                                    getString(R.string.transition_title_name)));
                     ActivityCompat.startActivityForResult(MainActivity.this, intent, FullTaskActivity.REQUEST_CODE, options.toBundle());
 
                 } else {
@@ -143,8 +139,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initStatisticPanel() {
         int notCompletedTaskItemCount = 0, inProcessTaskItemCount = 0, doneTaskItemCount = 0;
-        int notCompletedTaskItemInterest = 0,  inProcessTaskItemInterest = 0, doneTaskItemInterest = 0;
-        int amountOfTaskItems = 0;
+        int notCompletedTaskItemInterest,  inProcessTaskItemInterest, doneTaskItemInterest;
+        int amountOfTaskItems;
         for (TaskObject taskObject : listOftasks) {
             for (TaskStatus taskStatus : taskObject.getStatuses()) {
                 switch (taskStatus){
@@ -178,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
         ((TextView)findViewById(R.id.notCompletedTxtView)).setText(notCompleted);
 
         ((PieChartView)findViewById(R.id.pieChart)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
-        ((PieChartView)findViewById(R.id.pieChart)).invalidate();
+        findViewById(R.id.pieChart).invalidate();
 
     }
 
@@ -193,18 +189,11 @@ public class MainActivity extends AppCompatActivity {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         switch (item.getItemId()) {
             case R.id.editItem:
-                Log.d("listPositionItem",info.position + " edited");
-                ////////////////
-                //TODO реалізувати виклик актівіті редагування
                 Intent intent = new Intent(this,AddNewTaskActivity.class);
                 intent.putExtra(DBHelper.TASK_TITLE,((TaskObject) adapter.getItem(info.position)).getTaskTitle());
                 startActivityForResult(intent,AddNewTaskActivity.REQUEST_CODE);
-                ////////////////
                 return true;
             case R.id.deleteItem:
-                Log.d("listPositionItem",info.position + " deleted");
-                ////////////////
-                //TODO реалізувати видалення елемента з бази і з списку
                 String taskTitle = ((TaskObject) adapter.getItem(info.position)).getTaskTitle();
                 new DBHelper(this).removeTask(taskTitle);
                 adapter.removeItem(info.position);
@@ -212,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
                 hintTextView.setVisibility(View.INVISIBLE);
                 showHint();
                 initStatisticPanel();
-                ////////////////
                 return true;
             default:
                 return super.onContextItemSelected(item);

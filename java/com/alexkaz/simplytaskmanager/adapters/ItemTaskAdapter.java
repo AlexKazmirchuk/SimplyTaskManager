@@ -18,21 +18,18 @@ import java.util.ArrayList;
 
 public class ItemTaskAdapter extends BaseAdapter {
 
-    public static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/250";
+    private static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/250";
     private ArrayList<String> items;
-    private Context context;
     private LayoutInflater inflater;
     private boolean itemCountChanged = false;
     private int itemAddedCount = 0;
 
     public ItemTaskAdapter(Context context, ArrayList<String> items) {
         this.items = items;
-        this.context = context;
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public ItemTaskAdapter(Context context){
-        this.context = context;
         items = new ArrayList<>();
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -72,10 +69,12 @@ public class ItemTaskAdapter extends BaseAdapter {
             holder = (ViewHolder) itemView.getTag();
         }
 
+        String itemPos = (position+1) + ".";
         holder.ref = position;
-        holder.textView.setText((position+1) + ".");
+        holder.textView.setText(itemPos);
         holder.editText.setText(items.get(position));
-        holder.txtCharCounter.setText(holder.editText.getText().toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS);
+        String charCounterValue = holder.editText.getText().toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS;
+        holder.txtCharCounter.setText(charCounterValue);
         holder.editText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,7 +89,8 @@ public class ItemTaskAdapter extends BaseAdapter {
             @Override
             public void afterTextChanged(Editable s) {
                 items.set(holder.ref,s.toString());
-                holder.txtCharCounter.setText(s.toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS);
+                String charCounterValue = s.toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS;
+                holder.txtCharCounter.setText(charCounterValue);
                 Log.d("afterTextChangedLog",s.toString().length()+"");
             }
         });
@@ -129,10 +129,6 @@ public class ItemTaskAdapter extends BaseAdapter {
 
     public boolean isItemCountChanged() {
         return itemCountChanged;
-    }
-
-    public void setItemCountChanged(boolean itemCountChanged) {
-        this.itemCountChanged = itemCountChanged;
     }
 
     public int getItemAddedCount(){

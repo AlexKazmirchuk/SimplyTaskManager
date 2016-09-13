@@ -18,7 +18,7 @@ public class RotateAnimAdapter extends AnimationAdapter {
         this(baseAdapter,25.0f);
     }
 
-    protected RotateAnimAdapter(@NonNull BaseAdapter baseAdapter, float mScaleFrom) {
+    private RotateAnimAdapter(@NonNull BaseAdapter baseAdapter, float mScaleFrom) {
         super(baseAdapter);
         this.mScaleFrom = mScaleFrom;
     }
@@ -26,14 +26,16 @@ public class RotateAnimAdapter extends AnimationAdapter {
     @Override
     public void setAbsListView(@NonNull AbsListView absListView) {
         super.setAbsListView(absListView);
-        getViewAnimator().setAnimationDurationMillis(300);
+        if (getViewAnimator() != null){
+            getViewAnimator().setAnimationDurationMillis(300);
+        }
     }
 
     @NonNull
     @Override
     public Animator[] getAnimators(@NonNull ViewGroup viewGroup, @NonNull View view) {
-        ObjectAnimator rotationX = ObjectAnimator.ofFloat(view,"rotationX", new float[]{this.mScaleFrom,0.0f});
-        ObjectAnimator rotationY = ObjectAnimator.ofFloat(view,"rotationY", new float[]{this.mScaleFrom,0.0f});
+        ObjectAnimator rotationX = ObjectAnimator.ofFloat(view,"rotationX", this.mScaleFrom,0.0f);
+        ObjectAnimator rotationY = ObjectAnimator.ofFloat(view,"rotationY", this.mScaleFrom,0.0f);
         return new Animator[]{rotationX,rotationY};
     }
 }
