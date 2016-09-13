@@ -1,11 +1,17 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Intent;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -66,6 +72,16 @@ public class FullTaskActivity extends AppCompatActivity {
                 break;
         }
         txtViewTaskTitle.setText(taskObject.getTaskTitle());
+
+        if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
+            LinearLayout topTaskPanel = (LinearLayout) findViewById(R.id.topTaskPanel);
+            Animation scaleAnimation = AnimationUtils.loadAnimation(this,R.anim.scale_anim);
+            topTaskPanel.startAnimation(scaleAnimation);
+            Animation alphaIconAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_icon_anim);
+            reviewIcon.startAnimation(alphaIconAnim);
+            Animation alphaTaskTitleAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_task_title_anim);
+            txtViewTaskTitle.startAnimation(alphaTaskTitleAnim);
+        }
     }
 
     private void initListView() {
