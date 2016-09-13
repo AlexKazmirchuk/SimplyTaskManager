@@ -3,7 +3,6 @@ package com.alexkaz.simplytaskmanager.adapters;
 import android.content.Context;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,18 +10,67 @@ import android.widget.BaseAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import com.alexkaz.simplytaskmanager.R;
-
 import java.util.ArrayList;
 
 public class ItemTaskAdapter extends BaseAdapter {
 
-    private static final String COUNT_OF_RIGHT_INPUTED_CHARACTERS = "/250";
+    private static final String INPUT_CHARS_MAX_NUMBER = "/250";
     private ArrayList<String> items;
     private LayoutInflater inflater;
-    private boolean itemCountChanged = false;
+    private boolean taskItemRemoved = false;
     private int itemAddedCount = 0;
+
+    private class ViewHolder {
+
+        private TextView posTxtView;
+        private TextView txtCharCounter;
+        private EditText editText;
+        private ImageButton delTaskItemBtn;
+        private int ref;
+
+        ViewHolder(View itemView){
+            posTxtView = (TextView)itemView.findViewById(R.id.itemTxt);
+            txtCharCounter = (TextView)itemView.findViewById(R.id.txtCharCounter);
+            editText = (EditText) itemView.findViewById(R.id.editTextTaskItem);
+            delTaskItemBtn = (ImageButton) itemView.findViewById(R.id.deleteBtn);
+        }
+
+        void refreshView(int position){
+            ref = position;
+
+            String itemPos = (position+1) + ".";
+            posTxtView.setText(itemPos);
+
+            editText.setText(items.get(position));
+
+            String charCounterValue = editText.getText().toString().length() + INPUT_CHARS_MAX_NUMBER;
+            txtCharCounter.setText(charCounterValue);
+
+            editText.addTextChangedListener(new TextWatcher() {
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    items.set(ref,s.toString());
+                    String charCounterValue = s.toString().length() + INPUT_CHARS_MAX_NUMBER;
+                    txtCharCounter.setText(charCounterValue);
+                }
+            });
+
+            delTaskItemBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if ((items.size() - 1) != ViewHolder.this.ref){
+                        taskItemRemoved = true;
+                    }
+                    items.remove(ref);
+                    ItemTaskAdapter.super.notifyDataSetChanged();
+                }
+            });
+        }
+    }
 
     public ItemTaskAdapter(Context context, ArrayList<String> items) {
         this.items = items;
@@ -51,70 +99,16 @@ public class ItemTaskAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View itemView, ViewGroup parent) {
-
         final ViewHolder holder;
-
         if (itemView == null){
-            holder = new ViewHolder();
             itemView = inflater.inflate(R.layout.new_item_task_layout,parent,false);
-
-            holder.textView = (TextView)itemView.findViewById(R.id.itemTxt);
-            holder.txtCharCounter = (TextView)itemView.findViewById(R.id.txtCharCounter);
-            holder.editText = (EditText) itemView.findViewById(R.id.editTextTaskItem);
-            holder.imageButton = (ImageButton) itemView.findViewById(R.id.deleteBtn);
-
+            holder = new ViewHolder(itemView);
             itemView.setTag(holder);
-
         } else {
             holder = (ViewHolder) itemView.getTag();
         }
-
-        String itemPos = (position+1) + ".";
-        holder.ref = position;
-        holder.textView.setText(itemPos);
-        holder.editText.setText(items.get(position));
-        String charCounterValue = holder.editText.getText().toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS;
-        holder.txtCharCounter.setText(charCounterValue);
-        holder.editText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                items.set(holder.ref,s.toString());
-                String charCounterValue = s.toString().length() + COUNT_OF_RIGHT_INPUTED_CHARACTERS;
-                holder.txtCharCounter.setText(charCounterValue);
-                Log.d("afterTextChangedLog",s.toString().length()+"");
-            }
-        });
-
-        holder.imageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if ((items.size()-1) != position){
-                    itemCountChanged = true;
-                }
-                items.remove(position);
-                Log.d("position", position + "");
-                ItemTaskAdapter.super.notifyDataSetChanged();
-            }
-        });
+        holder.refreshView(position);
         return itemView;
-    }
-
-    private class ViewHolder {
-        TextView textView;
-        TextView txtCharCounter;
-        EditText editText;
-        ImageButton imageButton;
-        int ref;
     }
 
     public void addNewItem(){
@@ -126,9 +120,8 @@ public class ItemTaskAdapter extends BaseAdapter {
         return items;
     }
 
-
-    public boolean isItemCountChanged() {
-        return itemCountChanged;
+    public boolean isTaskItemRemoved() {
+        return taskItemRemoved;
     }
 
     public int getItemAddedCount(){

@@ -185,7 +185,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 }
 
                 ArrayList<TaskStatus> statuses = new ArrayList<>();
-                if (itemTaskAdapter.isItemCountChanged()){
+                if (itemTaskAdapter.isTaskItemRemoved()){
                     for (int i = 0; i < itemTitles.size(); i++) {
                         statuses.add(TaskStatus.NOT_COMPLITED);
                     }

@@ -29,8 +29,104 @@ public class TaskViewerAdapter extends BaseAdapter {
     private ArrayList<String> itemTitles;
     private ArrayList<TaskStatus> statuses;
     private LayoutInflater inflater;
-    private TaskStatus choosedStatus;
+    private TaskStatus selectedStatus;
     private boolean someStatusChanged = false;
+
+    private class ViewHolder implements View.OnClickListener {
+        LinearLayout linearLayout;
+        VerticalTaskIndicatorView verticalTaskIndicatorView;
+        TextView textView;
+        int ref;
+
+        ViewHolder(View itemView){
+            linearLayout = (LinearLayout)itemView.findViewById(R.id.reviewTaskItemLayout);
+            verticalTaskIndicatorView = (VerticalTaskIndicatorView)itemView.findViewById(R.id.horTaskIndicator);
+            textView = (TextView)itemView.findViewById(R.id.itemTextView);
+        }
+
+        private void refreshIndicator(int position){
+            if (position == 0){
+                verticalTaskIndicatorView.setStatus(statuses.get(position),null,false);
+            } else if (position == (statuses.size()-1)){
+                verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),true);
+            } else {
+                verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),false);
+            }
+            verticalTaskIndicatorView.invalidate();
+        }
+
+        void refreshView(int position){
+            ref = position;
+            refreshIndicator(position);
+            textView.setText((position + 1) + ". " + itemTitles.get(position));
+            linearLayout.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            String[] statusItems = context.getResources().getStringArray(R.array.status_dialog_choosing_titles);
+            showChangeStatusDialog(statusItems);
+        }
+
+        private void showChangeStatusDialog(String[] statusItems){
+            AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
+            alertBuilder.setTitle(context.getResources().getString(R.string.status_dialog_title));
+            alertBuilder.setSingleChoiceItems(statusItems, 0, initDialogOnClickListener());
+            alertBuilder.setNegativeButton(context.getResources().getString(R.string.status_dialog_negative_button_text),null);
+            alertBuilder.setPositiveButton(context.getResources().getString(R.string.status_dialog_positive_button_text), initPositiveBtnOnClickListener());
+            alertBuilder.create().show();
+        }
+
+        private DialogInterface.OnClickListener initDialogOnClickListener(){
+            return new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case 0:
+                            selectedStatus = TaskStatus.DONE;
+                            break;
+                        case 1:
+                            selectedStatus = TaskStatus.IN_PROCESS;
+                            break;
+                        case 2:
+                            selectedStatus = TaskStatus.NOT_COMPLITED;
+                            break;
+                    }
+                }
+            };
+        }
+
+        private DialogInterface.OnClickListener initPositiveBtnOnClickListener(){
+            return new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    if(selectedStatus == null){
+                        statuses.set(ref,TaskStatus.DONE);
+                        new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_DONE);
+                    } else{
+                        statuses.set(ref, selectedStatus);
+                        switch (selectedStatus){
+                            case DONE:
+                                someStatusChanged = true;
+                                new DBHelper(context).setStatus(itemTitles.get(ref),STATUS_DONE);
+                                break;
+                            case IN_PROCESS:
+                                someStatusChanged = true;
+                                new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_IN_PROCESS);
+                                break;
+                            case NOT_COMPLITED:
+                                someStatusChanged = true;
+                                new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_NOT_COMPLETED);
+                                break;
+                        }
+                    }
+                    selectedStatus = null;
+                    ((FullTaskActivity)context).initStatisticPanel();
+                    notifyDataSetChanged();
+                }
+            };
+        }
+    }
 
     public TaskViewerAdapter(Context context, TaskObject taskObject){
         this.context = context;
@@ -58,87 +154,14 @@ public class TaskViewerAdapter extends BaseAdapter {
     public View getView(final int position, View itemView, ViewGroup parent) {
         final ViewHolder holder;
         if (itemView == null){
-            holder = new ViewHolder();
             itemView = inflater.inflate(R.layout.item_review,parent,false);
-            holder.linearLayout = (LinearLayout)itemView.findViewById(R.id.reviewTaskItemLayout);
-            holder.verticalTaskIndicatorView = (VerticalTaskIndicatorView)itemView.findViewById(R.id.horTaskIndicator);
-            holder.textView = (TextView)itemView.findViewById(R.id.itemTextView);
+            holder = new ViewHolder(itemView);
             itemView.setTag(holder);
         } else {
             holder = (ViewHolder)itemView.getTag();
         }
-        holder.ref = position;
-        if (position == 0){
-            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),null,false);
-        } else if (position == (statuses.size()-1)){
-            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),true);
-        } else {
-            holder.verticalTaskIndicatorView.setStatus(statuses.get(position),statuses.get(position-1),false);
-        }
-        holder.verticalTaskIndicatorView.invalidate();
-        holder.textView.setText((position+1) + ". " + itemTitles.get(position));
-        holder.linearLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String[] statusItems = context.getResources().getStringArray(R.array.status_dialog_choosing_titles);
-                AlertDialog.Builder alertBuilder = new AlertDialog.Builder(context);
-                alertBuilder.setTitle(context.getResources().getString(R.string.status_dialog_title));
-                alertBuilder.setSingleChoiceItems(statusItems, 0, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which){
-                            case 0:
-                                choosedStatus = TaskStatus.DONE;
-                                break;
-                            case 1:
-                                choosedStatus = TaskStatus.IN_PROCESS;
-                                break;
-                            case 2:
-                                choosedStatus = TaskStatus.NOT_COMPLITED;
-                                break;
-                        }
-                    }
-                });
-                alertBuilder.setNegativeButton(context.getResources().getString(R.string.status_dialog_negative_button_text),null);
-                alertBuilder.setPositiveButton(context.getResources().getString(R.string.status_dialog_positive_button_text), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if(choosedStatus == null){
-                            statuses.set(position,TaskStatus.DONE);
-                            new DBHelper(context).setStatus(itemTitles.get(position), STATUS_DONE);
-                        } else{
-                            statuses.set(position,choosedStatus);
-                            switch (choosedStatus){
-                                case DONE:
-                                    someStatusChanged = true;
-                                    new DBHelper(context).setStatus(itemTitles.get(position),STATUS_DONE);
-                                    break;
-                                case IN_PROCESS:
-                                    someStatusChanged = true;
-                                    new DBHelper(context).setStatus(itemTitles.get(position), STATUS_IN_PROCESS);
-                                    break;
-                                case NOT_COMPLITED:
-                                    someStatusChanged = true;
-                                    new DBHelper(context).setStatus(itemTitles.get(position), STATUS_NOT_COMPLETED);
-                                    break;
-                            }
-                        }
-                        choosedStatus = null;
-                        ((FullTaskActivity)context).initStatisticPanel();
-                        notifyDataSetChanged();
-                    }
-                });
-                alertBuilder.create().show();
-            }
-        });
+        holder.refreshView(position);
         return itemView;
-    }
-
-    private class ViewHolder {
-        LinearLayout linearLayout;
-        VerticalTaskIndicatorView verticalTaskIndicatorView;
-        TextView textView;
-        int ref;
     }
 
     public boolean isSomeStatusChanged() {
