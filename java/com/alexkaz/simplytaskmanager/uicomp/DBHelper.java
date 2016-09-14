@@ -80,7 +80,7 @@ public class DBHelper extends SQLiteOpenHelper {
             statusBuff = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.STATUS));
             switch (statusBuff){
                 case 0:
-                    statuses.add(TaskStatus.NOT_COMPLITED);
+                    statuses.add(TaskStatus.NOT_COMPLETED);
                     break;
                 case 1:
                     statuses.add(TaskStatus.IN_PROCESS);
@@ -109,7 +109,7 @@ public class DBHelper extends SQLiteOpenHelper {
             taskItemValues.put(ITEM_TITLE,itemTitles.get(i));
             taskItemValues.put(TASK_ID,taskID);
             switch (statuses.get(i)){
-                case NOT_COMPLITED:
+                case NOT_COMPLETED:
                     taskItemValues.put(STATUS,TaskObject.STATUS_NOT_COMPLETED);
                     break;
                 case IN_PROCESS:

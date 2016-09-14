@@ -135,7 +135,7 @@ public class FullTaskActivity extends AppCompatActivity {
         int amountOfTaskItems;
         for (TaskStatus taskStatus : taskObject.getStatuses()) {
             switch (taskStatus){
-                case NOT_COMPLITED:
+                case NOT_COMPLETED:
                     notCompletedTaskItemCount++;
                     break;
                 case IN_PROCESS:

@@ -89,7 +89,7 @@ public class TaskViewerAdapter extends BaseAdapter {
                             selectedStatus = TaskStatus.IN_PROCESS;
                             break;
                         case 2:
-                            selectedStatus = TaskStatus.NOT_COMPLITED;
+                            selectedStatus = TaskStatus.NOT_COMPLETED;
                             break;
                     }
                 }
@@ -114,7 +114,7 @@ public class TaskViewerAdapter extends BaseAdapter {
                                 someStatusChanged = true;
                                 new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_IN_PROCESS);
                                 break;
-                            case NOT_COMPLITED:
+                            case NOT_COMPLETED:
                                 someStatusChanged = true;
                                 new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_NOT_COMPLETED);
                                 break;

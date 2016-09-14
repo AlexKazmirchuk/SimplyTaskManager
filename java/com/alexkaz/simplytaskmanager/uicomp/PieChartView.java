@@ -23,24 +23,21 @@ public class PieChartView extends View {
     private static final float RADIUS_HEIGHT_DIVIDER = 0.9524f;
     private static final float RADIUS_WIDTH_DIVIDER = 0.9524f;
     private static final float PIE_CHART_DIVIDER = 0.1f;
-    private boolean measureFlag = true;
-
     private int pieChartDividerSize;
 
     private Paint pieChartPaint;
     private Paint pieChartDividerPaint;
     private RectF pieChartAvailableSpace;
+    private Bitmap doneBitmap;
+    private RectF doneRectF;
+    private Context context;
 
     private int amountOfNotCompleted;
     private int amountOfInProcess;
     private int amountOfDone;
 
-    private Context context;
-    private Bitmap doneBitmap;
-    private RectF doneRectF;
-
-    private TaskStatus[] taskStatuses = new TaskStatus[MAX_DISPLAY_COUNT];
     private ArrayList<TaskStatus> statuses;
+    private boolean measureFlag = true;
 
     public PieChartView(Context context) {
         super(context);
@@ -59,32 +56,9 @@ public class PieChartView extends View {
     private void initComps() {
         doneBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.done);
         doneRectF = new RectF();
-        taskStatuses[0] = TaskStatus.DONE;
-        taskStatuses[1] = TaskStatus.DONE;
-        taskStatuses[2] = TaskStatus.DONE;
-        taskStatuses[3] = TaskStatus.IN_PROCESS;
-        taskStatuses[4] = TaskStatus.IN_PROCESS;
-        taskStatuses[5] = TaskStatus.NOT_COMPLITED;
-        taskStatuses[6] = TaskStatus.NOT_COMPLITED;
-        taskStatuses[7] = TaskStatus.NOT_COMPLITED;
-
         statuses = new ArrayList<>();
         for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
             statuses.add(TaskStatus.DONE);
-        }
-
-        for (TaskStatus taskStatus : taskStatuses) {
-            switch (taskStatus) {
-                case NOT_COMPLITED:
-                    amountOfNotCompleted++;
-                    break;
-                case IN_PROCESS:
-                    amountOfInProcess++;
-                    break;
-                case DONE:
-                    amountOfDone++;
-                    break;
-            }
         }
     }
 
@@ -180,7 +154,7 @@ public class PieChartView extends View {
         amountOfDone = 0;
         for (TaskStatus taskStatus : statuses) {
             switch (taskStatus) {
-                case NOT_COMPLITED:
+                case NOT_COMPLETED:
                     amountOfNotCompleted++;
                     break;
                 case IN_PROCESS:

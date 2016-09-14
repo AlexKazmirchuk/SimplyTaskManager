@@ -1,7 +1,7 @@
 package com.alexkaz.simplytaskmanager.uicomp;
 
 public enum TaskStatus {
-    NOT_COMPLITED,
+    NOT_COMPLETED,
     IN_PROCESS,
     DONE
 }

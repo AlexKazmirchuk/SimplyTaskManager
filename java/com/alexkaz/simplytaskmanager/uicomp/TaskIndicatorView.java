@@ -5,7 +5,6 @@ import android.graphics.Canvas;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
-
 import java.util.ArrayList;
 
 public class TaskIndicatorView extends View {
@@ -14,12 +13,15 @@ public class TaskIndicatorView extends View {
 
     public TaskIndicatorView(Context context) {
         super(context);
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        taskIndicator = new TaskIndicator(context);
+        initComps(context);
     }
 
     public TaskIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initComps(context);
+    }
+
+    private void initComps(Context context){
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         taskIndicator = new TaskIndicator(context);
     }
@@ -27,9 +29,6 @@ public class TaskIndicatorView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-
-        String result = "width - " + canvas.getWidth() + ", " + "height - " + canvas.getHeight(); // 258 27
-        Log.d("myLog", result);
         taskIndicator.determineMeasurements(this.getWidth(),this.getHeight());
         taskIndicator.draw(canvas);
     }

@@ -41,7 +41,7 @@ public class TaskIndicator {
     private void initComps() {
         statuses = new ArrayList<>();
         for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
-            statuses.add(TaskStatus.NOT_COMPLITED);
+            statuses.add(TaskStatus.NOT_COMPLETED);
         }
 
     }
@@ -76,7 +76,7 @@ public class TaskIndicator {
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,circleRadius,inProcessPaint);
                     canvas.drawCircle(i*elemRectSizeX + elemRectSizeX/2,elemRectSizeY/2,blurRadius,inProcessBlurPaint);
                     break;
-                case NOT_COMPLITED:
+                case NOT_COMPLETED:
                     if (i < countOfTaskItems-1){
                         canvas.drawRect(i*linkingRectSizeX+linkingRectSizeX/2,elemRectSizeY/2 - linkingRectSizeY,i*linkingRectSizeX+linkingRectSizeX/2 + linkingRectSizeX,elemRectSizeY/2 + linkingRectSizeY,notCompletedPaint);
                     }

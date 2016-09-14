@@ -144,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
         for (TaskObject taskObject : listOftasks) {
             for (TaskStatus taskStatus : taskObject.getStatuses()) {
                 switch (taskStatus){
-                    case NOT_COMPLITED:
+                    case NOT_COMPLETED:
                         notCompletedTaskItemCount++;
                         break;
                     case IN_PROCESS:

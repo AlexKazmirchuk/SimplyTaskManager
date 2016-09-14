@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 import com.alexkaz.simplytaskmanager.R;
@@ -20,16 +19,18 @@ public class VerticalTaskIndicatorView extends View {
     private static final float BG_RECT_SIZE_DIVIDER = 0.9f;
     private static final float CIRCLE_POS_X_DIVIDER = 0.9f;
     private static final float LINKING_RECT_SIZE_DIVIDER = 0.2143f;
-    private boolean measureFlag = true;
-    private TaskStatus currentStatus = TaskStatus.NOT_COMPLITED;
+    public static final int CIRCLE_PADDING_TOP = 16;
+
+    private TaskStatus currentStatus = TaskStatus.NOT_COMPLETED;
     private TaskStatus previousStatus;
     private boolean last = false;
 
+    private boolean measureFlag = true;
     private int circleRadius;
     private int circlePosX;
     private int circlePosY;
-
     private int linkingRectSize;
+    private float blurRadius;
 
     private Paint linkingPaint;
     private Paint notCompletedPaint;
@@ -39,19 +40,21 @@ public class VerticalTaskIndicatorView extends View {
     private Paint notCompletedBlurPaint;
     private Paint inProcessBlurPaint;
     private Paint doneBlurPaint;
-    private float blurRadius;
 
     private Rect bgRect;
 
 
     public VerticalTaskIndicatorView(Context context) {
         super(context);
-        setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-        setStatus(TaskStatus.DONE,TaskStatus.DONE,false);
+        initComps();
     }
 
     public VerticalTaskIndicatorView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        initComps();
+    }
+
+    private void initComps(){
         setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         setStatus(TaskStatus.DONE,TaskStatus.DONE,false);
     }
@@ -74,7 +77,7 @@ public class VerticalTaskIndicatorView extends View {
         canvas.drawRect(circlePosX,circlePosY-linkingRectSize,canvas.getWidth(),circlePosY+linkingRectSize,linkingPaint); // to right
         if(previousStatus != null){
             switch (previousStatus){
-                case NOT_COMPLITED:
+                case NOT_COMPLETED:
                     canvas.drawRect(circlePosX-linkingRectSize,0,circlePosX+linkingRectSize,circlePosY,notCompletedPaint); //to top
                     break;
                 case IN_PROCESS:
@@ -85,8 +88,9 @@ public class VerticalTaskIndicatorView extends View {
                     break;
             }
         }
+
         switch (currentStatus){
-            case NOT_COMPLITED:
+            case NOT_COMPLETED:
                 if (!last){
                     canvas.drawRect(circlePosX-linkingRectSize,circlePosY,circlePosX+linkingRectSize,canvas.getHeight(),notCompletedPaint); // to bottom
                 }
@@ -111,8 +115,6 @@ public class VerticalTaskIndicatorView extends View {
     }
 
     private void determineMeasurements(int width, int height){
-        Log.d("canvasSizes",width + " " + height); // 60x52
-
         if (width>=height){
             circleRadius = (int)(height* CIRCLE_RADIUS_HEIGHT_DIVIDER)/2; // 14
         } else {
@@ -123,7 +125,7 @@ public class VerticalTaskIndicatorView extends View {
         int bgRectSizeX = (int) (width * BG_RECT_SIZE_DIVIDER);
 
         circlePosX = (int) (width* CIRCLE_POS_X_DIVIDER)/2;
-        int paddingTop = 16;
+        int paddingTop = CIRCLE_PADDING_TOP;
         circlePosY = paddingTop + circleRadius;
 
         linkingRectSize = (int) (circleRadius* LINKING_RECT_SIZE_DIVIDER); // 3

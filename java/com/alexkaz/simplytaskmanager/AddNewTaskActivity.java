@@ -187,7 +187,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 ArrayList<TaskStatus> statuses = new ArrayList<>();
                 if (itemTaskAdapter.isTaskItemRemoved()){
                     for (int i = 0; i < itemTitles.size(); i++) {
-                        statuses.add(TaskStatus.NOT_COMPLITED);
+                        statuses.add(TaskStatus.NOT_COMPLETED);
                     }
                 } else{
                     if (intentTaskTitle != null){
@@ -199,7 +199,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                         } else {
                             statuses = intentTaskObject.getStatuses();
                             for (int i = 0; i < itemTaskAdapter.getItemAddedCount(); i++) {
-                                statuses.add(TaskStatus.NOT_COMPLITED);
+                                statuses.add(TaskStatus.NOT_COMPLETED);
                             }
                         }
                         ///////////////////////////////
@@ -207,7 +207,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     } else {
                         statuses = new ArrayList<>();
                         for (int i = 0; i < itemTitles.size(); i++) {
-                            statuses.add(TaskStatus.NOT_COMPLITED);
+                            statuses.add(TaskStatus.NOT_COMPLETED);
                         }
                     }
                 }
