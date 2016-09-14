@@ -35,6 +35,14 @@ public class FullTaskActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
+
+        initData(savedInstanceState);
+        initComp();
+        initListView();
+        initStatisticPanel();
+    }
+
+    private void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null){
             taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
@@ -44,15 +52,10 @@ public class FullTaskActivity extends AppCompatActivity {
         }
         DBHelper helper = new DBHelper(this);
         taskObject = helper.getTask(taskTitle);
-
-        initComp();
-        initListView();
-        initStatisticPanel();
     }
 
     private void initComp() {
         ImageView reviewIcon = (ImageView) findViewById(R.id.reviewIcon);
-        TextView txtViewTaskTitle = (TextView) findViewById(R.id.txtViewTaskTitle);
         switch (taskObject.getIcon()){
             case TaskObject.WORK_ICON:
                 reviewIcon.setImageResource(R.drawable.work_icon);
@@ -67,17 +70,25 @@ public class FullTaskActivity extends AppCompatActivity {
                 reviewIcon.setImageResource(R.drawable.other_icon);
                 break;
         }
+
+        TextView txtViewTaskTitle = (TextView) findViewById(R.id.txtViewTaskTitle);
         txtViewTaskTitle.setText(taskObject.getTaskTitle());
 
         if(Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP){
-            LinearLayout topTaskPanel = (LinearLayout) findViewById(R.id.topTaskPanel);
-            Animation scaleAnimation = AnimationUtils.loadAnimation(this,R.anim.scale_anim);
-            topTaskPanel.startAnimation(scaleAnimation);
-            Animation alphaIconAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_icon_anim);
-            reviewIcon.startAnimation(alphaIconAnim);
-            Animation alphaTaskTitleAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_task_title_anim);
-            txtViewTaskTitle.startAnimation(alphaTaskTitleAnim);
+            launchPreLollipopAnim(txtViewTaskTitle, reviewIcon);
         }
+    }
+
+    private void launchPreLollipopAnim(TextView txtViewTaskTitle, ImageView reviewIcon) {
+        LinearLayout topTaskPanel = (LinearLayout) findViewById(R.id.topTaskPanel);
+        Animation scaleAnimation = AnimationUtils.loadAnimation(this,R.anim.scale_anim);
+        topTaskPanel.startAnimation(scaleAnimation);
+
+        Animation alphaIconAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_icon_anim);
+        reviewIcon.startAnimation(alphaIconAnim);
+
+        Animation alphaTaskTitleAnim = AnimationUtils.loadAnimation(this,R.anim.alpha_task_title_anim);
+        txtViewTaskTitle.startAnimation(alphaTaskTitleAnim);
     }
 
     private void initListView() {
@@ -92,6 +103,9 @@ public class FullTaskActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId() == android.R.id.home){
+            if (adapter.isSomeStatusChanged()){
+                setResult(RESULT_OK);
+            }
             this.finish();
         }
         if (item.getItemId() == R.id.editMenuItem){
@@ -133,6 +147,7 @@ public class FullTaskActivity extends AppCompatActivity {
         int notCompletedTaskItemCount = 0, inProcessTaskItemCount = 0, doneTaskItemCount = 0;
         int notCompletedTaskItemInterest,  inProcessTaskItemInterest, doneTaskItemInterest;
         int amountOfTaskItems;
+
         for (TaskStatus taskStatus : taskObject.getStatuses()) {
             switch (taskStatus){
                 case NOT_COMPLETED:
