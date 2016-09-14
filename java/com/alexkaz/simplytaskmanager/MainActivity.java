@@ -9,7 +9,6 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +37,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initComp();
+        initList();
+        showHint();
+        initStatisticPanel();
+        initActionButton();
+    }
+
+    private void initComp(){
         if(getSupportActionBar() != null){
             getSupportActionBar().setDisplayShowHomeEnabled(true);
             getSupportActionBar().setIcon(R.drawable.ic_developer_board_white_36dp);
@@ -45,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
         }
         hintTextView = (TextView) findViewById(R.id.hintTextView);
         listOftasks = new DBHelper(this).getListOfTasks();
-        initList();
-        showHint();
-        initStatisticPanel();
-        initActionButton();
     }
 
     private void showHint() {
@@ -71,45 +75,40 @@ public class MainActivity extends AppCompatActivity {
     private void initList() {
         mainListView = (ListView) findViewById(R.id.mainListView);
         mainListView.setDivider(null);
+
         adapter = new MainTaskAdapter(this,listOftasks);
         RotateAnimAdapter rotateAnimAdapter = new RotateAnimAdapter(adapter);
         rotateAnimAdapter.setAbsListView(mainListView);
         mainListView.setAdapter(rotateAnimAdapter);
-        mainListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+        mainListView.setOnItemClickListener(initOnItemClickListenerForMainList());
+        registerForContextMenu(mainListView);
+    }
+
+    private AdapterView.OnItemClickListener initOnItemClickListenerForMainList(){
+        return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
+                Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
+                intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-                    String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
-                    Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
-                    intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
-
                     ActivityOptionsCompat options = makeSceneTransitionAnimation(MainActivity.this,
-                            new Pair<>(view.findViewById(R.id.mainItemIcon),
-                                    getString(R.string.transition_icon_image)),
-                            new Pair<>(view.findViewById(R.id.mainItemTitle),
-                                    getString(R.string.transition_title_name)));
+                            new Pair<>(view.findViewById(R.id.mainItemIcon),getString(R.string.transition_icon_image)),
+                            new Pair<>(view.findViewById(R.id.mainItemTitle),getString(R.string.transition_title_name)));
                     ActivityCompat.startActivityForResult(MainActivity.this, intent, FullTaskActivity.REQUEST_CODE, options.toBundle());
-
                 } else {
-                    String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
-                    Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
-                    intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
-//                startActivity(intent);
                     startActivityForResult(intent,FullTaskActivity.REQUEST_CODE);
-                    Log.d("titleLog",taskTitle);
                 }
             }
-        });
-        registerForContextMenu(mainListView);
+        };
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode){
             case AddNewTaskActivity.REQUEST_CODE:
-                Log.d("requestLog","returned from add new task");
                 if (resultCode == RESULT_OK){
-                    Log.d("requestLog","data changed in add new task");
                     hintTextView.setVisibility(View.INVISIBLE);
                     listOftasks = new DBHelper(this).getListOfTasks();
                     initList();
@@ -118,9 +117,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
             case FullTaskActivity.REQUEST_CODE:
-                Log.d("requestLog","returned from full task");
                 if (resultCode == RESULT_OK){
-                    Log.d("requestLog","data changed in full task");
                     hintTextView.setVisibility(View.INVISIBLE);
                     listOftasks = new DBHelper(this).getListOfTasks();
                     initList();
@@ -129,12 +126,6 @@ public class MainActivity extends AppCompatActivity {
                 }
                 break;
         }
-
-//        hintTextView.setVisibility(View.INVISIBLE);
-//        listOftasks = new DBHelper(this).getListOfTasks();
-//        initList();
-//        showHint();
-//        initStatisticPanel();
     }
 
     private void initStatisticPanel() {
@@ -156,9 +147,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-//        notCompletedTaskItemCount = 300;
-//        inProcessTaskItemCount = 23;
-//        doneTaskItemCount = 150;
 
         amountOfTaskItems = notCompletedTaskItemCount + inProcessTaskItemCount + doneTaskItemCount;
         notCompletedTaskItemInterest =  Math.round((((float) notCompletedTaskItemCount)/((float) amountOfTaskItems))*100);
@@ -175,7 +163,6 @@ public class MainActivity extends AppCompatActivity {
 
         ((PieChartView)findViewById(R.id.pieChart)).setValues(notCompletedTaskItemCount,inProcessTaskItemCount,doneTaskItemCount);
         findViewById(R.id.pieChart).invalidate();
-
     }
 
     @Override
@@ -215,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        //
+        // TODO
         return super.onOptionsItemSelected(item);
     }
 
