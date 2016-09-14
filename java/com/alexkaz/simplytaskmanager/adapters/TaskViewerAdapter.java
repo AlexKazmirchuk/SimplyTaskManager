@@ -102,6 +102,7 @@ public class TaskViewerAdapter extends BaseAdapter {
                 public void onClick(DialogInterface dialog, int which) {
                     if(selectedStatus == null){
                         statuses.set(ref,TaskStatus.DONE);
+                        someStatusChanged = true;
                         new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_DONE);
                     } else{
                         statuses.set(ref, selectedStatus);

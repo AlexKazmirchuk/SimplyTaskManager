@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,16 +32,18 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     static final int REQUEST_CODE = 1324;
     private static final String TITLE_TEXT_CHAR_LIMIT = "/100";
+
     private Spinner spinner;
-
-    private ItemTaskAdapter itemTaskAdapter;
-    private ListView itemTaskList;
-
-    private Button addButton;
     private EditText editTextTitle;
     private TextView titleCharCounter;
-    private TaskObject intentTaskObject;
+
     private String intentTaskTitle;
+    private TaskObject intentTaskObject;
+    private ListView itemTaskList;
+    private ItemTaskAdapter itemTaskAdapter;
+
+    private Button addButton;
+
     private boolean taskChanged = false;
 
     @Override
@@ -52,48 +53,27 @@ public class AddNewTaskActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
-
-        Intent intent = getIntent();
-        intentTaskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
-
-        initSpinner();
-        ////////////////////
         initComp();
-
-        ////////////////////
+        initSpinner();
         initListView();
-
-
-        ///////////////////////////
-        ///////////////////////////
-        if(intentTaskTitle != null){
-            getSupportActionBar().setTitle(R.string.edit_task_activity_label);
-            intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
-            switch (intentTaskObject.getIcon()){
-                case TaskObject.WORK_ICON:
-                    spinner.setSelection(0);
-                    break;
-                case TaskObject.HOME_ICON:
-                    spinner.setSelection(1);
-                    break;
-                case TaskObject.FUN_ICON:
-                    spinner.setSelection(2);
-                    break;
-                case TaskObject.OTHER_ICON:
-                    spinner.setSelection(3);
-                    break;
-            }
-            editTextTitle.setText(intentTaskObject.getTaskTitle());
-            String charCounterValue = intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT;
-            titleCharCounter.setText(charCounterValue);
-            itemTaskAdapter = new ItemTaskAdapter(this, (ArrayList<String>) intentTaskObject.getItemTitles().clone());
-            addButton.setText(getString(R.string.edit_button_title));
-        } else {
-            spinner.setSelection(0);
-            itemTaskAdapter = new ItemTaskAdapter(this);
-        }
-        itemTaskList.setAdapter(itemTaskAdapter);
+        checkIntendData();
         initAddButton();
+    }
+
+    private void initComp(){
+        addButton = (Button) findViewById(R.id.addButton);
+        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
+        titleCharCounter = (TextView) findViewById(R.id.titleCharCounter);
+        editTextTitle.addTextChangedListener(new TextWatcher() {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String charCounterValue = s.length() + TITLE_TEXT_CHAR_LIMIT;
+                titleCharCounter.setText(charCounterValue);
+            }
+        });
     }
 
     private void initSpinner(){
@@ -112,30 +92,6 @@ public class AddNewTaskActivity extends AppCompatActivity {
         spinner.setAdapter(simpleAdapter);
     }
 
-    private void initComp(){
-        addButton = (Button) findViewById(R.id.addButton);
-        editTextTitle = (EditText) findViewById(R.id.editTextTitle);
-        titleCharCounter = (TextView) findViewById(R.id.titleCharCounter);
-
-        editTextTitle.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String charCounterValue = s.length() + TITLE_TEXT_CHAR_LIMIT;
-                titleCharCounter.setText(charCounterValue);
-            }
-        });
-    }
-
     private void initListView() {
         itemTaskList = (ListView) findViewById(R.id.itemTaskList);
         itemTaskList.setDivider(null);
@@ -144,102 +100,128 @@ public class AddNewTaskActivity extends AppCompatActivity {
         addNewTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemTaskAdapter.addNewItem(); // переписати
+                itemTaskAdapter.addNewItem();
                 itemTaskAdapter.notifyDataSetChanged();
             }
         });
         itemTaskList.addFooterView(view);
     }
 
+    private void checkIntendData(){
+        intentTaskTitle = getIntent().getStringExtra(DBHelper.TASK_TITLE);
+        if(intentTaskTitle != null){
+            loadDataFromDB();
+        } else {
+            spinner.setSelection(0);
+            itemTaskAdapter = new ItemTaskAdapter(this);
+        }
+        itemTaskList.setAdapter(itemTaskAdapter);
+    }
+
+    private void loadDataFromDB(){
+        if (getSupportActionBar() != null){
+            getSupportActionBar().setTitle(R.string.edit_task_activity_label);
+        }
+        intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
+        switch (intentTaskObject.getIcon()){
+            case TaskObject.WORK_ICON:
+                spinner.setSelection(0);
+                break;
+            case TaskObject.HOME_ICON:
+                spinner.setSelection(1);
+                break;
+            case TaskObject.FUN_ICON:
+                spinner.setSelection(2);
+                break;
+            case TaskObject.OTHER_ICON:
+                spinner.setSelection(3);
+                break;
+        }
+        editTextTitle.setText(intentTaskObject.getTaskTitle());
+        String charCounterValue = intentTaskObject.getTaskTitle().length() + TITLE_TEXT_CHAR_LIMIT;
+        titleCharCounter.setText(charCounterValue);
+        itemTaskAdapter = new ItemTaskAdapter(this, (ArrayList<String>) intentTaskObject.getItemTitles().clone());
+        addButton.setText(getString(R.string.edit_button_title));
+    }
+
     private void initAddButton() {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String icon = "";
-                switch (spinner.getSelectedItemPosition()){
-                    case 0:
-                        icon = TaskObject.WORK_ICON;
-                        break;
-                    case 1:
-                        icon = TaskObject.HOME_ICON;
-                        break;
-                    case 2:
-                        icon = TaskObject.FUN_ICON;
-                        break;
-                    case 3:
-                        icon = TaskObject.OTHER_ICON;
-                        break;
-                }
-                String taskTitle = editTextTitle.getText().toString();
-                ArrayList<String> itemTitles = itemTaskAdapter.getItems();
-                /////////////
-                if (taskTitle.equals("")){
-                    showAlertMassage(getString(R.string.alert_massage_when_task_title_empty));
-                    return;
-                }
-                for (String item : itemTitles) {
-                    if (item.equals("")){
-                        showAlertMassage(getString(R.string.alert_massage_when_task_title_item_empty));
-                        return;
-                    }
-                }
-
-                ArrayList<TaskStatus> statuses = new ArrayList<>();
-                if (itemTaskAdapter.isTaskItemRemoved()){
-                    for (int i = 0; i < itemTitles.size(); i++) {
-                        statuses.add(TaskStatus.NOT_COMPLETED);
-                    }
-                } else{
-                    if (intentTaskTitle != null){
-//                        statuses = intentTaskObject.getStatuses();
-
-                        ///////////////////////////////////
-                        if (itemTaskAdapter.getItemAddedCount() == 0){
-                            statuses = intentTaskObject.getStatuses();
-                        } else {
-                            statuses = intentTaskObject.getStatuses();
-                            for (int i = 0; i < itemTaskAdapter.getItemAddedCount(); i++) {
-                                statuses.add(TaskStatus.NOT_COMPLETED);
-                            }
-                        }
-                        ///////////////////////////////
-
-                    } else {
-                        statuses = new ArrayList<>();
-                        for (int i = 0; i < itemTitles.size(); i++) {
-                            statuses.add(TaskStatus.NOT_COMPLETED);
-                        }
-                    }
-                }
-
-                TaskObject taskObject = new TaskObject(icon,taskTitle,itemTitles,statuses);
-                //тут записуємо в базу ...
-
+                TaskObject taskObject = formingData();
                 DBHelper helper = new DBHelper(AddNewTaskActivity.this);
-                /////////////////////////////
                 if (intentTaskTitle != null){
                     helper.setTask(intentTaskObject.getTaskTitle(),taskObject);
                     Intent callbackIntent = new Intent();
-                    callbackIntent.putExtra(DBHelper.TASK_TITLE, taskTitle);
+                    callbackIntent.putExtra(DBHelper.TASK_TITLE, taskObject.getTaskTitle());
                     setResult(RESULT_OK,callbackIntent);
                 } else {
                     setResult(RESULT_OK);
                     helper.addTask(taskObject);
                 }
-
-                /////////////////////////////
                 finish();
-                /////////////////
             }
         });
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if(item.getItemId() == android.R.id.home){
-            this.finish();
+    private TaskObject formingData(){
+        String icon = "";
+        switch (spinner.getSelectedItemPosition()){
+            case 0:
+                icon = TaskObject.WORK_ICON;
+                break;
+            case 1:
+                icon = TaskObject.HOME_ICON;
+                break;
+            case 2:
+                icon = TaskObject.FUN_ICON;
+                break;
+            case 3:
+                icon = TaskObject.OTHER_ICON;
+                break;
         }
-        return super.onOptionsItemSelected(item);
+        String taskTitle = editTextTitle.getText().toString();
+        ArrayList<String> itemTitles = itemTaskAdapter.getItems();
+
+        isAllEditTextsNotEmpty(taskTitle,itemTitles);
+
+        ArrayList<TaskStatus> statuses = new ArrayList<>();
+        if (itemTaskAdapter.isTaskItemRemoved()){
+            for (int i = 0; i < itemTitles.size(); i++) {
+                statuses.add(TaskStatus.NOT_COMPLETED);
+            }
+        } else{
+            if (intentTaskTitle != null){
+                if (itemTaskAdapter.getItemAddedCount() == 0){
+                    statuses = intentTaskObject.getStatuses();
+                } else {
+                    statuses = intentTaskObject.getStatuses();
+                    for (int i = 0; i < itemTaskAdapter.getItemAddedCount(); i++) {
+                        statuses.add(TaskStatus.NOT_COMPLETED);
+                    }
+                }
+            } else {
+                statuses = new ArrayList<>();
+                for (int i = 0; i < itemTitles.size(); i++) {
+                    statuses.add(TaskStatus.NOT_COMPLETED);
+                }
+            }
+        }
+
+        return new TaskObject(icon,taskTitle,itemTitles,statuses);
+    }
+
+    private void isAllEditTextsNotEmpty(String taskTitle, ArrayList<String> itemTitles){
+        if (taskTitle.equals("")){
+            showAlertMassage(getString(R.string.alert_massage_when_task_title_empty));
+            return;
+        }
+        for (String item : itemTitles) {
+            if (item.equals("")){
+                showAlertMassage(getString(R.string.alert_massage_when_task_title_item_empty));
+                return;
+            }
+        }
     }
 
     private void showAlertMassage(String massage){
@@ -252,8 +234,20 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-//        super.onBackPressed();
+        checkIfTaskChanged();
+        showAlertDialogIfTaskChanged();
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == android.R.id.home){
+            checkIfTaskChanged();
+            showAlertDialogIfTaskChanged();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void checkIfTaskChanged(){
         if(intentTaskObject != null){
             if(!(editTextTitle.getText().toString().equals(intentTaskObject.getTaskTitle()))){
                 taskChanged = true;
@@ -269,7 +263,9 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 taskChanged = true;
             }
         }
+    }
 
+    private void showAlertDialogIfTaskChanged(){
         if (taskChanged){
             AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(AddNewTaskActivity.this);
             dialogBuilder.setTitle(R.string.alert_massage_warning);
@@ -285,7 +281,5 @@ public class AddNewTaskActivity extends AppCompatActivity {
         } else {
             this.finish();
         }
-
-        Log.d("textChanged",taskChanged + "");
     }
 }
