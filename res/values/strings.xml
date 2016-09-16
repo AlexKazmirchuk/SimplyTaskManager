@@ -67,6 +67,7 @@
     <string name="positive_answer">Yes</string>
     <string name="negative_answer">No</string>
     <string name="modified_data_alarm_massage">Do you really want to leave the editing task? All modified data will be lost !</string>
+    <string name="PIE_CHART_TEXT">0%</string>
 
 
 </resources>

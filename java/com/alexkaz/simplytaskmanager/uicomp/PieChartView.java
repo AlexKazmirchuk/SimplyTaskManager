@@ -8,6 +8,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
+import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.View;
@@ -23,6 +24,7 @@ public class PieChartView extends View {
     private static final float RADIUS_HEIGHT_DIVIDER = 0.9524f;
     private static final float RADIUS_WIDTH_DIVIDER = 0.9524f;
     private static final float PIE_CHART_DIVIDER = 0.1f;
+    private static final float TEXT_SIZE_DIVIDER = 0.387f;
     private int pieChartDividerSize;
 
     private Paint pieChartPaint;
@@ -30,6 +32,12 @@ public class PieChartView extends View {
     private RectF pieChartAvailableSpace;
     private Bitmap doneBitmap;
     private RectF doneRectF;
+
+    private Paint textPaint;
+    private Rect textBoundsRect;
+    private float textSize;
+    private String pieChartText;
+
     private Context context;
 
     private int amountOfNotCompleted;
@@ -56,6 +64,7 @@ public class PieChartView extends View {
     private void initComps() {
         doneBitmap = BitmapFactory.decodeResource(context.getResources(), R.drawable.done);
         doneRectF = new RectF();
+        pieChartText = context.getString(R.string.PIE_CHART_TEXT);
         statuses = new ArrayList<>();
         for (int i = 0; i < MAX_DISPLAY_COUNT; i++) {
             statuses.add(TaskStatus.DONE);
@@ -111,6 +120,9 @@ public class PieChartView extends View {
         if((amountOfDone + amountOfInProcess + amountOfNotCompleted) == amountOfDone && amountOfDone != 0){
             canvas.drawBitmap(doneBitmap,null,doneRectF, null);
         }
+        if((amountOfDone + amountOfInProcess + amountOfNotCompleted) == amountOfNotCompleted && amountOfNotCompleted != 0){
+            canvas.drawText(pieChartText,canvas.getWidth()/2 - textPaint.measureText(pieChartText)/2, canvas.getHeight()/2 + textBoundsRect.height()/2,textPaint);
+        }
     }
 
     private void determineMeasurements(int width, int height){
@@ -132,6 +144,8 @@ public class PieChartView extends View {
         doneRectF.top = bmpPosY;
         doneRectF.right = bmpPosX + bmpWidth;
         doneRectF.bottom = bmpPosY + bmpHeight;
+
+        textSize = width* TEXT_SIZE_DIVIDER;
     }
 
     private void initGraphicComp(){
@@ -145,6 +159,15 @@ public class PieChartView extends View {
         pieChartDividerPaint.setAntiAlias(true);
         pieChartDividerPaint.setStrokeWidth(pieChartDividerSize);
         pieChartDividerPaint.setColor(Color.BLACK);
+
+        textPaint = new Paint();
+        textBoundsRect = new Rect();
+
+        textPaint.setColor(Color.WHITE);
+        textPaint.setTextSize(textSize);
+        textPaint.getTextBounds(pieChartText,0,pieChartText.length(),textBoundsRect);
+
+        textBoundsRect.offset(0, -textBoundsRect.top);
     }
 
     public void setTaskStatuses(ArrayList<TaskStatus> statuses) {
