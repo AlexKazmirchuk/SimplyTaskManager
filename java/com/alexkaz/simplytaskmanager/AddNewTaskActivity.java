@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -149,6 +150,11 @@ public class AddNewTaskActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TaskObject taskObject = formingData();
+
+                if (isOneOfEditTextsEmpty(taskObject.getTaskTitle(),taskObject.getItemTitles())){
+                    return;
+                }
+
                 DBHelper helper = new DBHelper(AddNewTaskActivity.this);
                 if (intentTaskTitle != null){
                     helper.setTask(intentTaskObject.getTaskTitle(),taskObject);
@@ -183,8 +189,6 @@ public class AddNewTaskActivity extends AppCompatActivity {
         String taskTitle = editTextTitle.getText().toString();
         ArrayList<String> itemTitles = itemTaskAdapter.getItems();
 
-        isAllEditTextsNotEmpty(taskTitle,itemTitles);
-
         ArrayList<TaskStatus> statuses = new ArrayList<>();
         if (itemTaskAdapter.isTaskItemRemoved()){
             for (int i = 0; i < itemTitles.size(); i++) {
@@ -211,17 +215,18 @@ public class AddNewTaskActivity extends AppCompatActivity {
         return new TaskObject(icon,taskTitle,itemTitles,statuses);
     }
 
-    private void isAllEditTextsNotEmpty(String taskTitle, ArrayList<String> itemTitles){
-        if (taskTitle.equals("")){
+    private boolean isOneOfEditTextsEmpty(String taskTitle, ArrayList<String> itemTitles){
+        if (taskTitle.trim().equals("")){
             showAlertMassage(getString(R.string.alert_massage_when_task_title_empty));
-            return;
+            return true;
         }
         for (String item : itemTitles) {
-            if (item.equals("")){
+            if (item.trim().equals("")){
                 showAlertMassage(getString(R.string.alert_massage_when_task_title_item_empty));
-                return;
+                return true;
             }
         }
+        return false;
     }
 
     private void showAlertMassage(String massage){
