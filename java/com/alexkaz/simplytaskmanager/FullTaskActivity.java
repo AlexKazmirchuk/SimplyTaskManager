@@ -34,6 +34,7 @@ public class FullTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_full_task);
         if (getSupportActionBar() != null){
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setElevation(0);
         }
 
         initData(savedInstanceState);
