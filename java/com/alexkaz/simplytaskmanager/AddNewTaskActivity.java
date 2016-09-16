@@ -157,7 +157,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
 
                 DBHelper helper = new DBHelper(AddNewTaskActivity.this);
                 if (intentTaskTitle != null){
-                    helper.setTask(intentTaskObject.getTaskTitle(),taskObject);
+                    helper.updateTaskObject(helper.getIdFromTitle(intentTaskTitle),taskObject);
                     Intent callbackIntent = new Intent();
                     callbackIntent.putExtra(DBHelper.TASK_TITLE, taskObject.getTaskTitle());
                     setResult(RESULT_OK,callbackIntent);

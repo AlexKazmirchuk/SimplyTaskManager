@@ -44,6 +44,11 @@ public class DBHelper extends SQLiteOpenHelper {
             + " FROM " + TABLE_TASKS
             + " WHERE " + TASK_TITLE + "=?;";
 
+    private static final String QUERY_TASK_TITLE_AND_ICON_FROM_ID = "SELECT " + TASK_TITLE + ", " + ICON
+            + " FROM " + TABLE_TASKS
+            + " WHERE " + TASK_ID + "=?;";
+
+
     private static final String DELETE_TASK_ITEMS_FROM_TASK_ID = "DELETE FROM " + TABLE_TASK_ITEMS + " WHERE " + TASK_ID + "=";
     private static final String QUERY_ITEM_TITLE_AND_STATUS_FROM_ID = "SELECT " + ITEM_TITLE + ", " + STATUS
             + " FROM " + TABLE_TASK_ITEMS
@@ -157,5 +162,73 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(STATUS,newStatus);
         getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
+    }
+
+    public void updateTaskObject(int taskID, TaskObject taskObject){
+        //1. по вказаному id обновляємо icon
+        ContentValues taskValues = new ContentValues();
+        taskValues.put(TASK_TITLE,taskObject.getTaskTitle());
+        taskValues.put(ICON, taskObject.getIcon());
+        getWritableDatabase().update(TABLE_TASKS,taskValues,TASK_ID + "=?", new String[]{taskID + ""});
+        //2. по вказаному id удалємо всі айтеми з другої таблиці
+        getWritableDatabase().delete(TABLE_TASK_ITEMS, TASK_ID + "=?", new String[]{taskID + ""});
+        //3. створюємо всі айтеми з таск обжекта з вказаним id
+        for (int i = 0; i < taskObject.getItemTitles().size(); i++) {
+            ContentValues taskItemValues = new ContentValues();
+            taskItemValues.put(ITEM_TITLE, taskObject.getItemTitles().get(i));
+            taskItemValues.put(TASK_ID,taskID);
+            taskItemValues.put(STATUS,convertStatusToInt(taskObject.getStatuses().get(i)));
+            getWritableDatabase().insert(TABLE_TASK_ITEMS,null,taskItemValues);
+        }
+    }
+
+    public TaskObject getTaskFromID(int taskID){
+        Cursor taskIDCursor = this.getReadableDatabase().rawQuery(QUERY_TASK_TITLE_AND_ICON_FROM_ID,new String[]{taskID + ""});
+        taskIDCursor.moveToNext();
+
+        String taskTitle = taskIDCursor.getString(taskIDCursor.getColumnIndex(DBHelper.TASK_TITLE));
+        String icon = taskIDCursor.getString(taskIDCursor.getColumnIndex(DBHelper.ICON));
+
+        taskIDCursor = this.getReadableDatabase().rawQuery(QUERY_ITEM_TITLE_AND_STATUS_FROM_ID,new String[]{taskID + ""});
+        ArrayList<String> itemTitles = new ArrayList<>();
+        ArrayList<TaskStatus> statuses = new ArrayList<>();
+        int statusBuff;
+        while(taskIDCursor.moveToNext()){
+            itemTitles.add(taskIDCursor.getString(taskIDCursor.getColumnIndex(DBHelper.ITEM_TITLE)));
+            statusBuff = taskIDCursor.getInt(taskIDCursor.getColumnIndex(DBHelper.STATUS));
+            switch (statusBuff){
+                case 0:
+                    statuses.add(TaskStatus.NOT_COMPLETED);
+                    break;
+                case 1:
+                    statuses.add(TaskStatus.IN_PROCESS);
+                    break;
+                case 2:
+                    statuses.add(TaskStatus.DONE);
+                    break;
+            }
+        }
+        taskIDCursor.close();
+        return new TaskObject(icon,taskTitle,itemTitles,statuses);
+    }
+
+    private int convertStatusToInt(TaskStatus taskStatus){
+        switch (taskStatus){
+            case NOT_COMPLETED:
+                return TaskObject.STATUS_NOT_COMPLETED;
+            case IN_PROCESS:
+                return TaskObject.STATUS_IN_PROCESS;
+            case DONE:
+                return TaskObject.STATUS_DONE;
+        }
+        return 0;
+    }
+
+    public int getIdFromTitle(String taskTitle){
+        Cursor taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_TASK_ID_AND_ICON_FROM_TITLE,new String[]{taskTitle});
+        taskTitleCursor.moveToNext();
+        int taskID = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.TASK_ID));
+        taskTitleCursor.close();
+        return taskID;
     }
 }
