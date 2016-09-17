@@ -89,9 +89,9 @@ public class MainActivity extends AppCompatActivity {
         return new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String taskTitle = ((TaskObject)adapter.getItem(position)).getTaskTitle();
+                int taskID = ((TaskObject)adapter.getItem(position)).getTaskID();
                 Intent intent = new Intent(MainActivity.this,FullTaskActivity.class);
-                intent.putExtra(DBHelper.TASK_TITLE,taskTitle);
+                intent.putExtra(DBHelper.TASK_ID,taskID);
                 if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
                     ActivityOptionsCompat options = makeSceneTransitionAnimation(MainActivity.this,
                             new Pair<>(view.findViewById(R.id.mainItemIcon),getString(R.string.transition_icon_image)),
@@ -177,12 +177,12 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.editItem:
                 Intent intent = new Intent(this,AddNewTaskActivity.class);
-                intent.putExtra(DBHelper.TASK_TITLE,((TaskObject) adapter.getItem(info.position)).getTaskTitle());
+                intent.putExtra(DBHelper.TASK_ID,((TaskObject) adapter.getItem(info.position)).getTaskID());
                 startActivityForResult(intent,AddNewTaskActivity.REQUEST_CODE);
                 return true;
             case R.id.deleteItem:
-                String taskTitle = ((TaskObject) adapter.getItem(info.position)).getTaskTitle();
-                new DBHelper(this).removeTask(taskTitle);
+                int taskID = ((TaskObject) adapter.getItem(info.position)).getTaskID();
+                new DBHelper(this).removeTaskFromID(taskID);
                 adapter.removeItem(info.position);
                 adapter.notifyDataSetChanged();
                 hintTextView.setVisibility(View.INVISIBLE);
@@ -202,7 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // TODO
         return super.onOptionsItemSelected(item);
     }
 

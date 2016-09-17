@@ -23,10 +23,10 @@ import com.alexkaz.simplytaskmanager.uicomp.TaskStatus;
 public class FullTaskActivity extends AppCompatActivity {
 
     static final int REQUEST_CODE = 4361;
-    private static final String SAVED_TASK_TITLE = "savedTaskTitle";
+    private static final String SAVED_TASK_ID = "savedTaskID";
     private TaskViewerAdapter adapter;
     private TaskObject taskObject;
-    private String taskTitle;
+    private int taskID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +46,13 @@ public class FullTaskActivity extends AppCompatActivity {
     private void initData(Bundle savedInstanceState) {
         Intent intent = getIntent();
         if (intent != null){
-            taskTitle = intent.getStringExtra(DBHelper.TASK_TITLE);
+            taskID = intent.getIntExtra(DBHelper.TASK_ID, -1);
         }
         if (savedInstanceState!=null){
-            taskTitle = savedInstanceState.getString(SAVED_TASK_TITLE);
+            taskID = savedInstanceState.getInt(SAVED_TASK_ID);
         }
         DBHelper helper = new DBHelper(this);
-        taskObject = helper.getTask(taskTitle);
+        taskObject = helper.getTaskFromID(taskID);
     }
 
     private void initComp() {
@@ -111,7 +111,7 @@ public class FullTaskActivity extends AppCompatActivity {
         }
         if (item.getItemId() == R.id.editMenuItem){
             Intent intent = new Intent(this,AddNewTaskActivity.class);
-            intent.putExtra(DBHelper.TASK_TITLE,taskObject.getTaskTitle());
+            intent.putExtra(DBHelper.TASK_ID,taskObject.getTaskID());
             startActivityForResult(intent, AddNewTaskActivity.REQUEST_CODE);
         }
         return super.onOptionsItemSelected(item);
@@ -129,9 +129,10 @@ public class FullTaskActivity extends AppCompatActivity {
             return;
         }
 
-        String newTaskTitle = data.getStringExtra(DBHelper.TASK_TITLE);
+        int taskID = data.getIntExtra(DBHelper.TASK_ID,-1);
         DBHelper helper = new DBHelper(this);
-        taskObject = helper.getTask(newTaskTitle);
+        taskObject = helper.getTaskFromID(taskID);
+
         initComp();
         initListView();
         initStatisticPanel();
@@ -141,7 +142,7 @@ public class FullTaskActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putString(SAVED_TASK_TITLE,taskObject.getTaskTitle());
+        outState.putInt(SAVED_TASK_ID,taskObject.getTaskID());
     }
 
     public void initStatisticPanel() {

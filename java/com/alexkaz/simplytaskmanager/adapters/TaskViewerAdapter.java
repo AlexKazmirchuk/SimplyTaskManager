@@ -26,6 +26,7 @@ import static com.alexkaz.simplytaskmanager.uicomp.TaskObject.STATUS_NOT_COMPLET
 public class TaskViewerAdapter extends BaseAdapter {
 
     private Context context;
+    private int taskID;
     private ArrayList<String> itemTitles;
     private ArrayList<TaskStatus> statuses;
     private LayoutInflater inflater;
@@ -103,21 +104,21 @@ public class TaskViewerAdapter extends BaseAdapter {
                     if(selectedStatus == null){
                         statuses.set(ref,TaskStatus.DONE);
                         someStatusChanged = true;
-                        new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_DONE);
+                        new DBHelper(context).setStatus(taskID, itemTitles.get(ref), STATUS_DONE);
                     } else{
                         statuses.set(ref, selectedStatus);
                         switch (selectedStatus){
                             case DONE:
                                 someStatusChanged = true;
-                                new DBHelper(context).setStatus(itemTitles.get(ref),STATUS_DONE);
+                                new DBHelper(context).setStatus(taskID, itemTitles.get(ref),STATUS_DONE);
                                 break;
                             case IN_PROCESS:
                                 someStatusChanged = true;
-                                new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_IN_PROCESS);
+                                new DBHelper(context).setStatus(taskID, itemTitles.get(ref), STATUS_IN_PROCESS);
                                 break;
                             case NOT_COMPLETED:
                                 someStatusChanged = true;
-                                new DBHelper(context).setStatus(itemTitles.get(ref), STATUS_NOT_COMPLETED);
+                                new DBHelper(context).setStatus(taskID, itemTitles.get(ref), STATUS_NOT_COMPLETED);
                                 break;
                         }
                     }
@@ -131,6 +132,7 @@ public class TaskViewerAdapter extends BaseAdapter {
 
     public TaskViewerAdapter(Context context, TaskObject taskObject){
         this.context = context;
+        this.taskID = taskObject.getTaskID();
         this.itemTitles = taskObject.getItemTitles();
         this.statuses = taskObject.getStatuses();
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

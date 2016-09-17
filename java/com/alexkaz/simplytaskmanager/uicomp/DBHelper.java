@@ -15,7 +15,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String DB_NAME = "task_db";
 
     private static final String TABLE_TASKS = "tasks";
-    private static final String TASK_ID = "task_id";
+    public static final String TASK_ID = "task_id";
     public static final String TASK_TITLE = "task_title";
     private static final String ICON = "icon";
 
@@ -39,6 +39,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DELETE_TASK_TITLE_FROM_TASK_ID = "DELETE FROM " + TABLE_TASKS + " WHERE " + TASK_ID + "=";
     private static final String QUERY_ALL_TASK_TITLES = "SELECT " + TASK_TITLE + " FROM " + TABLE_TASKS + ";";
+    private static final String QUERY_ALL_TASK_ID = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + ";";
     private static final String QUERY_TASK_ID_FROM_TITLE = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + " WHERE " + TASK_TITLE + "=?;";
     private static final String QUERY_TASK_ID_AND_ICON_FROM_TITLE = "SELECT " + TASK_ID + ", " + ICON
             + " FROM " + TABLE_TASKS
@@ -96,7 +97,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         taskTitleCursor.close();
-        return new TaskObject(icon,taskTitle,itemTitles,statuses);
+        return new TaskObject(taskID, icon,taskTitle,itemTitles,statuses);
     }
 
     public void addTask(TaskObject taskObject){
@@ -140,6 +141,11 @@ public class DBHelper extends SQLiteOpenHelper {
         cursor.close();
     }
 
+    public void removeTaskFromID(int taskID){
+        this.getWritableDatabase().execSQL(DELETE_TASK_ITEMS_FROM_TASK_ID + taskID);
+        this.getWritableDatabase().execSQL(DELETE_TASK_TITLE_FROM_TASK_ID + taskID);
+    }
+
     public void setTask(String oldTaskTitle, TaskObject taskObject){
         removeTask(oldTaskTitle);
         addTask(taskObject);
@@ -148,11 +154,11 @@ public class DBHelper extends SQLiteOpenHelper {
     public ArrayList<TaskObject> getListOfTasks(){
 
         ArrayList<TaskObject> taskObjects = new ArrayList<>();
-        String selectSQL = QUERY_ALL_TASK_TITLES;
+        String selectSQL = QUERY_ALL_TASK_ID;
         Cursor cursor = this.getReadableDatabase().rawQuery(selectSQL,null);
         while(cursor.moveToNext()){
-            String taskTitle = cursor.getString(cursor.getColumnIndex(DBHelper.TASK_TITLE));
-            taskObjects.add(getTask(taskTitle));
+            int taskID = cursor.getInt(cursor.getColumnIndex(DBHelper.TASK_ID));
+            taskObjects.add(getTaskFromID(taskID));
         }
         cursor.close();
         return taskObjects;
@@ -162,6 +168,13 @@ public class DBHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(STATUS,newStatus);
         getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
+    }
+
+    public void setStatus(int taskID, String taskItem, int newStatus){
+        //// todo
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATUS,newStatus);
+        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,TASK_ID + "=? AND " + ITEM_TITLE + "=?",new String[]{taskID + "",taskItem});
     }
 
     public void updateTaskObject(int taskID, TaskObject taskObject){
@@ -209,7 +222,7 @@ public class DBHelper extends SQLiteOpenHelper {
             }
         }
         taskIDCursor.close();
-        return new TaskObject(icon,taskTitle,itemTitles,statuses);
+        return new TaskObject(taskID, icon,taskTitle,itemTitles,statuses);
     }
 
     private int convertStatusToInt(TaskStatus taskStatus){

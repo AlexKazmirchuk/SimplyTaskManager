@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +37,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
     private EditText editTextTitle;
     private TextView titleCharCounter;
 
-    private String intentTaskTitle;
+    private int intentTaskID;
     private TaskObject intentTaskObject;
     private ListView itemTaskList;
     private ItemTaskAdapter itemTaskAdapter;
@@ -109,8 +108,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
     }
 
     private void checkIntendData(){
-        intentTaskTitle = getIntent().getStringExtra(DBHelper.TASK_TITLE);
-        if(intentTaskTitle != null){
+        intentTaskID = getIntent().getIntExtra(DBHelper.TASK_ID,-1);
+        if(intentTaskID != -1){
             loadDataFromDB();
         } else {
             spinner.setSelection(0);
@@ -123,7 +122,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
         if (getSupportActionBar() != null){
             getSupportActionBar().setTitle(R.string.edit_task_activity_label);
         }
-        intentTaskObject = new DBHelper(this).getTask(intentTaskTitle);
+        intentTaskObject = new DBHelper(this).getTaskFromID(intentTaskID);
         switch (intentTaskObject.getIcon()){
             case TaskObject.WORK_ICON:
                 spinner.setSelection(0);
@@ -156,10 +155,10 @@ public class AddNewTaskActivity extends AppCompatActivity {
                 }
 
                 DBHelper helper = new DBHelper(AddNewTaskActivity.this);
-                if (intentTaskTitle != null){
-                    helper.updateTaskObject(helper.getIdFromTitle(intentTaskTitle),taskObject);
+                if (intentTaskID != -1){
+                    helper.updateTaskObject(intentTaskID,taskObject);
                     Intent callbackIntent = new Intent();
-                    callbackIntent.putExtra(DBHelper.TASK_TITLE, taskObject.getTaskTitle());
+                    callbackIntent.putExtra(DBHelper.TASK_ID, intentTaskID);
                     setResult(RESULT_OK,callbackIntent);
                 } else {
                     setResult(RESULT_OK);
@@ -194,8 +193,8 @@ public class AddNewTaskActivity extends AppCompatActivity {
             for (int i = 0; i < itemTitles.size(); i++) {
                 statuses.add(TaskStatus.NOT_COMPLETED);
             }
-        } else{
-            if (intentTaskTitle != null){
+        } else {
+            if (intentTaskID != -1){
                 if (itemTaskAdapter.getItemAddedCount() == 0){
                     statuses = intentTaskObject.getStatuses();
                 } else {
