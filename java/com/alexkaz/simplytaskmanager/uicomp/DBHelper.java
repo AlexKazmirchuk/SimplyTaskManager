@@ -16,7 +16,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TABLE_TASKS = "tasks";
     public static final String TASK_ID = "task_id";
-    public static final String TASK_TITLE = "task_title";
+    private static final String TASK_TITLE = "task_title";
     private static final String ICON = "icon";
 
     private static final String TABLE_TASK_ITEMS = "task_items";
@@ -38,7 +38,6 @@ public class DBHelper extends SQLiteOpenHelper {
             "REFERENCES " + TABLE_TASKS + "(" + TASK_ID + "));";
 
     private static final String DELETE_TASK_TITLE_FROM_TASK_ID = "DELETE FROM " + TABLE_TASKS + " WHERE " + TASK_ID + "=";
-    private static final String QUERY_ALL_TASK_TITLES = "SELECT " + TASK_TITLE + " FROM " + TABLE_TASKS + ";";
     private static final String QUERY_ALL_TASK_ID = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + ";";
     private static final String QUERY_TASK_ID_FROM_TITLE = "SELECT " + TASK_ID + " FROM " + TABLE_TASKS + " WHERE " + TASK_TITLE + "=?;";
     private static final String QUERY_TASK_ID_AND_ICON_FROM_TITLE = "SELECT " + TASK_ID + ", " + ICON
@@ -100,7 +99,7 @@ public class DBHelper extends SQLiteOpenHelper {
         }
     }
 
-    public void removeTask(String taskTitle){
+    private void removeTask(String taskTitle){
         String selectSQL =  QUERY_TASK_ID_FROM_TITLE;
         Cursor cursor = this.getReadableDatabase().rawQuery(selectSQL,new String[]{taskTitle});
 
