@@ -71,35 +71,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     }
 
-    public TaskObject getTask(String taskTitle){
-        Cursor taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_TASK_ID_AND_ICON_FROM_TITLE,new String[]{taskTitle});
-        taskTitleCursor.moveToNext();
-        int taskID = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.TASK_ID));
-        String icon = taskTitleCursor.getString(taskTitleCursor.getColumnIndex(DBHelper.ICON));
-
-        taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_ITEM_TITLE_AND_STATUS_FROM_ID,new String[]{taskID + ""});
-        ArrayList<String> itemTitles = new ArrayList<>();
-        ArrayList<TaskStatus> statuses = new ArrayList<>();
-        int statusBuff;
-        while(taskTitleCursor.moveToNext()){
-            itemTitles.add(taskTitleCursor.getString(taskTitleCursor.getColumnIndex(DBHelper.ITEM_TITLE)));
-            statusBuff = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.STATUS));
-            switch (statusBuff){
-                case 0:
-                    statuses.add(TaskStatus.NOT_COMPLETED);
-                    break;
-                case 1:
-                    statuses.add(TaskStatus.IN_PROCESS);
-                    break;
-                case 2:
-                    statuses.add(TaskStatus.DONE);
-                    break;
-            }
-        }
-        taskTitleCursor.close();
-        return new TaskObject(taskID, icon,taskTitle,itemTitles,statuses);
-    }
-
     public void addTask(TaskObject taskObject){
         ContentValues taskValues = new ContentValues();
         taskValues.put(TASK_TITLE,taskObject.getTaskTitle());
@@ -146,11 +117,6 @@ public class DBHelper extends SQLiteOpenHelper {
         this.getWritableDatabase().execSQL(DELETE_TASK_TITLE_FROM_TASK_ID + taskID);
     }
 
-    public void setTask(String oldTaskTitle, TaskObject taskObject){
-        removeTask(oldTaskTitle);
-        addTask(taskObject);
-    }
-
     public ArrayList<TaskObject> getListOfTasks(){
 
         ArrayList<TaskObject> taskObjects = new ArrayList<>();
@@ -162,19 +128,6 @@ public class DBHelper extends SQLiteOpenHelper {
         }
         cursor.close();
         return taskObjects;
-    }
-
-    public void setStatus(String taskItem, int newStatus){
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(STATUS,newStatus);
-        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
-    }
-
-    public void setStatus(int taskID, String taskItem, int newStatus){
-        //// todo
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(STATUS,newStatus);
-        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,TASK_ID + "=? AND " + ITEM_TITLE + "=?",new String[]{taskID + "",taskItem});
     }
 
     public void updateTaskObject(int taskID, TaskObject taskObject){
@@ -235,6 +188,52 @@ public class DBHelper extends SQLiteOpenHelper {
                 return TaskObject.STATUS_DONE;
         }
         return 0;
+    }
+
+    public void setStatus(int taskID, String taskItem, int newStatus){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATUS,newStatus);
+        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,TASK_ID + "=? AND " + ITEM_TITLE + "=?",new String[]{taskID + "",taskItem});
+    }
+
+    public void setStatus(String taskItem, int newStatus){
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATUS,newStatus);
+        getWritableDatabase().update(TABLE_TASK_ITEMS,contentValues,ITEM_TITLE + "=?",new String[]{taskItem});
+    }
+
+    public void setTask(String oldTaskTitle, TaskObject taskObject){
+        removeTask(oldTaskTitle);
+        addTask(taskObject);
+    }
+
+    public TaskObject getTask(String taskTitle){
+        Cursor taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_TASK_ID_AND_ICON_FROM_TITLE,new String[]{taskTitle});
+        taskTitleCursor.moveToNext();
+        int taskID = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.TASK_ID));
+        String icon = taskTitleCursor.getString(taskTitleCursor.getColumnIndex(DBHelper.ICON));
+
+        taskTitleCursor = this.getReadableDatabase().rawQuery(QUERY_ITEM_TITLE_AND_STATUS_FROM_ID,new String[]{taskID + ""});
+        ArrayList<String> itemTitles = new ArrayList<>();
+        ArrayList<TaskStatus> statuses = new ArrayList<>();
+        int statusBuff;
+        while(taskTitleCursor.moveToNext()){
+            itemTitles.add(taskTitleCursor.getString(taskTitleCursor.getColumnIndex(DBHelper.ITEM_TITLE)));
+            statusBuff = taskTitleCursor.getInt(taskTitleCursor.getColumnIndex(DBHelper.STATUS));
+            switch (statusBuff){
+                case 0:
+                    statuses.add(TaskStatus.NOT_COMPLETED);
+                    break;
+                case 1:
+                    statuses.add(TaskStatus.IN_PROCESS);
+                    break;
+                case 2:
+                    statuses.add(TaskStatus.DONE);
+                    break;
+            }
+        }
+        taskTitleCursor.close();
+        return new TaskObject(taskID, icon,taskTitle,itemTitles,statuses);
     }
 
     public int getIdFromTitle(String taskTitle){
