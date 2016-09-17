@@ -163,6 +163,7 @@ public class PieChartView extends View {
         textPaint = new Paint();
         textBoundsRect = new Rect();
 
+        textPaint.setAntiAlias(true);
         textPaint.setColor(Color.WHITE);
         textPaint.setTextSize(textSize);
         textPaint.getTextBounds(pieChartText,0,pieChartText.length(),textBoundsRect);
