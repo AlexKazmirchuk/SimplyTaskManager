@@ -3,6 +3,7 @@ package com.alexkaz.simplytaskmanager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alexkaz.simplytaskmanager.receivers.NotificationReceiver;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.adapters.ItemTaskAdapter;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;
@@ -164,6 +166,7 @@ public class AddNewTaskActivity extends AppCompatActivity {
                     setResult(RESULT_OK);
                     helper.addTask(taskObject);
                 }
+                initNotification();
                 finish();
             }
         });
@@ -284,6 +287,18 @@ public class AddNewTaskActivity extends AppCompatActivity {
             dialogBuilder.create().show();
         } else {
             this.finish();
+        }
+    }
+
+    private void initNotification(){
+        SharedPreferences sharedPreferences = getPreferences(MODE_PRIVATE);
+        boolean isNotificationCreated = sharedPreferences.getBoolean("notification_receiver_launched",false);
+        if (!isNotificationCreated){
+            Intent intent = new Intent(this, NotificationReceiver.class);
+            sendBroadcast(intent);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("notification_receiver_launched",true);
+            editor.apply();
         }
     }
 }

@@ -59,7 +59,7 @@
     <string name="temp_value_of_list_add_item">1.</string>
     <string name="review_icon_description">review icon</string>
     <string name="spinner_item_content_description">spinner item</string>
-    <string name="empty_list_hint_text">Create new task</string>
+    <string name="empty_list_hint_text">Create a new task</string>
     <!--end-->
 
     <string name="transition_icon_image">transition:ICON</string>
@@ -68,6 +68,9 @@
     <string name="negative_answer">No</string>
     <string name="modified_data_alarm_massage">Do you really want to leave the editing task? All modified data will be lost !</string>
     <string name="PIE_CHART_TEXT">0%</string>
+    <string name="notification_ticker_text">There are no completed tasks!</string>
+    <string name="notification_content_title">Reminding</string>
+    <string name="notification_content_text">Please see the list of tasks. To follow a positive result, do at least several tasks per day.</string>
 
 
 </resources>

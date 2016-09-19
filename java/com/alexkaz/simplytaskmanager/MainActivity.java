@@ -1,6 +1,7 @@
 package com.alexkaz.simplytaskmanager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.support.design.widget.FloatingActionButton;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import com.alexkaz.simplytaskmanager.adapters.MainTaskAdapter;
 import com.alexkaz.simplytaskmanager.adapters.RotateAnimAdapter;
+import com.alexkaz.simplytaskmanager.receivers.NotificationReceiver;
 import com.alexkaz.simplytaskmanager.uicomp.DBHelper;
 import com.alexkaz.simplytaskmanager.uicomp.PieChartView;
 import com.alexkaz.simplytaskmanager.uicomp.TaskObject;

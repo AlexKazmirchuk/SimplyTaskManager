@@ -34,6 +34,9 @@
     <string name="positive_answer">Да</string>
     <string name="negative_answer">Нет</string>
     <string name="modified_data_alarm_massage">Вы действительно хотите покинуть редактирования задачи? Все измененные данные будут потеряны !</string>
+    <string name="notification_ticker_text">Есть не выполненные задания!</string>
+    <string name="notification_content_title">Напоминание</string>
+    <string name="notification_content_text">Пожалуйста, просмотрите список задач. Для положительного результата выполняйте минимум несколько задач в день.</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Выполнено</item>

@@ -34,6 +34,9 @@
     <string name="positive_answer">Так</string>
     <string name="negative_answer">Ні</string>
     <string name="modified_data_alarm_massage">Ви дійсно хочете покинути редагування завдання? Всі змінені дані буде втрачено!</string>
+    <string name="notification_ticker_text">Є не виконані завдання!</string>
+    <string name="notification_content_title">Нагадування</string>
+    <string name="notification_content_text">Будь ласка перегляньте список завдань. Для позитивного результату виконуйте мінімум кілька завдань на день.</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Виконано</item>
