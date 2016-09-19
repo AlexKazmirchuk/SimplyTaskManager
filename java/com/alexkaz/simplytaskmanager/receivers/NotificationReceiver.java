@@ -62,7 +62,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         notifBuilder.setContentIntent(pendingIntent)
                 .setWhen(System.currentTimeMillis())
                 .setAutoCancel(true)
-                .setSmallIcon(R.mipmap.ic_app)
+                .setSmallIcon(R.drawable.ic_developer_board_white_36dp)
                 .setLargeIcon(BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_app))
                 .setTicker(context.getString(R.string.notification_ticker_text))
                 .setContentTitle(context.getString(R.string.notification_content_title))
