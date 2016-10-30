@@ -1,4 +1,31 @@
 <resources>
+    <!--Temporary values-->
+    <string name="first_item_text">1.Development of the interface , the initial screen paragraphs…</string>
+    <string name="done_txt_view_text">Виконано - 34%(13)</string>
+    <string name="in_process_txt_view_text">В процесі - 14%(5)</string>
+    <string name="not_completed_txt_view_text">Не виконано - 52%(23)</string>
+    <string name="txt_view_task_title_text">Створення інтерфейсу екрану для повного перегляду</string>
+    <string name="item_txt_view_text">1. Створити статус бар і іконки на ньому</string>
+    <!--end-->
+
+    <!--content description values-->
+    <string name="spinner_arrow_description">spinner bottom right arrow</string>
+    <string name="character_counter_text">0/100</string>
+    <string name="main_item_icon_content_description">icon description</string>
+    <string name="add_new_task_icon_content_description">add new task icon</string>
+    <string name="delete_button_icon_content_description">delete button icon</string>
+    <string name="txt_char_counter_temp_value">33/50</string>
+    <string name="temp_value_of_list_add_item">1.</string>
+    <string name="review_icon_description">review icon</string>
+    <string name="spinner_item_content_description">spinner item</string>
+    <!--end-->
+
+    <!--values for transition-->
+    <string name="transition_icon_image">transition:ICON</string>
+    <string name="transition_title_name">transition:TITLE</string>
+    <string name="PIE_CHART_TEXT">0%</string>
+    <!--end-->
+
     <!--for locale-->
     <string name="app_name">Simple Task Manager</string>
     <string name="main_activity_label">&#160;&#160;Всі завдання</string>
@@ -18,7 +45,6 @@
     <string name="delete_item_title_for_context_menu">Видалити</string>
     <string name="options_menu_item_title">Налаштування</string>
 
-
     <string name="bottom_panel_title">Статистика</string>
     <string name="done_count">Виконано - %1$d%%(%2$d)</string>
     <string name="in_process_count">В процесі - %1$d%%(%2$d)</string>
@@ -30,6 +56,7 @@
     <string name="alert_massage_warning">Попередження</string>
     <string name="alert_massage_when_task_title_empty">Будь ласка введіть назву завдання</string>
     <string name="alert_massage_when_task_title_item_empty">Будь ласка заповніть або видаліть порожні поля</string>
+
     <string name="empty_list_hint_text">Створіть нове завдання</string>
     <string name="positive_answer">Так</string>
     <string name="negative_answer">Ні</string>
