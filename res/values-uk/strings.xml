@@ -43,7 +43,7 @@
     <string name="edit_menu_item_title">Редагувати</string>
     <string name="edit_item_title_for_context_menu">Редагувати</string>
     <string name="delete_item_title_for_context_menu">Видалити</string>
-    <string name="options_menu_item_title">Налаштування</string>
+    <string name="menu_item_about_title">Про програму</string>
 
     <string name="bottom_panel_title">Статистика</string>
     <string name="done_count">Виконано - %1$d%%(%2$d)</string>
@@ -64,6 +64,7 @@
     <string name="notification_ticker_text">Є не виконані завдання!</string>
     <string name="notification_content_title">Нагадування</string>
     <string name="notification_content_text">Будь ласка перегляньте список завдань. Для позитивного результату виконуйте мінімум кілька завдань на день.</string>
+    <string name="about_label">Про програму</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Виконано</item>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/options_menu_item_title"
-        android:id="@+id/preferencesItem" />
+    <item android:title="@string/menu_item_about_title"
+        android:id="@+id/aboutItem" />
 </menu>
