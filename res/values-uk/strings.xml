@@ -64,7 +64,14 @@
     <string name="notification_ticker_text">Є не виконані завдання!</string>
     <string name="notification_content_title">Нагадування</string>
     <string name="notification_content_text">Будь ласка перегляньте список завдань. Для позитивного результату виконуйте мінімум кілька завдань на день.</string>
+
     <string name="about_label">Про програму</string>
+    <string name="author_title">Автор</string>
+    <string name="author_value">Казмірчук Олександр</string>
+    <string name="version_title">Версія</string>
+    <string name="version_value">1.0</string>
+    <string name="github_title">Посилання на github</string>
+    <string name="github_link">https://github.com/AlexKazmirchuk/SimplyTaskManager</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Виконано</item>

@@ -64,7 +64,14 @@
     <string name="notification_ticker_text">There are no completed tasks!</string>
     <string name="notification_content_title">Reminding</string>
     <string name="notification_content_text">Please see the list of tasks. To follow a positive result, do at least several tasks per day.</string>
+
     <string name="about_label">About</string>
+    <string name="author_title">Author</string>
+    <string name="author_value">Kazmirchuk Oleksandr</string>
+    <string name="version_title">Version</string>
+    <string name="version_value">1.0</string>
+    <string name="github_title">Github link</string>
+    <string name="github_link">https://github.com/AlexKazmirchuk/SimplyTaskManager</string>
 
     <string-array name="status_dialog_choosing_titles">
         <item>Done</item>
