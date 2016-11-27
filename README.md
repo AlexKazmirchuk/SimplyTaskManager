@@ -1,5 +1,7 @@
 # Simple task manager
 
+<a href="https://play.google.com/store/apps/details?id=com.alexkaz.simplytaskmanager"><img src="http://www.android.com/images/brand/get_it_on_play_logo_large.png"/></a>
+
 ### Summary of application
 
 This application for Android OS smartphones is designed to divide a long or difficult task into simple steps and monitor their implementation. Each task should be divided into simple steps. For the user step by step is psychologically easier to execute such task, and the statistics in  program is only motivate to complete the task 100%. Just divide something complex into simple steps and each step in carrying set the appropriate status. Data will be calculated and displayed in the form of various graphs and statistics that will show the effectiveness of implementation. Thus, the performance of any task will be easier and more interesting.
